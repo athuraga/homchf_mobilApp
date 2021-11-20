@@ -1,0 +1,18 @@
+[
+    {
+        "merged": "/Volumes/USB/HomChf/git_repo/homchf_mobilApp/build/url_launcher/intermediates/res/merged/debug/drawable/notification_bg.xml",
+        "source": "/Users/wbr/.gradle/caches/transforms-2/files-2.1/d67cd79abd1ca209502f51c69d23182b/core-1.1.0/res/drawable/notification_bg.xml"
+    },
+    {
+        "merged": "/Volumes/USB/HomChf/git_repo/homchf_mobilApp/build/url_launcher/intermediates/res/merged/debug/drawable/notification_icon_background.xml",
+        "source": "/Users/wbr/.gradle/caches/transforms-2/files-2.1/d67cd79abd1ca209502f51c69d23182b/core-1.1.0/res/drawable/notification_icon_background.xml"
+    },
+    {
+        "merged": "/Volumes/USB/HomChf/git_repo/homchf_mobilApp/build/url_launcher/intermediates/res/merged/debug/drawable/notification_bg_low.xml",
+        "source": "/Users/wbr/.gradle/caches/transforms-2/files-2.1/d67cd79abd1ca209502f51c69d23182b/core-1.1.0/res/drawable/notification_bg_low.xml"
+    },
+    {
+        "merged": "/Volumes/USB/HomChf/git_repo/homchf_mobilApp/build/url_launcher/intermediates/res/merged/debug/drawable/notification_tile_bg.xml",
+        "source": "/Users/wbr/.gradle/caches/transforms-2/files-2.1/d67cd79abd1ca209502f51c69d23182b/core-1.1.0/res/drawable/notification_tile_bg.xml"
+    }
+]

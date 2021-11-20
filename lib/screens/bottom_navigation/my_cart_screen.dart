@@ -67,6 +67,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
 
   int? selectedAddressId;
   String? strSelectedAddress = '';
+  String? strScheduleOrder = '';
 
   int? vendorDiscount, vendorDiscountID;
   String? vendorDiscountMinItemAmount = '',
@@ -980,34 +981,41 @@ class _MyCartScreenState extends State<MyCartScreen> {
                         onTap: () {
                           if (SharedPreferenceUtil.getBool(
                               Constants.isLoggedIn)) {
-                            if (SharedPreferenceUtil.getInt(
-                                    Constants.appSettingIsPickup) ==
-                                1) {
-                              if (deliveryTypeIndex == -1) {
-                                Constants.toastMessage(
-                                    'Please select order delivery type.');
-                              } else if (deliveryTypeIndex == 0) {
-                                if (selectedAddressId == null) {
+                            if (strScheduleOrder!.length <= 6) {
+                              Constants.toastMessage(
+                                  'Please set your delivery date, time and food allergies');
+                              if (SharedPreferenceUtil.getInt(
+                                      Constants.appSettingIsPickup) ==
+                                  1) {
+                                if (deliveryTypeIndex == -1) {
                                   Constants.toastMessage(
-                                      'Please select address for deliver order.');
-                                } else {
+                                      'Please select order delivery type.');
+                                } else if (deliveryTypeIndex == 0) {
+                                  if (selectedAddressId == null) {
+                                    Constants.toastMessage(
+                                        'Please select address for deliver order.');
+                                  } else {
+                                    getAllData();
+                                  }
+                                } else if (deliveryTypeIndex == 1) {
                                   getAllData();
                                 }
-                              } else if (deliveryTypeIndex == 1) {
-                                getAllData();
+                              } else {
+                                if (deliveryTypeIndex == 0) {
+                                  if (selectedAddressId == null) {
+                                    Constants.toastMessage(
+                                        'Please select address for deliver order.');
+                                  } else {
+                                    getAllData();
+                                  }
+                                } else if (deliveryTypeIndex == -1) {
+                                  Constants.toastMessage(
+                                      'Please select order delivery type.');
+                                }
                               }
                             } else {
-                              if (deliveryTypeIndex == 0) {
-                                if (selectedAddressId == null) {
-                                  Constants.toastMessage(
-                                      'Please select address for deliver order.');
-                                } else {
-                                  getAllData();
-                                }
-                              } else if (deliveryTypeIndex == -1) {
-                                Constants.toastMessage(
-                                    'Please select order delivery type.');
-                              }
+                              Constants.toastMessage(
+                                  'You agree that you conveyed the food allergies');
                             }
                           } else {
                             Navigator.of(context).push(
@@ -2352,9 +2360,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                     right: ScreenUtil().setWidth(10)),
                                 child: SizedBox(
                                   // width: 200.0,
-                                  height: 80.0,
+                                  height: 100.0,
                                   child: Card(
                                     elevation: 4,
+                                    color: Color(Constants.colorTheme),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
@@ -4279,7 +4288,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
               vendorDiscountAmount: vendorDiscountAmount.toInt(),
               vendorDiscountId: vendorDiscountID,
               strTaxAmount: strTaxAmount,
-              strScheduleOrder: _textDeliverDateTimeEtc.text.toString(),
+              strScheduleOrder: _textDeliverDateTimeEtc.text,
               allTax: sendAllTax),
         ),
       );
