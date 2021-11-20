@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mealup/model/balance.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/wallet/wallet_add_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/model/balance.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/wallet/wallet_add_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -78,8 +78,8 @@ class _WalletScreenState extends State<WalletScreen> {
                       child: SmartRefresher(
                         enablePullDown: true,
                         header: MaterialClassicHeader(
-                          backgroundColor: Constants.colorTheme,
-                          color: Constants.colorWhite,
+                          backgroundColor: Color(Constants.colorTheme),
+                          color: Colors.white,
                         ),
                         controller: _refreshController,
                         onRefresh: _onRefresh,
@@ -98,7 +98,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                         EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 10),
                                     margin: EdgeInsets.only(top: 10, bottom: 10),
                                     decoration: BoxDecoration(
-                                        color: Constants.colorWhite,
+                                        color: Colors.white,
                                         boxShadow: [
                                           BoxShadow(
                                             color: Colors.grey.withOpacity(0.5),
@@ -124,7 +124,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                                 Text(
                                                   Languages.of(context)!.walletBalance,
                                                   style: TextStyle(
-                                                      color: Constants.colorBlack,
+                                                      color: Color(Constants.colorBlack),
                                                       fontFamily: Constants.appFont,
                                                       fontSize: 14),
                                                 ),
@@ -134,7 +134,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                                 Text(
                                                   "${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)}$balance",
                                                   style: TextStyle(
-                                                      color: Constants.colorBlack,
+                                                      color: Color(Constants.colorBlack),
                                                       fontFamily: Constants.appFontBold,
                                                       fontSize: 26),
                                                 ),
@@ -187,15 +187,15 @@ class _WalletScreenState extends State<WalletScreen> {
                                                 ),
                                               ),
                                               fillColor:
-                                                  Constants.colorGray.withOpacity(0.3),
+                                                  Color(Constants.colorGray).withOpacity(0.3),
                                               filled: true,
                                               hintText: 'Search here',
                                               hintStyle: TextStyle(
-                                                  color: Constants.colorBlack,
+                                                  color: Color(Constants.colorBlack),
                                                   fontSize: 14,
                                                   fontFamily: Constants.appFont),
                                               suffixIcon: Icon(Icons.search,
-                                                  color: Constants.colorBlack),
+                                                  color: Color(Constants.colorBlack)),
                                               // suffixIcon: IconButton(
                                               //   onPressed: () => this._clearSearch(),
                                               //   icon: Icon(Icons.clear, color: Palette.bonjour),
@@ -217,14 +217,14 @@ class _WalletScreenState extends State<WalletScreen> {
                                             Text(
                                               Languages.of(context)!.transactionHistory,
                                               style: TextStyle(
-                                                  color: Constants.colorBlack,
+                                                  color: Color(Constants.colorBlack),
                                                   fontFamily: Constants.appFontBold,
                                                   fontSize: 20),
                                             ),
                                             Text(
                                               _selectedDate != null ? 'Showing data of : ' + _selectedDate!.year.toString() + '-' + _selectedDate!.month.toString() + '-' + _selectedDate!.day.toString() : '',
                                               style: TextStyle(
-                                                  color: Constants.colorGray,
+                                                  color: Color(Constants.colorGray),
                                                   fontFamily: Constants.appFont,
                                                   fontSize: 14),
                                             )
@@ -238,7 +238,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                           child: Text(
                                             'Filter',
                                             style: TextStyle(
-                                                color:Constants.colorWhite,
+                                                color: Colors.white,
                                                 fontFamily: Constants.appFontBold,
                                                 fontSize: 16),
                                           ),
@@ -297,7 +297,8 @@ class _WalletScreenState extends State<WalletScreen> {
                                                           : _searchResult[index]
                                                           .vendorName!,
                                                       style: TextStyle(
-                                                          color: Constants.colorBlack,
+                                                          color: Color(
+                                                              Constants.colorBlack),
                                                           fontFamily: "ProximaNova",
                                                           fontSize: 16),
                                                     ),
@@ -307,8 +308,8 @@ class _WalletScreenState extends State<WalletScreen> {
                                                           ? 'Added to Wallet'
                                                           : 'Order Id : ${_searchResult[index].order!.orderId}',
                                                       style: TextStyle(
-                                                          color:
-                                                              Constants.colorGray,
+                                                          color: Color(
+                                                              Constants.colorGray),
                                                           fontFamily:
                                                           Constants.appFont,
                                                           fontSize: 12),
@@ -341,7 +342,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                                 _searchResult[index].date!,
                                                 style: TextStyle(
                                                     color:
-                                                    Constants.colorGray,
+                                                    Color(Constants.colorGray),
                                                     fontFamily: Constants.appFont,
                                                     fontSize: 14),
                                               ),
@@ -349,7 +350,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                                 "debited from ${_searchResult[index].paymentDetails != null ? _searchResult[index].paymentDetails!.paymentType : 'Wallet'}",
                                                 style: TextStyle(
                                                     color:
-                                                    Constants.colorBlack,
+                                                    Color(Constants.colorBlack),
                                                     fontFamily: Constants.appFont,
                                                     fontSize: 14),
                                               ),
@@ -409,7 +410,8 @@ class _WalletScreenState extends State<WalletScreen> {
                                                           : dataList[index]
                                                           .vendorName!,
                                                       style: TextStyle(
-                                                          color: Constants.colorBlack,
+                                                          color: Color(
+                                                              Constants.colorBlack),
                                                           fontFamily: "ProximaNova",
                                                           fontSize: 16),
                                                     ),
@@ -418,8 +420,8 @@ class _WalletScreenState extends State<WalletScreen> {
                                                           ? 'Added to Wallet'
                                                           : 'Order Id : ${dataList[index].order!.orderId}',
                                                       style: TextStyle(
-                                                          color:
-                                                              Constants.colorGray,
+                                                          color: Color(
+                                                              Constants.colorGray),
                                                           fontFamily:
                                                           Constants.appFont,
                                                           fontSize: 12),
@@ -451,7 +453,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                                 dataList[index].date!,
                                                 style: TextStyle(
                                                     color:
-                                                    Constants.colorGray,
+                                                    Color(Constants.colorGray),
                                                     fontFamily: Constants.appFont,
                                                     fontSize: 14),
                                               ),
@@ -459,7 +461,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                                 "debited from ${dataList[index].paymentDetails != null ? dataList[index].paymentDetails!.paymentType : 'Wallet'}",
                                                 style: TextStyle(
                                                     color:
-                                                    Constants.colorBlack,
+                                                    Color(Constants.colorBlack),
                                                     fontFamily: Constants.appFont,
                                                     fontSize: 14),
                                               ),
@@ -515,7 +517,8 @@ class _WalletScreenState extends State<WalletScreen> {
                                                           ? 'Deposit'
                                                           : filterList[index].vendorName!,
                                                       style: TextStyle(
-                                                          color: Constants.colorBlack,
+                                                          color: Color(
+                                                              Constants.colorBlack),
                                                           fontFamily: "ProximaNova",
                                                           fontSize: 16),
                                                     ),
@@ -524,8 +527,8 @@ class _WalletScreenState extends State<WalletScreen> {
                                                           ? 'Added to Wallet'
                                                           : 'Order Id : ${filterList[index].order!.orderId}',
                                                       style: TextStyle(
-                                                          color:
-                                                              Constants.colorGray,
+                                                          color: Color(
+                                                              Constants.colorGray),
                                                           fontFamily:
                                                           Constants.appFont,
                                                           fontSize: 12),
@@ -557,7 +560,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                                 filterList[index].date!,
                                                 style: TextStyle(
                                                     color:
-                                                    Constants.colorGray,
+                                                    Color(Constants.colorGray),
                                                     fontFamily: Constants.appFont,
                                                     fontSize: 14),
                                               ),
@@ -565,7 +568,7 @@ class _WalletScreenState extends State<WalletScreen> {
                                                 "debited from ${filterList[index].paymentDetails != null ? filterList[index].paymentDetails!.paymentType : 'Wallet'}",
                                                 style: TextStyle(
                                                     color:
-                                                    Constants.colorBlack,
+                                                    Color(Constants.colorBlack),
                                                     fontFamily: Constants.appFont,
                                                     fontSize: 14),
                                               ),

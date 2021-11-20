@@ -6,23 +6,23 @@ import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mealup/model/cartmodel.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/model/payment_setting_model.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/PaypalPayment.dart';
-import 'package:mealup/screens/order_history_screen.dart';
-import 'package:mealup/screens/stripe.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/database_helper.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/rounded_corner_app_button.dart';
+import 'package:homchf/model/cartmodel.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/model/payment_setting_model.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/PaypalPayment.dart';
+import 'package:homchf/screens/order_history_screen.dart';
+import 'package:homchf/screens/stripe.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/database_helper.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/rounded_corner_app_button.dart';
 import 'package:scoped_model/scoped_model.dart';
 
 import 'package:stripe_payment/stripe_payment.dart';
@@ -44,7 +44,7 @@ class PaymentMethodScreen extends StatefulWidget {
   // final double orderItem;
   final List<Map<String, dynamic>>? orderItem;
   final List<Map<String, dynamic>>? allTax;
-
+  final String? strScheduleOrder;
   // final List<String> orderItem;
 
   const PaymentMethodScreen(
@@ -63,7 +63,8 @@ class PaymentMethodScreen extends StatefulWidget {
       this.vendorDiscountAmount,
       this.vendorDiscountId,
       this.strTaxAmount,
-      this.allTax})
+      this.allTax,
+      this.strScheduleOrder})
       : super(key: key);
 
   @override
@@ -75,7 +76,6 @@ class PaymentMethodScreen extends StatefulWidget {
 class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   int radioIndex = -1;
   String? orderPaymentType;
-
 
   final dbHelper = DatabaseHelper.instance;
 
@@ -111,80 +111,96 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
 
   Future<BaseModel<PaymentSettingModel>> callGetPaymentSettingAPI() async {
     PaymentSettingModel response;
-    try{
+    try {
       final dio = Dio();
-      dio.options.headers["Accept"] = "application/json"; // config your dio headers globally// config your dio headers globally
+      dio.options.headers["Accept"] =
+          "application/json"; // config your dio headers globally// config your dio headers globally
       dio.options.followRedirects = false;
       dio.options.connectTimeout = 5000; //5s
       dio.options.receiveTimeout = 3000;
-      response  = await  RestClient(dio).paymentSetting();
+      response = await RestClient(dio).paymentSetting();
       print(response.success);
 
       if (response.success!) {
         if (mounted)
           setState(() {
-            SharedPreferenceUtil.putString(Constants.appPaymentCOD, response.data!.cod.toString());
-            if(response.data!.wallet != null){
-              SharedPreferenceUtil.putString(Constants.appPaymentWallet, response.data!.wallet.toString());
-            }else{
+            SharedPreferenceUtil.putString(
+                Constants.appPaymentCOD, response.data!.cod.toString());
+            if (response.data!.wallet != null) {
+              SharedPreferenceUtil.putString(
+                  Constants.appPaymentWallet, response.data!.wallet.toString());
+            } else {
               SharedPreferenceUtil.putString(Constants.appPaymentWallet, '0');
             }
-            if(response.data!.stripe != null){
-              SharedPreferenceUtil.putString(Constants.appPaymentStripe, response.data!.stripe.toString());
-            }else{
+            if (response.data!.stripe != null) {
+              SharedPreferenceUtil.putString(
+                  Constants.appPaymentStripe, response.data!.stripe.toString());
+            } else {
               SharedPreferenceUtil.putString(Constants.appPaymentStripe, '0');
             }
-            if(response.data!.razorpay != null){
-              SharedPreferenceUtil.putString(Constants.appPaymentRozerPay, response.data!.razorpay.toString());
-            }else{
+            if (response.data!.razorpay != null) {
+              SharedPreferenceUtil.putString(Constants.appPaymentRozerPay,
+                  response.data!.razorpay.toString());
+            } else {
               SharedPreferenceUtil.putString(Constants.appPaymentRozerPay, '0');
             }
 
-            if(response.data!.paypal != null){
-              SharedPreferenceUtil.putString(Constants.appPaymentPaypal, response.data!.paypal.toString());
-            }else{
+            if (response.data!.paypal != null) {
+              SharedPreferenceUtil.putString(
+                  Constants.appPaymentPaypal, response.data!.paypal.toString());
+            } else {
               SharedPreferenceUtil.putString(Constants.appPaymentPaypal, '0');
             }
 
-            if(response.data!.stripePublishKey != null){
-              SharedPreferenceUtil.putString(Constants.appStripePublishKey, response.data!.stripePublishKey.toString());
-            }else{
-              SharedPreferenceUtil.putString(Constants.appStripePublishKey, '0');
+            if (response.data!.stripePublishKey != null) {
+              SharedPreferenceUtil.putString(Constants.appStripePublishKey,
+                  response.data!.stripePublishKey.toString());
+            } else {
+              SharedPreferenceUtil.putString(
+                  Constants.appStripePublishKey, '0');
             }
 
-            if(response.data!.stripeSecretKey != null){
-              SharedPreferenceUtil.putString(Constants.appStripeSecretKey, response.data!.stripeSecretKey.toString());
-            }else{
+            if (response.data!.stripeSecretKey != null) {
+              SharedPreferenceUtil.putString(Constants.appStripeSecretKey,
+                  response.data!.stripeSecretKey.toString());
+            } else {
               SharedPreferenceUtil.putString(Constants.appStripeSecretKey, '0');
             }
 
-            if(response.data!.paypalProduction != null){
-              SharedPreferenceUtil.putString(Constants.appPaypalProduction, response.data!.paypalProduction.toString());
-            }else{
-              SharedPreferenceUtil.putString(Constants.appPaypalProduction, '0');
+            if (response.data!.paypalProduction != null) {
+              SharedPreferenceUtil.putString(Constants.appPaypalProduction,
+                  response.data!.paypalProduction.toString());
+            } else {
+              SharedPreferenceUtil.putString(
+                  Constants.appPaypalProduction, '0');
             }
 
-            if(response.data!.stripeSecretKey != null){
-              SharedPreferenceUtil.putString(Constants.appPaypalSendBox, response.data!.stripeSecretKey.toString());
-            }else{
+            if (response.data!.stripeSecretKey != null) {
+              SharedPreferenceUtil.putString(Constants.appPaypalSendBox,
+                  response.data!.stripeSecretKey.toString());
+            } else {
               SharedPreferenceUtil.putString(Constants.appPaypalSendBox, '0');
             }
 
-            if(response.data!.paypalClientId != null){
-              SharedPreferenceUtil.putString(Constants.appPaypalClientId, response.data!.paypalClientId.toString());
-            }else{
+            if (response.data!.paypalClientId != null) {
+              SharedPreferenceUtil.putString(Constants.appPaypalClientId,
+                  response.data!.paypalClientId.toString());
+            } else {
               SharedPreferenceUtil.putString(Constants.appPaypalClientId, '0');
             }
-            if(response.data!.paypalSecretKey != null){
-              SharedPreferenceUtil.putString(Constants.appPaypalSecretKey, response.data!.paypalSecretKey.toString());
-            }else{
+            if (response.data!.paypalSecretKey != null) {
+              SharedPreferenceUtil.putString(Constants.appPaypalSecretKey,
+                  response.data!.paypalSecretKey.toString());
+            } else {
               SharedPreferenceUtil.putString(Constants.appPaypalSecretKey, '0');
             }
 
-            if(response.data!.razorpayPublishKey != null){
-              SharedPreferenceUtil.putString(Constants.appRozerpayPublishKey, response.data!.razorpayPublishKey.toString());
-            }else{
-              SharedPreferenceUtil.putString(Constants.appRozerpayPublishKey, '0');
+            if (response.data!.razorpayPublishKey != null) {
+              SharedPreferenceUtil.putString(Constants.appRozerpayPublishKey,
+                  response.data!.razorpayPublishKey.toString());
+            } else {
+              SharedPreferenceUtil.putString(
+                  Constants.appRozerpayPublishKey, '0');
             }
           });
         if (SharedPreferenceUtil.getString(Constants.appPaymentCOD) == '1') {
@@ -217,7 +233,8 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
           listPaymentImage.remove('images/ic_stripe.svg');
         }
 
-        if (SharedPreferenceUtil.getString(Constants.appPaymentRozerPay) == '1') {
+        if (SharedPreferenceUtil.getString(Constants.appPaymentRozerPay) ==
+            '1') {
           listPayment.add(3);
           listPaymentName.add('Rozerpay');
           listPaymentImage.add('images/ic_rozar_pay.svg');
@@ -241,20 +258,18 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
 
         StripePayment.setOptions(StripeOptions(
             publishableKey:
-            SharedPreferenceUtil.getString(Constants.appStripePublishKey),
+                SharedPreferenceUtil.getString(Constants.appStripePublishKey),
             merchantId: "Test",
             androidPayMode: 'test'));
       } else {
         Constants.toastMessage(Languages.of(context)!.labelNoData);
       }
-
-    }catch (error, stacktrace) {
+    } catch (error, stacktrace) {
       print("Exception occurred: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
     return BaseModel()..data = response;
   }
-
 
   @override
   void dispose() {
@@ -262,9 +277,9 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
   }
 
   void openCheckout() async {
-    var options = {
+    /* var options = {
       'key': SharedPreferenceUtil.getString(Constants.appRozerpayPublishKey),
-      'amount': widget.orderAmount! * 100,
+      'amount': widget.orderAmount * 100,
       'name': SharedPreferenceUtil.getString(Constants.loginUserName),
       'description': 'Payment',
       'prefill': {
@@ -274,12 +289,11 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
       'external': {
         'wallets': ['paytm']
       }
-    };
+    };*/
   }
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
           key: _scaffoldKey,
@@ -330,7 +344,9 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                                 left: 20, right: 20, bottom: 20),
                             child: RoundedCornerAppButton(
                               onPressed: () {
-                                if (SharedPreferenceUtil.getInt(Constants.appSettingBusinessAvailability) == 1) {
+                                if (SharedPreferenceUtil.getInt(Constants
+                                        .appSettingBusinessAvailability) ==
+                                    1) {
                                   if (orderPaymentType != null) {
                                     if (orderPaymentType == 'COD') {
                                       placeOrder();
@@ -353,31 +369,35 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
 
                                       Navigator.of(context).push(
                                         Transitions(
-                                          transitionType: TransitionType.slideUp,
+                                          transitionType:
+                                              TransitionType.slideUp,
                                           curve: Curves.bounceInOut,
                                           reverseCurve:
-                                          Curves.fastLinearToSlowEaseIn,
+                                              Curves.fastLinearToSlowEaseIn,
                                           widget: PaymentStripe(
                                             orderDeliveryType:
-                                            widget.orderDeliveryType,
+                                                widget.orderDeliveryType,
                                             orderAmount: widget.orderAmount,
                                             venderId: widget.venderId,
-                                            ordrePromoCode: widget.ordrePromoCode,
+                                            ordrePromoCode:
+                                                widget.ordrePromoCode,
                                             orderTime: widget.orderTime,
                                             orderDate: widget.orderDate,
                                             orderStatus: widget.orderStatus,
                                             orderDeliveryCharge:
-                                            widget.orderDeliveryCharge,
+                                                widget.orderDeliveryCharge,
                                             orderCustomization:
-                                            widget.orderCustomization,
+                                                widget.orderCustomization,
                                             addressId: widget.addressId,
                                             orderItem: widget.orderItem,
                                             vendorDiscountAmount: widget
                                                 .vendorDiscountAmount!
                                                 .toInt(),
                                             vendorDiscountId:
-                                            widget.vendorDiscountId,
+                                                widget.vendorDiscountId,
                                             allTax: widget.allTax,
+                                            strScheduleOrder:
+                                                widget.strScheduleOrder,
                                             // strTaxAmount: widget.strTaxAmount,
                                           ),
                                         ),
@@ -387,28 +407,30 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                                         MaterialPageRoute(
                                           builder: (BuildContext context) =>
                                               PaypalPayment(
-                                                total: widget.orderAmount.toString(),
-                                                onFinish: (number) async {
-                                                  // payment done
-                                                  print('order id: ' + number);
-                                                  if (number != null &&
-                                                      number.toString() != '') {
-                                                    strPaymentToken =
-                                                        number.toString();
-                                                    placeOrder();
-                                                  }
-                                                },
-                                              ),
+                                            total:
+                                                widget.orderAmount.toString(),
+                                            onFinish: (number) async {
+                                              // payment done
+                                              print('order id: ' + number);
+                                              if (number != null &&
+                                                  number.toString() != '') {
+                                                strPaymentToken =
+                                                    number.toString();
+                                                placeOrder();
+                                              }
+                                            },
+                                          ),
                                         ),
                                       );
                                     }
                                   } else {
-                                    Constants.toastMessage(Languages
-                                        .of(context)!
-                                        .labelPleaseSelectPaymentMethod);
+                                    Constants.toastMessage(
+                                        Languages.of(context)!
+                                            .labelPleaseSelectPaymentMethod);
                                   }
-                                }else{
-                                  Constants.toastMessage(Constants.appPaymentCOD);
+                                } else {
+                                  Constants.toastMessage(
+                                      Constants.appPaymentCOD);
                                 }
                               },
                               btnLabel:
@@ -436,7 +458,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         changeIndex(index);
         if (index == 0) {
           orderPaymentType = 'COD';
-        }else if (index == 1) {
+        } else if (index == 1) {
           orderPaymentType = 'WALLET';
         } else if (index == 2) {
           orderPaymentType = 'STRIPE';
@@ -489,7 +511,7 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
 
   Future<BaseModel<CommenRes>> placeOrder() async {
     CommenRes response;
-    try{
+    try {
       Constants.onLoading(context);
       print('without ${json.encode(widget.orderItem.toString())}');
       String item1 = json.encode(widget.orderItem).toString();
@@ -519,7 +541,9 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
         // 'item': '[{\'id\':\'11\',\'price\':\'200\',\'qty\':\'1\'},{\'id\':\'10\',\'price\':\'195\',\'qty\':\'3\'}]',
         'amount': widget.orderAmount.toString(),
         'delivery_type': widget.orderDeliveryType,
-        'address_id': widget.orderDeliveryType == 'SHOP' ? '' : widget.addressId.toString(),
+        'address_id': widget.orderDeliveryType == 'SHOP'
+            ? ''
+            : widget.addressId.toString(),
         'delivery_charge': widget.orderDeliveryCharge,
         'payment_type': orderPaymentType,
         'payment_status': orderPaymentType == 'COD' ? '0' : '1',
@@ -535,8 +559,9 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
             : '',
         // 'tax': widget.strTaxAmount,
         'tax': json.encode(widget.allTax).toString(),
+        'order_schedule': json.encode(widget.strScheduleOrder),
       };
-      response  = await RestClient(RetroApi().dioData()).bookOrder(body);
+      response = await RestClient(RetroApi().dioData()).bookOrder(body);
       Constants.hideDialog(context);
       print(response);
       print(response.success);
@@ -554,16 +579,11 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
                 isFromProfile: false,
               ),
             ),
-                (Route<dynamic> route) => true);
+            (Route<dynamic> route) => true);
       } else {
-       if(response.data != null) {
-          Constants.toastMessage(response.data!);
-        }else{
-          Constants.toastMessage('Error while place order.');
-        }
+        Constants.toastMessage('Errow while place order.');
       }
-
-    }catch (error, stacktrace) {
+    } catch (error, stacktrace) {
       Constants.hideDialog(context);
       print("Exception occurred: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
@@ -588,21 +608,20 @@ class _PaymentMethodScreenState extends State<PaymentMethodScreen> {
 
   Future<BaseModel<CommenRes>> getWalletBalance() async {
     CommenRes response;
-    try{
+    try {
       Constants.onLoading(context);
-      response  = await RestClient(RetroApi().dioData()).getWalletBalance();
+      response = await RestClient(RetroApi().dioData()).getWalletBalance();
       Constants.hideDialog(context);
-      if(widget.orderAmount! > int.parse(response.data!)){
+      if (widget.orderAmount! > int.parse(response.data!)) {
         Constants.toastMessage('Not Enough money in wallet please add first');
-      }else{
+      } else {
         placeOrder();
       }
-    }catch (error, stacktrace) {
-     Constants.hideDialog(context);
+    } catch (error, stacktrace) {
+      Constants.hideDialog(context);
       print("Exception occurred: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
     return BaseModel()..data = response;
   }
-
 }

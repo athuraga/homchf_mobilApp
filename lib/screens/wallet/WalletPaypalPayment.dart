@@ -1,6 +1,6 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'package:mealup/screens/PaypalServices.dart';
+import 'package:homchf/screens/PaypalServices.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class WalletPaypalPayment extends StatefulWidget {
@@ -65,7 +65,7 @@ class WalletPaypalPaymentState extends State<WalletPaypalPayment> {
           ),
         );
         ScaffoldMessenger.of(context).showSnackBar(snackBar);
-       //_scaffoldKey.currentState.showSnackBar(snackBar);
+        //_scaffoldKey.currentState.showSnackBar(snackBar);
       }
     });
   }

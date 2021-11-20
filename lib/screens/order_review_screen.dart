@@ -8,17 +8,17 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_lable_widget.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/rounded_corner_app_button.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_lable_widget.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/rounded_corner_app_button.dart';
 
 class OrderReviewScreen extends StatefulWidget {
   final int? orderId;
@@ -40,12 +40,9 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
   /// 😠 😕 😐 ☺ 😍
   int radioindex = -1;
 
-  String? strCountryCode = '+91';
+  String? strCountryCode = '+46';
 
-  bool isFirst = true,
-      isSecond = false,
-      isThird = false,
-      isAllAdded = false;
+  bool isFirst = true, isSecond = false, isThird = false, isAllAdded = false;
 
   final picker = ImagePicker();
 
@@ -68,10 +65,12 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
           ),
           backgroundColor: Color(0xFFFAFAFA),
           body: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints viewportConstraints) {
+            builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
               return SingleChildScrollView(
                 child: ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: viewportConstraints.maxHeight),
+                  constraints:
+                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
@@ -104,7 +103,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                                 crossAxisAlignment: CrossAxisAlignment.stretch,
                                 children: [
                                   Padding(
-                                    padding: const EdgeInsets.only(left: 5, bottom: 5),
+                                    padding: const EdgeInsets.only(
+                                        left: 5, bottom: 5),
                                     child: Text(
                                       Languages.of(context)!.labelGiveStar,
                                       style: TextStyle(
@@ -119,11 +119,10 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                                       glow: false,
                                       itemSize: ScreenUtil().setWidth(50),
                                       allowHalfRating: true,
-                                      itemBuilder: (context, _) =>
-                                          Icon(
-                                            Icons.star,
-                                            color: Constants.colorTheme,
-                                          ),
+                                      itemBuilder: (context, _) => Icon(
+                                        Icons.star,
+                                        color: Colors.amber,
+                                      ),
                                       onRatingUpdate: (double rating) {
                                         setState(() => orderRate = rating);
                                       },
@@ -135,7 +134,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                                         bottom: ScreenUtil().setHeight(5),
                                         top: ScreenUtil().setHeight(15)),
                                     child: Text(
-                                      Languages.of(context)!.labelReviewThisFood,
+                                      Languages.of(context)!
+                                          .labelReviewThisFood,
                                       style: TextStyle(
                                           fontSize: ScreenUtil().setSp(16),
                                           fontWeight: FontWeight.bold),
@@ -146,7 +146,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                                     child: Card(
                                       elevation: 3,
                                       shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(10.0),
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
                                       ),
                                       child: Padding(
                                         padding: const EdgeInsets.all(8.0),
@@ -158,16 +159,17 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                                               hintText: Languages.of(context)!
                                                   .labelAddYourValuableFeedback,
                                               errorStyle: TextStyle(
-                                                  fontFamily: Constants.appFontBold,
+                                                  fontFamily:
+                                                      Constants.appFontBold,
                                                   color: Colors.red),
                                               border: InputBorder.none),
                                           maxLines: 4,
                                           style: TextStyle(
-                                            fontFamily: Constants.appFont,
-                                            fontSize: ScreenUtil().setSp(14),
-                                            color:
-                                            Constants.colorGray,
-                                          ),
+                                              fontFamily: Constants.appFont,
+                                              fontSize: ScreenUtil().setSp(14),
+                                              color: Color(
+                                                Constants.colorGray,
+                                              )),
                                         ),
                                       ),
                                     ),
@@ -180,53 +182,68 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                                         Card(
                                           elevation: 3,
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10.0),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
                                           ),
                                           child: _imageList.length > 0
                                               ? Image.file(
-                                            _imageList[0],
-                                            width: ScreenUtil().setWidth(60),
-                                            height: ScreenUtil().setHeight(60),
-                                            fit: BoxFit.cover,
-                                          )
+                                                  _imageList[0],
+                                                  width:
+                                                      ScreenUtil().setWidth(60),
+                                                  height: ScreenUtil()
+                                                      .setHeight(60),
+                                                  fit: BoxFit.cover,
+                                                )
                                               : Container(
-                                            width: ScreenUtil().setWidth(60),
-                                            height: ScreenUtil().setHeight(60),
-                                          ),
+                                                  width:
+                                                      ScreenUtil().setWidth(60),
+                                                  height: ScreenUtil()
+                                                      .setHeight(60),
+                                                ),
                                         ),
                                         Card(
                                           elevation: 3,
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10.0),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
                                           ),
                                           child: _imageList.length > 1
                                               ? Image.file(
-                                            _imageList[1],
-                                            width: ScreenUtil().setWidth(60),
-                                            height: ScreenUtil().setHeight(60),
-                                            fit: BoxFit.cover,
-                                          )
+                                                  _imageList[1],
+                                                  width:
+                                                      ScreenUtil().setWidth(60),
+                                                  height: ScreenUtil()
+                                                      .setHeight(60),
+                                                  fit: BoxFit.cover,
+                                                )
                                               : Container(
-                                            width: ScreenUtil().setWidth(60),
-                                            height: ScreenUtil().setHeight(60),
-                                          ),
+                                                  width:
+                                                      ScreenUtil().setWidth(60),
+                                                  height: ScreenUtil()
+                                                      .setHeight(60),
+                                                ),
                                         ),
                                         Card(
                                           elevation: 3,
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(10.0),
+                                            borderRadius:
+                                                BorderRadius.circular(10.0),
                                           ),
                                           child: _imageList.length > 2
                                               ? Image.file(
-                                            _imageList[2],
-                                            width: ScreenUtil().setWidth(60),
-                                            height: ScreenUtil().setHeight(60),
-                                            fit: BoxFit.cover,
-                                          )
+                                                  _imageList[2],
+                                                  width:
+                                                      ScreenUtil().setWidth(60),
+                                                  height: ScreenUtil()
+                                                      .setHeight(60),
+                                                  fit: BoxFit.cover,
+                                                )
                                               : Container(
-                                            width: ScreenUtil().setWidth(60),
-                                            height: ScreenUtil().setHeight(60),
-                                          ),
+                                                  width:
+                                                      ScreenUtil().setWidth(60),
+                                                  height: ScreenUtil()
+                                                      .setHeight(60),
+                                                ),
                                         ),
                                         InkWell(
                                           onTap: () {
@@ -240,11 +257,13 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                                               }
                                             } else {
                                               Constants.toastMessage(
-                                                  Languages.of(context)!.labelMax3Image);
+                                                  Languages.of(context)!
+                                                      .labelMax3Image);
                                             }
                                           },
                                           child: Padding(
-                                            padding: const EdgeInsets.only(left: 10, top: 5),
+                                            padding: const EdgeInsets.only(
+                                                left: 10, top: 5),
                                             child: DottedBorder(
                                               borderType: BorderType.RRect,
                                               radius: Radius.circular(16),
@@ -252,13 +271,17 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                                               dashPattern: [8, 4],
                                               color: Color(0xffdddddd),
                                               child: ClipRRect(
-                                                borderRadius:
-                                                BorderRadius.all(Radius.circular(12)),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(12)),
                                                 child: Container(
-                                                  height: ScreenUtil().setHeight(60),
-                                                  width: ScreenUtil().setWidth(60),
+                                                  height: ScreenUtil()
+                                                      .setHeight(60),
+                                                  width:
+                                                      ScreenUtil().setWidth(60),
                                                   child: Padding(
-                                                    padding: const EdgeInsets.all(20.0),
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            20.0),
                                                     child: SvgPicture.asset(
                                                       'images/ic_plus1.svg',
                                                       color: Color(0xffdddddd),
@@ -276,18 +299,21 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                                     height: ScreenUtil().setHeight(20),
                                   ),
                                   AppLableWidget(
-                                    title: Languages.of(context)!.labelContactNumber,
+                                    title: Languages.of(context)!
+                                        .labelContactNumber,
                                   ),
                                   Row(
                                     children: [
                                       Expanded(
                                         child: Card(
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(15.0),
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
                                           ),
                                           elevation: 5.0,
                                           child: Padding(
-                                            padding: const EdgeInsets.fromLTRB(15.0, 0.0, 0.0, 0.0),
+                                            padding: const EdgeInsets.fromLTRB(
+                                                15.0, 0.0, 0.0, 0.0),
                                             child: CountryCodePicker(
                                               enabled: false,
                                               onChanged: (c) {
@@ -307,11 +333,13 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                                         flex: 3,
                                         child: Card(
                                           shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(15.0),
+                                            borderRadius:
+                                                BorderRadius.circular(15.0),
                                           ),
                                           elevation: 5.0,
                                           child: Padding(
-                                            padding: const EdgeInsets.only(left: 15.0),
+                                            padding: const EdgeInsets.only(
+                                                left: 15.0),
                                             child: IntrinsicHeight(
                                               child: Row(
                                                 children: [
@@ -319,17 +347,23 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                                                     child: TextFormField(
                                                       enabled: false,
                                                       style: TextStyle(
-                                                        fontFamily: Constants.appFont,
+                                                        fontFamily:
+                                                            Constants.appFont,
                                                       ),
                                                       decoration: InputDecoration(
-                                                          hintText: strCountryCode,
+                                                          hintText:
+                                                              strCountryCode,
                                                           hintStyle: TextStyle(
-                                                              color: Constants.colorHint),
-                                                          border: InputBorder.none),
+                                                              color: Color(
+                                                                  Constants
+                                                                      .colorHint)),
+                                                          border:
+                                                              InputBorder.none),
                                                     ),
                                                   ),
                                                   Padding(
-                                                    padding: const EdgeInsets.fromLTRB(
+                                                    padding: const EdgeInsets
+                                                            .fromLTRB(
                                                         0, 10.0, 10.0, 10.0),
                                                     child: VerticalDivider(
                                                       color: Colors.black54,
@@ -341,20 +375,30 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                                                     flex: 4,
                                                     child: TextFormField(
                                                       enabled: false,
-                                                      controller: _textContactNo,
-                                                      validator: kvalidateCotactNum,
+                                                      controller:
+                                                          _textContactNo,
+                                                      validator:
+                                                          kvalidateCotactNum,
                                                       style: TextStyle(
-                                                        fontFamily: Constants.appFont,
+                                                        fontFamily:
+                                                            Constants.appFont,
                                                       ),
-                                                      keyboardType: TextInputType.number,
+                                                      keyboardType:
+                                                          TextInputType.number,
                                                       decoration: InputDecoration(
                                                           errorStyle: TextStyle(
-                                                              fontFamily: Constants.appFontBold,
-                                                              color: Colors.red),
-                                                          hintText: '000 000 000',
+                                                              fontFamily: Constants
+                                                                  .appFontBold,
+                                                              color:
+                                                                  Colors.red),
+                                                          hintText:
+                                                              '000 000 000',
                                                           hintStyle: TextStyle(
-                                                              color: Constants.colorHint),
-                                                          border: InputBorder.none),
+                                                              color: Color(
+                                                                  Constants
+                                                                      .colorHint)),
+                                                          border:
+                                                              InputBorder.none),
                                                     ),
                                                   )
                                                 ],
@@ -380,7 +424,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                                             callShareAppFeedback(orderRate);
                                           } else {
                                             Constants.toastMessage(
-                                                Languages.of(context)!.labelPleaseGiveStar);
+                                                Languages.of(context)!
+                                                    .labelPleaseGiveStar);
                                           }
                                         } else {
                                           setState(() {
@@ -388,7 +433,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
                                           });
                                         }
                                       },
-                                      btnLabel: Languages.of(context)!.labelSubmitIt,
+                                      btnLabel:
+                                          Languages.of(context)!.labelSubmitIt,
                                     ),
                                   ),
                                 ],
@@ -529,10 +575,11 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
       Map body = {
         'rate': rate.toString(),
         'comment': _textComment.text,
+        'image': _listBase64String,
         'order_id': widget.orderId,
         'contact': _textContactNo.text,
       };
-      response = await RestClient(RetroApi().dioData()).addReview(body, _listBase64String);
+      response = await RestClient(RetroApi().dioData()).addReview(body);
       print(response.success);
       // Constants.hideDialog(context);
       if (response.success!) {
@@ -543,10 +590,8 @@ class _OrderReviewScreenState extends State<OrderReviewScreen> {
       }
     } catch (error, stacktrace) {
       print("Exception occurred: $error stackTrace: $stacktrace");
-      return BaseModel()
-        ..setException(ServerError.withError(error: error));
+      return BaseModel()..setException(ServerError.withError(error: error));
     }
-    return BaseModel()
-      ..data = response;
+    return BaseModel()..data = response;
   }
 }

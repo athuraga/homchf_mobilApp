@@ -21,7 +21,7 @@ if (localPropertiesFile.exists()) {
 
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
-    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+    throw new FileNotFoundException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
 }
 
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
@@ -36,7 +36,7 @@ if (flutterVersionName == null) {
 
 apply plugin: 'com.android.application'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
-//apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+//apply plugin: 'com.onesignal.androids.onesignal-gradle-plugin'
 //apply plugin: 'com.google.gms.google-services'
 //googleServices.disableVersionCheck = true
 
@@ -54,7 +54,7 @@ android {
 
     defaultConfig {
         // Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "app.saasmonsk.mealup"
+        applicationId "app.homchf.homechef"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode flutterVersionCode.toInteger()
@@ -62,21 +62,21 @@ android {
         multiDexEnabled true
     }
 
-//    signingConfigs{
-//        release {
-//            keyAlias keystoreProperties['keyAlias']
-//            keyPassword keystoreProperties['keyPassword']
-//            storeFile file(keystoreProperties['storeFile'])
-//            storePassword keystoreProperties['storePassword']
-//        }
-//    }
+   signingConfigs{
+       release {
+           keyAlias keystoreProperties['keyAlias']
+           keyPassword keystoreProperties['keyPassword']
+           storeFile file(keystoreProperties['storeFile'])
+           storePassword keystoreProperties['storePassword']
+       }
+   }
 
     buildTypes {
         release {
             // Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
-            signingConfig signingConfigs.debug
-            //signingConfig signingConfigs.release
+            // signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled false
             shrinkResources false
         }

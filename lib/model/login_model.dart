@@ -26,7 +26,6 @@ class Data {
   String? emailId;
   Null emailVerifiedAt;
   String? phone;
-  String? phone_code;
   int? isVerified;
   int? status;
   int? otp;
@@ -48,7 +47,6 @@ class Data {
       this.emailId,
       this.emailVerifiedAt,
       this.phone,
-      this.phone_code,
       this.isVerified,
       this.status,
       this.otp,
@@ -70,7 +68,6 @@ class Data {
     emailId = json['email_id'].toString();
     emailVerifiedAt = json['email_verified_at'];
     phone = json['phone'];
-    phone_code = json['phone_code'];
     isVerified = json['is_verified'];
     status = json['status'];
     otp = json['otp'];
@@ -115,7 +112,6 @@ class Data {
     data['email_id'] = this.emailId;
     data['email_verified_at'] = this.emailVerifiedAt;
     data['phone'] = this.phone;
-    data['phone_code'] = this.phone_code;
     data['is_verified'] = this.isVerified;
     data['status'] = this.status;
     data['otp'] = this.otp;

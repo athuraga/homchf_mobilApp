@@ -2,25 +2,25 @@ import 'package:country_code_picker/country_code_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mealup/model/register_model.dart';
-import 'package:mealup/model/send_otp_model.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/auth/login_screen.dart';
-import 'package:mealup/screens/otp_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_lable_widget.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/card_password_textfield.dart';
-import 'package:mealup/utils/card_textfield.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/hero_image_app_logo.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/localization/locale_constant.dart';
-import 'package:mealup/utils/rounded_corner_app_button.dart';
+import 'package:homchf/model/register_model.dart';
+import 'package:homchf/model/send_otp_model.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/auth/login_screen.dart';
+import 'package:homchf/screens/otp_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_lable_widget.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/card_password_textfield.dart';
+import 'package:homchf/utils/card_textfield.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/hero_image_app_logo.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/localization/locale_constant.dart';
+import 'package:homchf/utils/rounded_corner_app_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -100,7 +100,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
           height: 15,
         ),
       ),
-      decoration: myBoxDecorationChecked(false, Constants.colorTheme),
+      decoration: myBoxDecorationChecked(false, Color(Constants.colorTheme)),
     );
   }
 
@@ -108,7 +108,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
     return Container(
       width: 25,
       height: 25,
-      decoration: myBoxDecorationChecked(true, Constants.colorWhite),
+      decoration: myBoxDecorationChecked(true, Colors.white),
     );
   }
 
@@ -201,7 +201,7 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                                     width: ScreenUtil().setWidth(70),
                                     decoration: BoxDecoration(
                                       borderRadius: new BorderRadius.circular(15.0),
-                                      color: Constants.colorWhite,
+                                      color: Colors.white,
                                       border: Border.all(
                                         color: Colors.grey,
                                         width: 0.5,
@@ -237,10 +237,10 @@ class _CreateNewAccountState extends State<CreateNewAccount> {
                                       },
                                       decoration: InputDecoration(
                                         prefixIcon: Padding(padding: EdgeInsets.all(15), child: Text('$strCountryCode ')),
-                                        hintStyle: TextStyle(color: Constants.colorHint),
+                                        hintStyle: TextStyle(color: Color(Constants.colorHint)),
                                         errorStyle: TextStyle(fontFamily: Constants.appFontBold, color: Colors.red),
                                         filled: true,
-                                        fillColor: Constants.colorWhite,
+                                        fillColor: Colors.white,
                                         contentPadding: const EdgeInsets.only(left: 14.0, bottom: 6.0, top: 8.0,right: 14),
                                         errorMaxLines: 2,
                                         border: new OutlineInputBorder(

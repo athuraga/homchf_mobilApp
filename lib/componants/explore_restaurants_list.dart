@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mealup/utils/constants.dart';
+import 'package:homchf/utils/constants.dart';
 
 
 class ExploreRestaurantsList extends StatelessWidget {
@@ -76,7 +76,7 @@ class ExploreRestaurantsList extends StatelessWidget {
                                 onTap: onSaveItem as void Function()?,
                                 child: SvgPicture.asset(
                                   'images/ic_filled_heart.svg',
-                                  color: Constants.colorLike,
+                                  color: Color(Constants.colorLike),
                                   height: ScreenUtil().setHeight(20),
                                   width: ScreenUtil().setWidth(20),
                                 ),
@@ -92,7 +92,7 @@ class ExploreRestaurantsList extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                           style: TextStyle(
                               fontFamily: Constants.appFont,
-                              color: Constants.colorGray,
+                              color: Color(Constants.colorGray),
                               fontSize: ScreenUtil().setSp(12)),
                         ),
                       ),
@@ -145,7 +145,7 @@ class ExploreRestaurantsList extends StatelessWidget {
                                         allowHalfRating: true,
                                         itemBuilder: (context, _) => Icon(
                                           Icons.star,
-                                          color: Constants.colorTheme,
+                                          color: Colors.amber,
                                         ), onRatingUpdate: (double rating) {
                                         print(rating);
                                       },

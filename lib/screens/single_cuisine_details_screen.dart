@@ -4,16 +4,16 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mealup/model/cuisine_vendor_details_model.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/restaurants_details_screen.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/model/cuisine_vendor_details_model.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/restaurants_details_screen.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -66,8 +66,8 @@ class _SingleCuisineDetailsScreenState
       body: SmartRefresher(
         enablePullDown: true,
         header: MaterialClassicHeader(
-          backgroundColor: Constants.colorTheme,
-          color: Constants.colorWhite,
+          backgroundColor: Color(Constants.colorTheme),
+          color: Colors.white,
         ),
         controller: _refreshController,
         onRefresh: _onRefresh,
@@ -97,7 +97,7 @@ class _SingleCuisineDetailsScreenState
                                       style: TextStyle(
                                         fontSize: ScreenUtil().setSp(18),
                                         fontFamily: Constants.appFontBold,
-                                        color: Constants.colorTheme,
+                                        color: Color(Constants.colorTheme),
                                       ),
                                     ),
                                   )
@@ -153,7 +153,8 @@ class _SingleCuisineDetailsScreenState
                                               fit: BoxFit.fill,
                                               placeholder: (context, url) =>
                                                   SpinKitFadingCircle(
-                                                      color: Constants.colorTheme),
+                                                      color: Color(Constants
+                                                          .colorTheme)),
                                               errorWidget:
                                                   (context, url, error) =>
                                                       Container(
@@ -215,9 +216,9 @@ class _SingleCuisineDetailsScreenState
                                                                   fontFamily:
                                                                       Constants
                                                                           .appFont,
-                                                                  color:
+                                                                  color: Color(
                                                                       Constants
-                                                                          .colorGray,
+                                                                          .colorGray),
                                                                   fontSize:
                                                                       ScreenUtil()
                                                                           .setSp(

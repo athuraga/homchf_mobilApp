@@ -2,27 +2,25 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/shims/dart_ui_real.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mealup/model/app_setting_model.dart';
-import 'package:mealup/model/login_model.dart';
-import 'package:mealup/model/send_otp_model.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/auth/change_password.dart';
-import 'package:mealup/screens/auth/create_new_account.dart';
-import 'package:mealup/screens/bottom_navigation/dashboard_screen.dart';
-import 'package:mealup/screens/otp_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_lable_widget.dart';
-import 'package:mealup/utils/card_password_textfield.dart';
-import 'package:mealup/utils/card_textfield.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/hero_image_app_logo.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/localization/locale_constant.dart';
-import 'package:mealup/utils/rounded_corner_app_button.dart';
+import 'package:homchf/model/app_setting_model.dart';
+import 'package:homchf/model/login_model.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/auth/change_password.dart';
+import 'package:homchf/screens/auth/create_new_account.dart';
+import 'package:homchf/screens/bottom_navigation/dashboard_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_lable_widget.dart';
+import 'package:homchf/utils/card_password_textfield.dart';
+import 'package:homchf/utils/card_textfield.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/hero_image_app_logo.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/localization/locale_constant.dart';
+import 'package:homchf/utils/rounded_corner_app_button.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 
@@ -262,7 +260,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                                           onChanged: (state) =>
                                                               setState(() => isRememberMe = !isRememberMe),
                                                           activeColor: Colors.transparent,
-                                                          checkColor: Constants.colorTheme,
+                                                          checkColor: Color(Constants.colorTheme),
                                                           materialTapTargetSize: MaterialTapTargetSize.padded,
                                                         ),
                                                       ),
@@ -365,9 +363,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                           Text(
                                             Languages.of(context)!.labelSkipNow,
                                             style: TextStyle(
-                                                color: Constants.colorBlack,
+                                                color: Colors.black,
                                                 decoration: TextDecoration.underline,
-                                                decorationColor: Constants.colorBlack,
+                                                decorationColor: Colors.black,
                                                 fontWeight: FontWeight.bold,
                                                 decorationThickness: 5,
                                                 fontSize: ScreenUtil().setSp(16),
@@ -462,18 +460,12 @@ class _LoginScreenState extends State<LoginScreen> {
       Constants.hideDialog(context);
       print(response.success);
       if (response.success!) {
-        if(response.data!.isVerified == 1){
         Constants.toastMessage(Languages.of(context)!.labelLoginSuccessfully);
         response.data!.otp == null
             ? SharedPreferenceUtil.putInt(Constants.loginOTP, 0)
             : SharedPreferenceUtil.putInt(Constants.loginOTP, response.data!.otp);
         SharedPreferenceUtil.putString(Constants.loginEmail, response.data!.emailId!);
         SharedPreferenceUtil.putString(Constants.loginPhone, response.data!.phone!);
-        if(response.data!.phone_code != null){
-        SharedPreferenceUtil.putString(Constants.loginPhoneCode, response.data!.phone_code!);
-        }else{
-        SharedPreferenceUtil.putString(Constants.loginPhoneCode,'+91');
-        }
         SharedPreferenceUtil.putString(Constants.loginUserId, response.data!.id.toString());
         SharedPreferenceUtil.putString(Constants.headerToken, response.data!.token!);
         SharedPreferenceUtil.putString(Constants.loginUserImage, response.data!.image!);
@@ -514,9 +506,6 @@ class _LoginScreenState extends State<LoginScreen> {
             widget: DashboardScreen(0),
           ),
         );
-      }else{
-        callSendOTP ();
-      }
       } else {
         Constants.toastMessage(Languages.of(context)!.labelEmailPasswordWrong);
       }
@@ -528,44 +517,6 @@ class _LoginScreenState extends State<LoginScreen> {
     return BaseModel()..data = response;
   }
 
-
-  Future<BaseModel<SendOTPModel>> callSendOTP() async {
-    SendOTPModel response;
-    try{
-      Constants.onLoading(context);
-      Map<String, String> body = {
-        'email_id': _textEmail.text,
-        'where': 'register',
-      };
-      response  = await RestClient(RetroApi().dioData()).sendOtp(body);
-      Constants.hideDialog(context);
-      print(response.success);
-      if (response.success!) {
-        //Constants.toastMessage('OTP Sent');
-        SharedPreferenceUtil.putString(Constants.loginUserId, response.data!.id.toString());
-        Navigator.of(context).push(
-          Transitions(
-            transitionType: TransitionType.fade,
-            curve: Curves.bounceInOut,
-            reverseCurve: Curves.fastLinearToSlowEaseIn,
-            widget: OTPScreen(
-              isFromRegistration: true,
-              emailForOTP: _textEmail.text,
-            ),
-          ),
-        );
-      } else {
-        Constants.toastMessage(response.msg.toString());
-      }
-    }catch (error, stacktrace) {
-      setState(() {
-        Constants.hideDialog(context);
-      });
-      print("Exception occurred: $error stackTrace: $stacktrace");
-      return BaseModel()..setException(ServerError.withError(error: error));
-    }
-    return BaseModel()..data = response;
-  }
 
 /*  void callUserLogin() {
 

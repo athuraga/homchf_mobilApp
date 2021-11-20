@@ -13,7 +13,7 @@
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
 	<key>CFBundleName</key>
-	<string>HomChf1</string>
+	<string>mealup</string>
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
@@ -22,14 +22,21 @@
 	<string>????</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>HERECredentials</key>
+	<dict>
+		<key>AccessKeyId</key>
+		<string>HereMap_key_Id</string>
+		<key>AccessKeySecret</key>
+		<string>HereMap_Key_secret</string>
+	</dict>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
 	<string>For profile image</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>for nearby provider</string>
+	<string>This app needs access users location to show list of home chefs nearby</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open.</string>
+	<string>This app needs access to location when open to enable users order food from nearby home chefs</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>For profile image</string>
 	<key>UILaunchStoryboardName</key>

@@ -1,4 +1,4 @@
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 
 class LanguageArabic extends Languages {
 
@@ -9,13 +9,10 @@ class LanguageArabic extends Languages {
   String get walletSetting => "محفظة" ;
 
   @override
-  String get labelSelectLanguage => 'اختار اللغة';
+  String get labelSelectLanguage => 'Select Language';
 
   @override
   String get labelEditPersonalInfo => "تحرير المعلومات الشخصية" ;
-
- @override
-  String get labelSavePersonalInfo => "حفظ المعلومات الشخصية" ;
 
   @override
   String get labelManageYourLocation => "إدارة مواقعك" ;
@@ -48,7 +45,7 @@ class LanguageArabic extends Languages {
   String get labelLogout => "تسجيل الخروج" ;
 
   @override
-  String get labelMealupAppVersion => "إصدار التطبيق" ;
+  String get labelMealupAppVersion => "إصدار تطبيق الوجبة" ;
 
   @override
   String get labelScreenIntro1Line1 => 'اكتشف المطعم القريب منك';
@@ -211,7 +208,8 @@ class LanguageArabic extends Languages {
   String get labelTopRest => "أفضل المطاعم" ;
 
   @override
-  String get labelSelectAddress => 'حدد العنوان';
+  // String get labelSelectAddress => 'حدد العنوان';
+  String get labelSelectAddress => 'عنوان البحث';
 
   @override
   String get labelNoRestNear => 'لم يتم العثور على مطاعم بالقرب منك.';

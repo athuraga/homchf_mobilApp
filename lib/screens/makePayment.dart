@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:mealup/utils/constants.dart';
 
 import 'PaypalPayment.dart';
 
@@ -29,7 +28,7 @@ class _MakePaymentState extends State<MakePayment> {
           appBar: PreferredSize(
             preferredSize: Size.fromHeight(45.0),
             child: new AppBar(
-              backgroundColor: Constants.colorWhite,
+              backgroundColor: Colors.white,
               title: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

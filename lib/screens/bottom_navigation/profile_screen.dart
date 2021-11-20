@@ -2,13 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/auth/login_screen.dart';
-import 'package:mealup/screens/order_history_screen.dart';
-import 'package:mealup/screens/wallet/wallet_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/auth/login_screen.dart';
+import 'package:homchf/screens/order_history_screen.dart';
+import 'package:homchf/screens/wallet/wallet_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 import 'package:share/share.dart';
 import '../setting_screen.dart';
 import '../your_favorites_screen.dart';
@@ -39,16 +39,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return SafeArea(
       child: Scaffold(
           appBar: AppBar(
             elevation: 0,
+            backgroundColor: Color(Constants.colorAppbar),
             title: Text(Languages.of(context)!.labelProfile,
                 style: TextStyle(
                     fontWeight: FontWeight.w900,
                     fontSize: 20.0,
-                    fontFamily: Constants.appFontBold)),
+                    fontFamily: Constants.appFontBold,
+                    color: Color(Constants.colorAppbarback))),
           ),
           backgroundColor: Color(0xFFFAFAFA),
           body: LayoutBuilder(
@@ -101,7 +102,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 style: TextStyle(
                                     fontFamily: Constants.appFont,
                                     fontSize: 12,
-                                    color: Constants.colorGray),
+                                    color: Color(Constants.colorGray)),
                               )
                             ],
                           ),
@@ -112,16 +113,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             child: Column(
                               children: [
                                 Visibility(
-                                  visible: SharedPreferenceUtil.getString(Constants.appPaymentWallet) == '1'? true :true,
+                                  visible: SharedPreferenceUtil.getString(
+                                              Constants.appPaymentWallet) ==
+                                          '1'
+                                      ? true
+                                      : true,
                                   child: ProfileMenuWidget(
                                     strImagePath: 'images/wallet.svg',
-                                    strMenuName: Languages.of(context)!.walletSetting,
+                                    strMenuName:
+                                        Languages.of(context)!.walletSetting,
                                     onClick: () {
                                       Navigator.of(context).push(Transitions(
-                                          transitionType: TransitionType.slideUp,
+                                          transitionType:
+                                              TransitionType.slideUp,
                                           curve: Curves.bounceInOut,
                                           reverseCurve:
-                                          Curves.fastLinearToSlowEaseIn,
+                                              Curves.fastLinearToSlowEaseIn,
                                           widget: WalletScreen()));
                                     },
                                   ),
@@ -140,7 +147,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   },
                                 ),
                                 ProfileMenuWidget(
-                                  strImagePath: 'images/ic_heart.svg',
+                                  strImagePath: 'images/ic_heart1.svg',
                                   strMenuName:
                                       Languages.of(context)!.labelYourFavorites,
                                   onClick: () {
@@ -173,37 +180,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       .labelShareWithFriends,
                                   onClick: () {
                                     Share.share(
-                                        "https://play.google.com/store/apps/details?id=app.saasmonsk.mealup");
+                                        "https://apps.apple.com/us/app/homchf/id1591763186");
                                     // share();
                                   },
                                 ),
                                 ProfileMenuWidget(
                                   strImagePath: 'images/logout.svg',
-                                  strMenuName: Languages.of(context)!.labelLogout,
+                                  strMenuName:
+                                      Languages.of(context)!.labelLogout,
                                   onClick: () {
                                     showDialog(
                                         context: context,
                                         barrierDismissible: false,
                                         builder: (BuildContext context) {
                                           return AlertDialog(
-                                            title: Text(Languages.of(context)!.labelConfirmLogout),
-                                            content: Text(Languages.of(context)!.labelAreYouSureLogout),
+                                            title: Text(Languages.of(context)!
+                                                .labelConfirmLogout),
+                                            content: Text(Languages.of(context)!
+                                                .labelAreYouSureLogout),
                                             actions: <Widget>[
                                               TextButton(
-                                                child: Text(Languages.of(context)!.labelYES, style: TextStyle(color: Constants.colorBlack),),
+                                                child: Text(
+                                                  Languages.of(context)!
+                                                      .labelYES,
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                ),
                                                 onPressed: () {
-                                                  SharedPreferenceUtil.putBool(Constants.isLoggedIn, false);
+                                                  SharedPreferenceUtil.putBool(
+                                                      Constants.isLoggedIn,
+                                                      false);
                                                   SharedPreferenceUtil.clear();
-                                                  Navigator.of(context).pushAndRemoveUntil(Transitions(
-                                                    transitionType: TransitionType.fade,
-                                                    curve: Curves.bounceInOut,
-                                                    reverseCurve: Curves.fastLinearToSlowEaseIn,
-                                                    widget: LoginScreen(),
-                                                  ), (Route<dynamic> route) => false);
+                                                  Navigator.of(context)
+                                                      .pushAndRemoveUntil(
+                                                          Transitions(
+                                                            transitionType:
+                                                                TransitionType
+                                                                    .fade,
+                                                            curve: Curves
+                                                                .bounceInOut,
+                                                            reverseCurve: Curves
+                                                                .fastLinearToSlowEaseIn,
+                                                            widget:
+                                                                LoginScreen(),
+                                                          ),
+                                                          (Route<dynamic>
+                                                                  route) =>
+                                                              false);
                                                 },
                                               ),
                                               TextButton(
-                                                child: Text(Languages.of(context)!.labelNO, style: TextStyle(color: Constants.colorBlack),),
+                                                child: Text(
+                                                  Languages.of(context)!
+                                                      .labelNO,
+                                                  style: TextStyle(
+                                                      color: Colors.black),
+                                                ),
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
                                                 },
@@ -211,7 +243,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             ],
                                           );
                                         });
-
                                   },
                                 ),
                               ],
@@ -248,7 +279,7 @@ class ProfileMenuWidget extends StatelessWidget {
         child: Row(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20),
               child: SvgPicture.asset(
                 strImagePath,
                 width: 20,
@@ -258,7 +289,7 @@ class ProfileMenuWidget extends StatelessWidget {
             ),
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.only(left: 10,right: 10),
+                padding: const EdgeInsets.only(left: 10, right: 10),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -6,7 +6,7 @@ import 'dart:io';
 
 import 'package:geocoding/geocoding.dart';
 import 'package:http/http.dart';
-import 'package:mealup/utils/constants.dart';
+import 'package:homchf/utils/constants.dart';
 class Place {
   String? streetNumber;
   String? street;
@@ -55,12 +55,14 @@ class Suggestion1 {
 class PlaceApiProvider {
   final client = Client();
 
-  PlaceApiProvider();
+  PlaceApiProvider(this.sessionToken);
+
+  final sessionToken;
 
   final apiKey = Platform.isAndroid ? Constants.androidKey : Constants.iosKey;
 
   Future<List<Suggestion>> fetchSuggestions(String input, String lang) async {
-    final request = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=address&language=$lang&key=$apiKey';
+    final request = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=address&language=$lang&key=$apiKey&sessiontoken=$sessionToken';
     // &components=country:ch
     final response = await client.get(Uri.parse(request));
 
@@ -82,7 +84,7 @@ class PlaceApiProvider {
   }
 
   Future<List<Suggestion1>> fetchLatlong(String input, String lang) async {
-    final request = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=address&language=$lang&key=$apiKey';
+    final request = 'https://maps.googleapis.com/maps/api/place/autocomplete/json?input=$input&types=address&language=$lang&key=$apiKey&sessiontoken=$sessionToken';
     // &components=country:ch
     final response = await client.get(Uri.parse(request));
    // List<Suggestion1> suggestion = [];
@@ -117,7 +119,7 @@ class PlaceApiProvider {
 
   Future<Place> getPlaceDetailFromId(String placeId) async {
     final String request =
-        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$apiKey';
+        'https://maps.googleapis.com/maps/api/place/details/json?place_id=$placeId&fields=address_component&key=$apiKey&sessiontoken=$sessionToken';
     final response = await client.get(Uri.parse(request));
 
     if (response.statusCode == 200) {

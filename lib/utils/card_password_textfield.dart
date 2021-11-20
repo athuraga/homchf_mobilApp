@@ -32,7 +32,7 @@ class _CardTextFieldWidgetState extends State<CardPasswordTextFieldWidget> {
         controller: widget.textEditingController,
         obscureText: widget.isPasswordVisible,
         decoration: InputDecoration(
-          hintStyle: TextStyle(color: Constants.colorHint),
+          hintStyle: TextStyle(color: Color(Constants.colorHint)),
           hintText: widget.hintText,
           suffixIcon: IconButton(
               icon: SvgPicture.asset(
@@ -40,7 +40,7 @@ class _CardTextFieldWidgetState extends State<CardPasswordTextFieldWidget> {
                 widget.isPasswordVisible ? 'images/ic_eye_hide.svg' : 'images/ic_eye.svg',
                 height: ScreenUtil().setHeight(15),
                 width: 15,
-                color: Constants.colorTheme,
+                color: Color(Constants.colorTheme),
               ),
               onPressed: () {
                 setState(() {
@@ -49,7 +49,7 @@ class _CardTextFieldWidgetState extends State<CardPasswordTextFieldWidget> {
               }),
           errorStyle: TextStyle(fontFamily: Constants.appFontBold, color: Colors.red),
           filled: true,
-          fillColor: Constants.colorWhite,
+          fillColor: Colors.white,
           contentPadding: const EdgeInsets.only(left: 14.0, bottom: 6.0, top: 8.0, right: 14),
           errorMaxLines: 2,
           border: new OutlineInputBorder(

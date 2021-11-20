@@ -4,18 +4,18 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/model/favorite_list_model.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/restaurants_details_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/model/favorite_list_model.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/restaurants_details_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -56,8 +56,8 @@ class _YourFavoritesScreenState extends State<YourFavoritesScreen> {
         body: SmartRefresher(
           enablePullDown: true,
           header: MaterialClassicHeader(
-            backgroundColor: Constants.colorTheme,
-            color:Constants.colorWhite,
+            backgroundColor: Color(Constants.colorTheme),
+            color: Colors.white,
           ),
           controller: _refreshController,
           onRefresh: _onRefresh,
@@ -107,8 +107,8 @@ class _YourFavoritesScreenState extends State<YourFavoritesScreen> {
                                                     ScreenUtil().setSp(18),
                                                 fontFamily:
                                                     Constants.appFontBold,
-                                                color:
-                                                    Constants.colorTheme,
+                                                color: Color(
+                                                    Constants.colorTheme),
                                               ),
                                             ),
                                           )
@@ -172,7 +172,9 @@ class _YourFavoritesScreenState extends State<YourFavoritesScreen> {
                                                       placeholder: (context,
                                                               url) =>
                                                           SpinKitFadingCircle(
-                                                              color: Constants.colorTheme),
+                                                              color: Color(
+                                                                  Constants
+                                                                      .colorTheme)),
                                                       errorWidget: (context,
                                                               url, error) =>
                                                           Container(
@@ -224,7 +226,7 @@ class _YourFavoritesScreenState extends State<YourFavoritesScreen> {
                                                                             child: SvgPicture.asset(
                                                                           'images/ic_filled_heart.svg',
                                                                           color:
-                                                                              Constants.colorLike,
+                                                                              Color(Constants.colorLike),
                                                                           height:
                                                                               ScreenUtil().setHeight(20.0),
                                                                           width:
@@ -251,7 +253,7 @@ class _YourFavoritesScreenState extends State<YourFavoritesScreen> {
                                                                       style: TextStyle(
                                                                           fontFamily:
                                                                               Constants.appFont,
-                                                                          color: Constants.colorGray,
+                                                                          color: Color(Constants.colorGray),
                                                                           fontSize: ScreenUtil().setSp(12.0)),
                                                                     ),
                                                                   ),
@@ -457,7 +459,7 @@ class _YourFavoritesScreenState extends State<YourFavoritesScreen> {
                           style: TextStyle(
                               fontSize: 12,
                               fontFamily: Constants.appFont,
-                              color: Constants.colorBlack),
+                              color: Color(Constants.colorBlack)),
                         ),
                         SizedBox(
                           height: ScreenUtil().setHeight(20),
@@ -481,7 +483,7 @@ class _YourFavoritesScreenState extends State<YourFavoritesScreen> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: Constants.appFontBold,
-                                      color: Constants.colorGray),
+                                      color: Color(Constants.colorGray)),
                                 ),
                               ),
                               Padding(
@@ -497,7 +499,7 @@ class _YourFavoritesScreenState extends State<YourFavoritesScreen> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                         fontFamily: Constants.appFontBold,
-                                        color: Constants.colorBlue),
+                                        color: Color(Constants.colorBlue)),
                                   ),
                                 ),
                               ),

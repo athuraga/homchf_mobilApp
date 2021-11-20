@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui' as ui;
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -11,18 +10,18 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:mealup/model/TrackingModel.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/order_details_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_toolbar_with_btn_clr.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/timeline.dart';
+import 'package:homchf/model/TrackingModel.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/order_details_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_toolbar_with_btn_clr.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/timeline.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TrackYourOrderScreen extends StatefulWidget {
@@ -70,7 +69,7 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
   double? _currentLatitude;
   double? _currentLongitude;
 
-  // double _shopLatitude;
+ // double _shopLatitude;
   //double _shopLongitude;
   Timer? timer;
   int counter = 0;
@@ -82,11 +81,14 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
     // _center = LatLng(widget.currentLat, widget.currentLong);
     super.initState();
     getUserLocation().whenComplete(() {
-      _add(
-          widget.currentLat, widget.currentLong, 'images/ic_green_marker.svg', MarkerId('current'));
-      _add(widget.shopLat, widget.shopLong, 'images/ic_marker.svg', MarkerId('shop'));
-      _add(widget.shopLat, widget.shopLong, 'images/ic_driver_icon.svg', MarkerId('driver'));
-      _createPolylines(widget.currentLat!, widget.currentLong!, widget.shopLat!, widget.shopLong!);
+      _add(widget.currentLat, widget.currentLong, 'images/ic_green_marker.svg',
+          MarkerId('current'));
+      _add(widget.shopLat, widget.shopLong, 'images/ic_marker.svg',
+          MarkerId('shop'));
+      _add(widget.shopLat, widget.shopLong, 'images/ic_driver_icon.svg',
+          MarkerId('driver'));
+      _createPolylines(widget.currentLat!, widget.currentLong!, widget.shopLat!,
+          widget.shopLong!);
     });
     if (widget.currentLat != null && widget.currentLong != null) {
       _initialCameraPosition = LatLng(widget.currentLat!, widget.currentLong!);
@@ -100,8 +102,9 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
     if (mounted) {
       setState(() {
         timer = Timer.periodic(
-            Duration(seconds: SharedPreferenceUtil.getInt(Constants.appSettingDriverAutoRefresh)),
-            (t) {
+            Duration(
+                seconds: SharedPreferenceUtil.getInt(
+                    Constants.appSettingDriverAutoRefresh)), (t) {
           if (mounted) {
             setState(() {
               counter++;
@@ -125,8 +128,9 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
       });
     } else {
       timer = Timer.periodic(
-          Duration(seconds: SharedPreferenceUtil.getInt(Constants.appSettingDriverAutoRefresh)),
-          (t) {
+          Duration(
+              seconds: SharedPreferenceUtil.getInt(
+                  Constants.appSettingDriverAutoRefresh)), (t) {
         setState(() {
           counter++;
           print("counter++:$counter");
@@ -141,7 +145,8 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
   }
 
   void _add(lat, long, icon, markerId) async {
-    BitmapDescriptor bitmapDescriptor = await _bitmapDescriptorFromSvgAsset(context, '$icon');
+    BitmapDescriptor bitmapDescriptor =
+        await _bitmapDescriptorFromSvgAsset(context, '$icon');
     setState(() {});
     final Marker marker = Marker(
       markerId: markerId,
@@ -160,14 +165,16 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
   Future<BitmapDescriptor> _bitmapDescriptorFromSvgAsset(
       BuildContext context, String assetName) async {
     // Read SVG file as String
-    String svgString = await DefaultAssetBundle.of(context).loadString(assetName);
+    String svgString =
+        await DefaultAssetBundle.of(context).loadString(assetName);
     // Create DrawableRoot from SVG String
     DrawableRoot svgDrawableRoot = await svg.fromSvgString(svgString, '');
 
     // toPicture() and toImage() don't seem to be pixel ratio aware, so we calculate the actual sizes here
     MediaQueryData queryData = MediaQuery.of(context);
     double devicePixelRatio = queryData.devicePixelRatio;
-    double width = 32 * devicePixelRatio; // where 32 is your SVG's original width
+    double width =
+        32 * devicePixelRatio; // where 32 is your SVG's original width
     double height = 32 * devicePixelRatio; // same thing
 
     // Convert to ui.Picture
@@ -177,8 +184,8 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
     // you need to find the best size to suit your needs and take into account the
     // screen DPI
     ui.Image image = await picture.toImage(width.toInt(), height.toInt());
-    ByteData? bytes = await image.toByteData(format: ui.ImageByteFormat.png);
-    return BitmapDescriptor.fromBytes(bytes!.buffer.asUint8List());
+    ByteData bytes = await (image.toByteData(format: ui.ImageByteFormat.png) as FutureOr<ByteData>);
+    return BitmapDescriptor.fromBytes(bytes.buffer.asUint8List());
   }
 
   // Create the polylines for showing the route between two places
@@ -236,19 +243,20 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
 
   Future getUserLocation() async {
     currentLocation = await _location.getLocation();
-    _initialCameraPosition = LatLng(currentLocation.latitude!, currentLocation.longitude!);
+    _initialCameraPosition =
+        LatLng(currentLocation.latitude!, currentLocation.longitude!);
     _currentLatitude = currentLocation.latitude;
     _currentLongitude = currentLocation.longitude;
     print('selectedLat $_currentLatitude');
     print('selectedLng $_currentLongitude');
     //_shopLatitude = widget.shopLat;
-    // _shopLongitude = widget.shopLong;
+   // _shopLongitude = widget.shopLong;
   }
 
   Future<BaseModel<TrackingModel>> callStartTracking(int? orderId) async {
     TrackingModel response;
-    try {
-      response = await RestClient(RetroApi().dioData()).tracking(orderId);
+    try{
+      response  = await RestClient(RetroApi().dioData()).tracking(orderId);
       print('stattracking fun inside');
       if (mounted) {
         setState(() {
@@ -259,7 +267,8 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
         setMarker(counter, double.parse(response.data!.driverLat!),
             double.parse(response.data!.driverLang!));
       }
-    } catch (error, stacktrace) {
+
+    }catch (error, stacktrace) {
       print("Exception occurred: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
@@ -269,11 +278,12 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
   setMarker(int counter, double lat, double lang) async {
     print("New counter:$counter // $lat , $lang");
 
-
+    setState(() async {
       BitmapDescriptor bitmapDescriptorDriver =
-          await _bitmapDescriptorFromSvgAsset(context, 'images/ic_driver_icon.svg');
-      final marker =
-          markers.values.toList().firstWhere((item) => item.markerId == MarkerId('driver'));
+          await _bitmapDescriptorFromSvgAsset(
+              context, 'images/ic_driver_icon.svg');
+      setState(() {});
+      final marker = markers.values.toList().firstWhere((item) => item.markerId == MarkerId('driver'));
 
       Marker _marker = Marker(
         markerId: marker.markerId,
@@ -281,12 +291,11 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
         icon: bitmapDescriptorDriver,
       );
 
-      if(mounted) {
-        setState(() {
-          //the marker is identified by the markerId and not with the index of the list
-          markers[MarkerId('driver')] = _marker;
-        });
-      }
+      setState(() {
+        //the marker is identified by the markerId and not with the index of the list
+        markers[MarkerId('driver')] = _marker;
+      });
+    });
   }
 
   @override
@@ -297,7 +306,7 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
         appBar: ApplicationToolbarWithClrBtn(
           appbarTitle: '',
           strButtonTitle: Languages.of(context)!.labelViewOrderDetails,
-          btnColor: Constants.colorTheme,
+          btnColor: Color(Constants.colorTheme),
           onBtnPress: () {
             Navigator.of(context).push(Transitions(
                 transitionType: TransitionType.fade,
@@ -315,7 +324,8 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
             Expanded(
               flex: 6,
               child: GoogleMap(
-                initialCameraPosition: CameraPosition(target: _initialCameraPosition),
+                initialCameraPosition:
+                    CameraPosition(target: _initialCameraPosition),
                 mapType: MapType.normal,
                 onMapCreated: _onMapCreated,
                 myLocationEnabled: true,
@@ -366,7 +376,8 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
                               child: Container(
                                 height: 70,
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(15.0),
@@ -376,55 +387,70 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
                                         imageUrl: widget.vendorImage!,
                                         fit: BoxFit.cover,
                                         placeholder: (context, url) =>
-                                            SpinKitFadingCircle(color: Constants.colorTheme),
-                                        errorWidget: (context, url, error) => Container(
-                                          child: Center(child: Image.asset('images/noimage.png')),
+                                            SpinKitFadingCircle(
+                                                color: Color(
+                                                    Constants.colorTheme)),
+                                        errorWidget: (context, url, error) =>
+                                            Container(
+                                          child: Center(
+                                              child: Image.asset('images/noimage.png')),
                                         ),
                                       ),
                                     ),
                                     Container(
                                       child: Expanded(
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
                                           children: [
                                             Padding(
-                                              padding: const EdgeInsets.all(8.0),
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
                                               child: Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     '${widget.vendorName}',
                                                     style: TextStyle(
                                                         fontSize: 15,
-                                                        fontFamily: Constants.appFontBold,
-                                                        fontWeight: FontWeight.w900),
+                                                        fontFamily: Constants
+                                                            .appFontBold,
+                                                        fontWeight:
+                                                            FontWeight.w900),
                                                   ),
                                                   Text(
                                                     '${widget.vendorNumber}',
                                                     style: TextStyle(
-                                                        color: Constants.colorGray,
-                                                        fontFamily: Constants.appFont),
+                                                        color: Color(Constants
+                                                            .colorGray),
+                                                        fontFamily:
+                                                            Constants.appFont),
                                                   ),
                                                 ],
                                               ),
                                             ),
                                             InkWell(
                                               onTap: () {
-                                                launch("tel://${widget.vendorNumber}");
+                                                launch(
+                                                    "tel://${widget.vendorNumber}");
                                               },
                                               child: Padding(
-                                                padding: const EdgeInsets.only(right: 10),
+                                                padding: const EdgeInsets.only(
+                                                    right: 10),
                                                 child: Container(
                                                   width: 40,
                                                   height: 40,
                                                   child: Icon(
                                                     Icons.call,
-                                                    color: Constants.colorWhite,
+                                                    color: Colors.white,
                                                   ),
                                                   decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
-                                                      color: Constants.colorTheme),
+                                                      color: Color(Constants
+                                                          .colorTheme)),
                                                 ),
                                               ),
                                             )
@@ -455,19 +481,22 @@ class _TrackYourOrderScreenState extends State<TrackYourOrderScreen> {
                         width: 10,
                         height: 10,
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Constants.colorTheme),
+                            shape: BoxShape.circle,
+                            color: Color(Constants.colorTheme)),
                       ),
                       Container(
                         width: 10,
                         height: 10,
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Constants.colorTheme),
+                            shape: BoxShape.circle,
+                            color: Color(Constants.colorTheme)),
                       ),
                       Container(
                         width: 10,
                         height: 10,
                         decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Constants.colorTheme),
+                            shape: BoxShape.circle,
+                            color: Color(Constants.colorTheme)),
                       ),
                     ],
                   ),

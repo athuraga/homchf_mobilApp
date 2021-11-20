@@ -6,22 +6,27 @@ import 'localization/language/languages.dart';
 
 class Constants {
   /*map key*/
-  static final String androidKey = 'AIzaSyAFlsWFleswXOL-YQ65Hv1tst9KEXTzzMM';
+
+  static final String androidKey = 'AIzaSyBlPBZZgOLEDGUSQ9U7xFMWymaFlf9uyvQ';
   static final String iosKey = 'AIzaSyAFlsWFleswXOL-YQ65Hv1tst9KEXTzzMM';
 
-  static Color colorBlack = Color(0xFF090E21);
-  static Color colorGray = Color(0xFF999999);
-  static Color colorLike = Color(0xFFff6060);
-  static Color colorLikeLight = Color(0xFFe2bcbc);
-  static Color colorTheme = Color(0xFFEE4540);
-  static Color colorOrderPending = Color(0xFFF4AE36);
-  static Color colorOrderPickup = Color(0xFFd1286b);
-  static Color colorBackground = Color(0xFFFAFAFA);
-  static Color colorRate = Color(0xFFffc107);
-  static Color colorBlue = Color(0xFF1492e6);
-  static Color colorHint = Color(0xFFb9b9b9);
-  static Color colorWhite = Color(0xFFFFFFFF);
-
+  static int colorBlack = 0xFF090E21;
+  static int colorGray = 0xFF999999;
+  static int colorLightGray = 0xFFe8e8e8;
+  static int colorLike = 0xFFff6060;
+  static int colorLikeLight = 0xFFe2bcbc;
+  static int colorTheme = 0xFFEE4540;
+  static int colorThemeW = 0xFFFFFFFF;
+  static int colorAppbar = 0xFF510A32;
+  static int colorAppbarback = 0xFFFAFAFA;
+  static int colorOrderPending = 0xFFF4AE36;
+  static int colorOrderPickup = 0xFFd1286b;
+  static int colorThemeOp = 0xFF9BE6C2;
+  static int colorBackground = 0xFFFAFAFA;
+  static int colorRate = 0xFFffc107;
+  static int colorBlue = 0xFF1492e6;
+  static int colorScreenBackGround = 0xFFf2f2f2;
+  static int colorHint = 0xFFb9b9b9;
   static String appFont = 'Proxima';
   static String appFontBold = 'ProximaBold';
 
@@ -38,7 +43,6 @@ class Constants {
   static String loginOTP = 'loginOTP';
   static String loginEmail = 'loginEmail';
   static String loginPhone = 'loginPhone';
-  static String loginPhoneCode = 'loginPhoneCode';
   static String loginUserId = 'loggeduserId';
   static String loginUserImage = 'loggedImage';
   static String loginUserName = 'loggedName';
@@ -65,10 +69,12 @@ class Constants {
   static String appSettingHelp = 'appSettingHelp';
   static String appSettingAboutUs = 'appSettingAboutUs';
   static String appSettingDriverAutoRefresh = 'appSettingDriverAutoRefresh';
-  static String appSettingBusinessAvailability = 'appSettingBusiness_availability';
+  static String appSettingBusinessAvailability =
+      'appSettingBusiness_availability';
   static String appSettingBusinessMessage = 'appSettingBusiness_message';
   static String appSettingCustomerAppId = 'appSettingCustomerAppId';
-  static String appSettingAndroidCustomerVersion = 'appSetting_android_customer_version';
+  static String appSettingAndroidCustomerVersion =
+      'appSetting_android_customer_version';
   static String appSettingIsPickup = 'appSetting_isPickup';
   static String appPushOneSingleToken = 'push_oneSingleToken';
 
@@ -101,15 +107,18 @@ class Constants {
     }
   }
 
-  static var kAppLabelWidget =
-      TextStyle(fontWeight: FontWeight.bold, fontSize: 16.0, fontFamily: Constants.appFontBold);
+  static var kAppLabelWidget = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 16.0,
+      fontFamily: Constants.appFontBold);
 
   static var kTextFieldInputDecoration = InputDecoration(
-    hintStyle: TextStyle(color: Constants.colorHint),
+    hintStyle: TextStyle(color: Color(Constants.colorHint)),
     errorStyle: TextStyle(fontFamily: Constants.appFontBold, color: Colors.red),
     filled: true,
-    fillColor: Constants.colorWhite,
-    contentPadding: const EdgeInsets.only(left: 14.0, bottom: 6.0, top: 8.0,right: 14),
+    fillColor: Colors.white,
+    contentPadding:
+        const EdgeInsets.only(left: 14.0, bottom: 6.0, top: 8.0, right: 14),
     errorMaxLines: 2,
     border: new OutlineInputBorder(
       borderRadius: new BorderRadius.circular(15.0),
@@ -144,10 +153,9 @@ class Constants {
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.black54,
-        textColor: Constants.colorWhite,
+        textColor: Colors.white,
         fontSize: 16.0);
   }
-
 
   static onLoading(BuildContext context) {
     showDialog(
@@ -161,7 +169,7 @@ class Constants {
               mainAxisSize: MainAxisSize.min,
               children: [
                 new CircularProgressIndicator(),
-                SizedBox(width : 20),
+                SizedBox(width: 20),
                 new Text(Languages.of(context)!.labelPleaseWait),
               ],
             ),
@@ -170,7 +178,8 @@ class Constants {
       },
     );
   }
-  static hideDialog(BuildContext context){
+
+  static hideDialog(BuildContext context) {
     Navigator.pop(context);
   }
 }

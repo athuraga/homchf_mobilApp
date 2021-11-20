@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:mealup/model/cartmodel.dart';
-import 'package:mealup/screens/splash_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/localizations_delegate.dart';
-import 'package:mealup/utils/preference_utils.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:location/location.dart';
+import 'package:homchf/model/cartmodel.dart';
+import 'package:homchf/screens/splash_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/localizations_delegate.dart';
+import 'package:homchf/utils/preference_utils.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:scoped_model/scoped_model.dart';
 import 'utils/localization/locale_constant.dart';
@@ -13,7 +15,9 @@ import 'utils/localization/locale_constant.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferenceUtil.getInstance();
-  runApp(MyApp(model: CartModel(),));
+  runApp(MyApp(
+    model: CartModel(),
+  ));
 }
 
 class MyApp extends StatefulWidget {
@@ -85,11 +89,33 @@ class _MyAppState extends State<MyApp> {
             return supportedLocales.first;
           },
           theme: ThemeData(
-            brightness: Brightness.light,
-            primaryColor: Constants.colorBackground,
-            accentColor: Constants.colorTheme,
+              brightness: Brightness.light,
+              primaryColor: Color(Constants.colorBackground),
+              colorScheme: ColorScheme.fromSwatch()
+                  .copyWith(secondary: Color(Constants.colorTheme)),
+              appBarTheme: AppBarTheme(
+                  backgroundColor: Color(Constants.colorAppbar),
+                  // foregroundColor: Color(Constants.colorAppbarback),
+                  iconTheme: IconThemeData(
+                    color: Color(Constants.colorAppbarback),
+                  ),
+                  actionsIconTheme: IconThemeData(
+                    color: Color(Constants.colorAppbarback),
+                  ),
+                  titleTextStyle: TextStyle(
+                    color: Color(Constants.colorAppbarback),
+                  ),
+                  toolbarTextStyle: TextStyle(
+                    color: Color(Constants.colorAppbarback),
+                  ),
+                  textTheme: TextTheme(
+                      // center text style
+                      headline6: TextStyle(color: Colors.white),
+                      // Side text style
+                      bodyText2: TextStyle(color: Colors.white)))),
+          home: SplashScreen(
+            model: widget.model,
           ),
-          home: SplashScreen(model: widget.model,),
           debugShowCheckedModeBanner: false,
         ),
       ),

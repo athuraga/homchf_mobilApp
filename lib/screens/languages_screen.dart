@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/localization/locale_constant.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/localization/locale_constant.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LanguagesScreen extends StatefulWidget {
@@ -35,7 +35,7 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
           height: 15,
         ),
       ),
-      decoration: myBoxDecorationChecked(false, Constants.colorTheme),
+      decoration: myBoxDecorationChecked(false, Color(Constants.colorTheme)),
     );
   }
 
@@ -43,7 +43,7 @@ class _LanguagesScreenState extends State<LanguagesScreen> {
     return Container(
       width: 25,
       height: 25,
-      decoration: myBoxDecorationChecked(true, Constants.colorWhite),
+      decoration: myBoxDecorationChecked(true, Colors.white),
     );
   }
 

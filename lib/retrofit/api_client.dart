@@ -1,44 +1,44 @@
 import 'package:dio/dio.dart';
-import 'package:mealup/model/banner_response.dart';
-import 'package:mealup/model/order_setting_api_model.dart';
+import 'package:homchf/model/banner_response.dart';
+import 'package:homchf/model/order_setting_api_model.dart';
 import 'package:retrofit/retrofit.dart';
-import 'package:mealup/model/TrackingModel.dart';
-import 'package:mealup/model/UserAddressListModel.dart';
-import 'package:mealup/model/app_setting_model.dart';
-import 'package:mealup/model/balance.dart';
-import 'package:mealup/model/check_opt_model.dart';
-import 'package:mealup/model/check_otp_model_for_forgot_password.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/model/cuisine_vendor_details_model.dart';
-import 'package:mealup/model/exploreRestaurantsListModel.dart';
-import 'package:mealup/model/faq_list_model.dart';
-import 'package:mealup/model/favorite_list_model.dart';
-import 'package:mealup/model/login_model.dart';
-import 'package:mealup/model/order_history_list_model.dart';
-import 'package:mealup/model/order_status.dart';
-import 'package:mealup/model/payment_setting_model.dart';
-import 'package:mealup/model/promoCode_model.dart';
-import 'package:mealup/model/cart_tax_modal.dart';
-import 'package:mealup/model/register_model.dart';
-import 'package:mealup/model/search_list_model.dart';
-import 'package:mealup/model/send_otp_model.dart';
-import 'package:mealup/model/single_order_details_model.dart';
-import 'package:mealup/model/top_restaurants_model.dart';
-import 'package:mealup/model/user_details_model.dart';
-import 'package:mealup/model/AllCuisinesModel.dart';
-import 'package:mealup/model/nearByRestaurantsModel.dart';
-import 'package:mealup/model/vegRestaurantsModel.dart';
-import 'package:mealup/model/nonVegRestaurantsModel.dart';
-import 'package:mealup/model/update_address_model.dart';
-import 'package:mealup/model/single_restaurants_details_model.dart';
+import 'package:homchf/model/TrackingModel.dart';
+import 'package:homchf/model/UserAddressListModel.dart';
+import 'package:homchf/model/app_setting_model.dart';
+import 'package:homchf/model/balance.dart';
+import 'package:homchf/model/check_opt_model.dart';
+import 'package:homchf/model/check_otp_model_for_forgot_password.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/model/cuisine_vendor_details_model.dart';
+import 'package:homchf/model/exploreRestaurantsListModel.dart';
+import 'package:homchf/model/faq_list_model.dart';
+import 'package:homchf/model/favorite_list_model.dart';
+import 'package:homchf/model/login_model.dart';
+import 'package:homchf/model/order_history_list_model.dart';
+import 'package:homchf/model/orders_response.dart';
+import 'package:homchf/model/order_status.dart';
+import 'package:homchf/model/payment_setting_model.dart';
+import 'package:homchf/model/promoCode_model.dart';
+import 'package:homchf/model/cart_tax_modal.dart';
+import 'package:homchf/model/register_model.dart';
+import 'package:homchf/model/search_list_model.dart';
+import 'package:homchf/model/send_otp_model.dart';
+import 'package:homchf/model/single_order_details_model.dart';
+import 'package:homchf/model/top_restaurants_model.dart';
+import 'package:homchf/model/user_details_model.dart';
+import 'package:homchf/model/AllCuisinesModel.dart';
+import 'package:homchf/model/nearByRestaurantsModel.dart';
+import 'package:homchf/model/vegRestaurantsModel.dart';
+import 'package:homchf/model/nonVegRestaurantsModel.dart';
+import 'package:homchf/model/update_address_model.dart';
+import 'package:homchf/model/single_restaurants_details_model.dart';
 
 part 'api_client.g.dart';
 
 @RestApi(baseUrl: 'https://homchf.one/api/')
 //Please don't remove "/api/".
 abstract class RestClient {
-
-  factory RestClient(Dio dio,{String? baseUrl}) = _RestClient;
+  factory RestClient(Dio dio, {String? baseUrl}) = _RestClient;
 
   @POST("user_register")
   Future<RegisterModel> register(@Body() Map<String, String?> map);
@@ -98,11 +98,14 @@ abstract class RestClient {
 
   @POST("book_order")
   Future<CommenRes> bookOrder(
-      @Body() map,
-      );
+    @Body() map,
+  );
 
   @POST("add_address")
   Future<CommenRes> addAddress(@Body() Map<String, String> map);
+
+  @GET("get_order_schedule")
+  Future<CommenRes> getOrderSchedule(@Body() map);
 
   @POST("apply_promo_code")
   Future<String?> applyPromoCode(@Body() Map<String, String> map);
@@ -112,15 +115,13 @@ abstract class RestClient {
 
   @POST("add_feedback")
   Future<CommenRes> addFeedback(
-      @Body() map,
-      @Field("image[]") List<String> image,
-      );
+    @Body() map,
+  );
 
   @POST("add_review")
   Future<CommenRes> addReview(
-      @Body() map,
-      @Field("image[]") List<String> image,
-      );
+    @Body() map,
+  );
 
   @GET("user_address")
   Future<UserAddressListModel> userAddress();
@@ -137,13 +138,13 @@ abstract class RestClient {
 
   @GET("promo_code/{id}")
   Future<PromoCodeModel> promoCode(
-      @Path() int? id,
-      );
+    @Path() int? id,
+  );
 
   @GET("single_order/{id}")
   Future<SingleOrderDetailsModel> singleOrder(
-      @Path() int? id,
-      );
+    @Path() int? id,
+  );
 
   @POST("cancel_order")
   Future<CommenRes> cancelOrder(@Body() Map<String, String> map);
@@ -156,8 +157,8 @@ abstract class RestClient {
 
   @GET("tracking/{id}")
   Future<TrackingModel> tracking(
-      @Path() int? id,
-      );
+    @Path() int? id,
+  );
 
   @GET("remove_address/{id}")
   Future<CommenRes> removeAddress(@Path() int? id);
@@ -197,6 +198,4 @@ abstract class RestClient {
 
   @POST("add_balance")
   Future<CommenRes> addBalance(@Body() Map<String, String?> map);
-
 }
-

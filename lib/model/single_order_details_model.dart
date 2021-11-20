@@ -27,6 +27,8 @@ class Data {
   int? amount;
   int? deliveryPersonId;
   String? orderStatus;
+  String? orderSchedule;
+
   int? deliveryCharge;
   int? addressId;
   int? promoCodeId;
@@ -48,6 +50,7 @@ class Data {
       this.deliveryCharge,
       this.deliveryPersonId,
       this.orderStatus,
+      this.orderSchedule,
       this.addressId,
       this.promoCodeId,
       this.promoCodePrice,
@@ -67,6 +70,8 @@ class Data {
     tax = json['tax'];
     deliveryPersonId = json['delivery_person_id'];
     orderStatus = json['order_status'];
+    orderSchedule = json['order_schedule'];
+
     deliveryCharge = json['delivery_charge'];
     addressId = json['address_id'];
     promoCodeId = json['promocode_id'];

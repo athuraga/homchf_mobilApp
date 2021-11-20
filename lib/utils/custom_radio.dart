@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mealup/utils/constants.dart';
 
 class CustomRadio extends StatefulWidget {
   @override
@@ -69,7 +68,7 @@ class RadioItem extends StatelessWidget {
               color: _item.isSelected ? Colors.blueAccent : Colors.transparent,
               border: new Border.all(
                   width: 1.0,
-                  color: _item.isSelected ? Constants.colorTheme : Constants.colorGray),
+                  color: _item.isSelected ? Colors.blueAccent : Colors.grey),
               borderRadius: const BorderRadius.all(const Radius.circular(2.0)),
             ),
           ),

@@ -6,18 +6,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mealup/model/UserAddressListModel.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/address/add_address_screen.dart';
-import 'package:mealup/screens/address/edit_address_screen.dart';
-import 'package:mealup/utils/app_toolbar_with_btn_clr.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/model/UserAddressListModel.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/address/add_address_screen.dart';
+import 'package:homchf/screens/address/edit_address_screen.dart';
+import 'package:homchf/utils/app_toolbar_with_btn_clr.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -103,7 +103,7 @@ class _ManageYourLocationState extends State<ManageYourLocation> {
         appBar: ApplicationToolbarWithClrBtn(
           appbarTitle: Languages.of(context)!.labelManageYourLocation,
           strButtonTitle: '+ ${Languages.of(context)!.labelAddAddress}',
-          btnColor: Constants.colorTheme,
+          btnColor: Color(Constants.colorThemeW),
           onBtnPress: () {
             if (_currentLongitude != 0.0) {
               Navigator.pop(context);
@@ -124,8 +124,8 @@ class _ManageYourLocationState extends State<ManageYourLocation> {
         body: SmartRefresher(
           enablePullDown: true,
           header: MaterialClassicHeader(
-            backgroundColor: Constants.colorTheme,
-            color: Constants.colorWhite,
+            backgroundColor: Color(Constants.colorTheme),
+            color: Color(Constants.colorLightGray),
           ),
           controller: _refreshController,
           onRefresh: _onRefresh,
@@ -165,7 +165,7 @@ class _ManageYourLocationState extends State<ManageYourLocation> {
                                           style: TextStyle(
                                             fontSize: ScreenUtil().setSp(18),
                                             fontFamily: Constants.appFontBold,
-                                            color: Constants.colorTheme,
+                                            color: Color(Constants.colorLightGray),
                                           ),
                                         ),
                                       )
@@ -202,7 +202,7 @@ class _ManageYourLocationState extends State<ManageYourLocation> {
                                           'images/ic_map.svg',
                                           width: 18,
                                           height: 18,
-                                          color: Constants.colorTheme,
+                                          color: Color(Constants.colorTheme),
                                         ),
                                         Expanded(
                                           child: Padding(
@@ -213,7 +213,9 @@ class _ManageYourLocationState extends State<ManageYourLocation> {
                                               style: TextStyle(
                                                   fontSize: 12,
                                                   fontFamily: Constants.appFont,
-                                                  color: Constants.colorBlack),
+                                                  color: Color(Constants.colorBlack),
+
+                                              )
                                             ),
                                           ),
                                         )
@@ -244,7 +246,7 @@ class _ManageYourLocationState extends State<ManageYourLocation> {
                                             child: Text(
                                               Languages.of(context)!.labelEditAddress,
                                               style: TextStyle(
-                                                  color: Constants.colorBlue,
+                                                  color: Color(Constants.colorBlue),
                                                   fontFamily: Constants.appFont,
                                                   fontSize: 12),
                                             ),
@@ -261,7 +263,7 @@ class _ManageYourLocationState extends State<ManageYourLocation> {
                                               child: Text(
                                                 Languages.of(context)!.labelRemoveThisAddress,
                                                 style: TextStyle(
-                                                    color: Constants.colorLike,
+                                                    color: Color(Constants.colorLike),
                                                     fontFamily: Constants.appFont,
                                                     fontSize: 12),
                                               ),
@@ -351,7 +353,7 @@ class _ManageYourLocationState extends State<ManageYourLocation> {
                               'images/ic_map.svg',
                               width: 18,
                               height: 18,
-                              color: Constants.colorTheme,
+                              color: Color(Constants.colorTheme),
                             ),
                             Expanded(
                               child: Padding(
@@ -362,7 +364,8 @@ class _ManageYourLocationState extends State<ManageYourLocation> {
                                   style: TextStyle(
                                       fontSize: 12,
                                       fontFamily: Constants.appFont,
-                                      color: Constants.colorBlack),
+                                      color: Color(Constants.colorBlack),
+                                      )
                                 ),
                               ),
                             )
@@ -390,7 +393,8 @@ class _ManageYourLocationState extends State<ManageYourLocation> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: Constants.appFontBold,
-                                      color: Constants.colorGray),
+                                      color: Color(Constants.colorGray),
+                                  )
                                 ),
                               ),
                               Padding(
@@ -405,7 +409,8 @@ class _ManageYourLocationState extends State<ManageYourLocation> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                         fontFamily: Constants.appFontBold,
-                                        color: Constants.colorBlue),
+                                        color: Color(Constants.colorBlue),
+                                    )
                                   ),
                                 ),
                               ),

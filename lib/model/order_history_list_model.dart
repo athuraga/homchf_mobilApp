@@ -29,6 +29,7 @@ class OrderHistoryData {
   int? amount;
   int? vendorId;
   String? orderStatus;
+  String? orderSchedule;
   int? deliveryPersonId;
   int? deliveryCharge;
   String? date;
@@ -45,6 +46,7 @@ class OrderHistoryData {
       this.amount,
       this.vendorId,
       this.orderStatus,
+      this.orderSchedule,
       this.deliveryPersonId,
       this.deliveryCharge,
       this.date,
@@ -61,6 +63,7 @@ class OrderHistoryData {
     amount = json['amount'];
     vendorId = json['vendor_id'];
     orderStatus = json['order_status'];
+    orderSchedule = json['order_schedule'];
     deliveryPersonId = json['delivery_person_id'];
     deliveryCharge = json['delivery_charge'];
     date = json['date'];

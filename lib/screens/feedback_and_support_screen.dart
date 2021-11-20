@@ -6,16 +6,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/rounded_corner_app_button.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/rounded_corner_app_button.dart';
 
 class FeedbackAndSupportScreen extends StatefulWidget {
   @override
@@ -154,9 +154,9 @@ class _FeedbackAndSupportScreenState extends State<FeedbackAndSupportScreen> {
                                 style: TextStyle(
                                     fontFamily: Constants.appFont,
                                     fontSize: 16,
-                                    color:
+                                    color: Color(
                                       Constants.colorGray,
-                                    ),
+                                    )),
                               ),
                             ),
                           ),
@@ -859,8 +859,9 @@ class _FeedbackAndSupportScreenState extends State<FeedbackAndSupportScreen> {
       Map body = {
         'rate': rate.toString(),
         'comment': _textComment.text,
+        'image': _listBase64String,
       };
-      response  = await RestClient(RetroApi().dioData()).addFeedback(body,_listBase64String);
+      response  = await RestClient(RetroApi().dioData()).addFeedback(body);
       print(response.success);
       // Constants.hideDialog(context);
       if (response.success!) {

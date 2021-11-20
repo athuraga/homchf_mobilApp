@@ -1,16 +1,16 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:mealup/model/app_setting_model.dart';
-import 'package:mealup/model/cartmodel.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/database_helper.dart';
-import 'package:mealup/utils/preference_utils.dart';
+import 'package:homchf/model/app_setting_model.dart';
+import 'package:homchf/model/cartmodel.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/database_helper.dart';
+import 'package:homchf/utils/preference_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'bottom_navigation/dashboard_screen.dart';
@@ -68,7 +68,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Image.asset('images/ic_intro_logo.png'),
         ),
       ),
-        backgroundColor: Constants.colorBackground,
+        backgroundColor: Color(Constants.colorBackground),
     );
   }
 
@@ -89,7 +89,7 @@ class _SplashScreenState extends State<SplashScreen> {
         if (response.data!.currency != null) {
           SharedPreferenceUtil.putString(Constants.appSettingCurrency, response.data!.currency!);
         } else {
-          SharedPreferenceUtil.putString(Constants.appSettingCurrency, 'USD');
+          SharedPreferenceUtil.putString(Constants.appSettingCurrency, 'SEK');
         }
         if (response.data!.aboutUs != null) {
           SharedPreferenceUtil.putString(Constants.appSettingAboutUs, response.data!.aboutUs!);
@@ -240,20 +240,20 @@ void _queryFirst(BuildContext context, CartModel? model) async {
 //
 // import 'package:flutter/material.dart';
 // import 'package:flutter_spinkit/flutter_spinkit.dart';
-// import 'package:mealup/model/app_setting_model.dart';
-// import 'package:mealup/model/cartmodel.dart';
-// import 'package:mealup/retrofit/api_client.dart';
-// import 'package:mealup/retrofit/api_header.dart';
-// import 'package:mealup/retrofit/base_model.dart';
-// import 'package:mealup/retrofit/server_error.dart';
-// // import 'package:mealup/network_api/Retro_Api.dart';
-// // import 'package:mealup/network_api/api_client.dart';
-// // import 'package:mealup/screens/login_screen.dart';
-// import 'package:mealup/utils/SharedPreferenceUtil.dart';
-// import 'package:mealup/utils/constants.dart';
-// import 'package:mealup/utils/database_helper.dart';
-// import 'package:mealup/utils/localization/language/languages.dart';
-// import 'package:mealup/utils/preference_utils.dart';
+// import 'package:homchf/model/app_setting_model.dart';
+// import 'package:homchf/model/cartmodel.dart';
+// import 'package:homchf/retrofit/api_client.dart';
+// import 'package:homchf/retrofit/api_header.dart';
+// import 'package:homchf/retrofit/base_model.dart';
+// import 'package:homchf/retrofit/server_error.dart';
+// // import 'package:homchf/network_api/Retro_Api.dart';
+// // import 'package:homchf/network_api/api_client.dart';
+// // import 'package:homchf/screens/login_screen.dart';
+// import 'package:homchf/utils/SharedPreferenceUtil.dart';
+// import 'package:homchf/utils/constants.dart';
+// import 'package:homchf/utils/database_helper.dart';
+// import 'package:homchf/utils/localization/language/languages.dart';
+// import 'package:homchf/utils/preference_utils.dart';
 // import 'package:onesignal_flutter/onesignal_flutter.dart';
 // // import 'package:progress_dialog/progress_dialog.dart';
 // import 'package:dio/dio.dart';

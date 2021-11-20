@@ -8,21 +8,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/model/user_details_model.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/bottom_navigation/dashboard_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_lable_widget.dart';
-import 'package:mealup/utils/card_textfield.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/localization/locale_constant.dart';
-import 'package:mealup/utils/rounded_corner_app_button.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/model/user_details_model.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/bottom_navigation/dashboard_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_lable_widget.dart';
+import 'package:homchf/utils/card_textfield.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/localization/locale_constant.dart';
+import 'package:homchf/utils/rounded_corner_app_button.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
@@ -43,7 +43,6 @@ class _EditProfileInformationState extends State<EditProfileInformation>
   final _textFullName = TextEditingController();
   final _textEmail = TextEditingController();
   final _textContactNo = TextEditingController();
-  final _textContactCode = TextEditingController();
   final _formKey = new GlobalKey<FormState>();
   final _formKeyForBankDetails = new GlobalKey<FormState>();
 
@@ -89,7 +88,7 @@ class _EditProfileInformationState extends State<EditProfileInformation>
           height: 15,
         ),
       ),
-      decoration: myBoxDecorationChecked(false, Constants.colorTheme),
+      decoration: myBoxDecorationChecked(false, Color(Constants.colorTheme)),
     );
   }
 
@@ -97,7 +96,7 @@ class _EditProfileInformationState extends State<EditProfileInformation>
     return Container(
       width: 25,
       height: 25,
-      decoration: myBoxDecorationChecked(true, Constants.colorWhite),
+      decoration: myBoxDecorationChecked(true, Colors.white),
     );
   }
 
@@ -136,7 +135,6 @@ class _EditProfileInformationState extends State<EditProfileInformation>
   void initState() {
     super.initState();
     _textContactNo.text = SharedPreferenceUtil.getString(Constants.loginPhone);
-    _textContactCode.text = SharedPreferenceUtil.getString(Constants.loginPhoneCode);
     _textEmail.text = SharedPreferenceUtil.getString(Constants.loginEmail);
     _textFullName.text = SharedPreferenceUtil.getString(Constants.loginUserName);
     _userPhoto = SharedPreferenceUtil.getString(Constants.loginUserImage);
@@ -239,6 +237,7 @@ class _EditProfileInformationState extends State<EditProfileInformation>
       length: 2,
       child: Scaffold(
         appBar: AppBar(
+          backgroundColor: Color(Constants.colorAppbar),
           title: Text(
             Languages.of(context)!.labelEditPersonalInfo,
             style: TextStyle(
@@ -250,8 +249,8 @@ class _EditProfileInformationState extends State<EditProfileInformation>
             controller: _controller,
             isScrollable: false,
             physics: NeverScrollableScrollPhysics(),
-            indicatorColor: Constants.colorTheme,
-            labelColor: Constants.colorTheme,
+            indicatorColor: Color(Constants.colorTheme),
+            labelColor: Color(Constants.colorTheme),
             unselectedLabelColor: Colors.grey,
             labelStyle: TextStyle(
               fontFamily: Constants.appFontBold,
@@ -408,7 +407,7 @@ class _EditProfileInformationState extends State<EditProfileInformation>
                                         },
                                         decoration: InputDecoration(
                                             filled: true,
-                                            fillColor: Constants.colorWhite,
+                                            fillColor: Colors.white,
                                             contentPadding: const EdgeInsets.only(left: 14.0, bottom: 6.0, top: 8.0,right: 14),
                                             errorMaxLines: 2,
                                             border: new OutlineInputBorder(
@@ -442,7 +441,7 @@ class _EditProfileInformationState extends State<EditProfileInformation>
                                             hintText:
                                                 Languages.of(context)!.labelEnterYourEmailID,
                                             hintStyle:
-                                                TextStyle(color: Constants.colorHint),
+                                                TextStyle(color: Color(Constants.colorHint)),
                                         ),
                                       ),
                                     ),
@@ -457,7 +456,7 @@ class _EditProfileInformationState extends State<EditProfileInformation>
                                             width: ScreenUtil().setWidth(70),
                                             decoration: BoxDecoration(
                                               borderRadius: new BorderRadius.circular(15.0),
-                                              color: Constants.colorWhite,
+                                              color: Colors.white,
                                               border: Border.all(
                                                 color: Colors.grey,
                                                 width: 0.5,
@@ -473,8 +472,8 @@ class _EditProfileInformationState extends State<EditProfileInformation>
                                                 });
                                               },
                                               // Initial selection and favorite can be one of code ('IT') OR dial_code('+39')
-                                              initialSelection: _textContactCode.text.toString(),
-                                              favorite: [_textContactCode.text.toString(), ''],
+                                              initialSelection: 'IN',
+                                              favorite: ['+91', 'IN'],
                                               hideMainText: true,
                                               alignLeft: true,
                                             ),
@@ -494,11 +493,11 @@ class _EditProfileInformationState extends State<EditProfileInformation>
                                               },
                                               decoration: InputDecoration(
                                                 enabled: false,
-                                                prefixIcon: Padding(padding: EdgeInsets.all(15), child: Text('${_textContactCode.text.toString()} ')),
-                                                hintStyle: TextStyle(color: Constants.colorHint),
+                                                prefixIcon: Padding(padding: EdgeInsets.all(15), child: Text('$strCountryCode ')),
+                                                hintStyle: TextStyle(color: Color(Constants.colorHint)),
                                                 errorStyle: TextStyle(fontFamily: Constants.appFontBold, color: Colors.red),
                                                 filled: true,
-                                                fillColor: Constants.colorWhite,
+                                                fillColor: Colors.white,
                                                 contentPadding: const EdgeInsets.only(left: 14.0, bottom: 6.0, top: 8.0,right: 14),
                                                 errorMaxLines: 2,
                                                 border: new OutlineInputBorder(
@@ -608,7 +607,7 @@ class _EditProfileInformationState extends State<EditProfileInformation>
                                           });
                                         }
                                       },
-                                      btnLabel: Languages.of(context)!.labelSavePersonalInfo,
+                                      btnLabel: Languages.of(context)!.labelEditPersonalInfo,
                                     ),
                                   ),
                                 ],

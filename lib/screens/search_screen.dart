@@ -5,17 +5,18 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mealup/model/search_list_model.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/restaurants_details_screen.dart';
-import 'package:mealup/screens/single_cuisine_details_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/model/search_list_model.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/restaurants_details_screen.dart';
+import 'package:homchf/screens/single_cuisine_details_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -49,9 +50,11 @@ class _SearchScreenState extends State<SearchScreen> {
             fit: BoxFit.cover,
           )),
           child: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints viewportConstraints) {
+            builder:
+                (BuildContext context, BoxConstraints viewportConstraints) {
               return ConstrainedBox(
-                  constraints: BoxConstraints(minHeight: viewportConstraints.maxHeight),
+                  constraints:
+                      BoxConstraints(minHeight: viewportConstraints.maxHeight),
                   child: Container(
                     decoration: BoxDecoration(
                         image: DecorationImage(
@@ -69,7 +72,8 @@ class _SearchScreenState extends State<SearchScreen> {
                                 Navigator.pop(context);
                               },
                               child: Padding(
-                                padding: const EdgeInsets.only(left: 10, top: 5),
+                                padding:
+                                    const EdgeInsets.only(left: 10, top: 5),
                                 child: Icon(
                                   Icons.arrow_back,
                                   size: 30,
@@ -79,7 +83,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             Expanded(
                               child: Container(
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
+                                  padding: const EdgeInsets.only(
+                                      left: 20, right: 20, top: 10),
                                   child: TextField(
                                     controller: searchController,
                                     onChanged: onSearchTextChanged,
@@ -93,14 +98,15 @@ class _SearchScreenState extends State<SearchScreen> {
                                           'images/search.svg',
                                           width: 20,
                                           height: 20,
-                                          color: Constants.colorGray,
+                                          color: Color(Constants.colorGray),
                                         ),
                                       ),
-                                      hintText: Languages.of(context)!.labelSearchSomething,
+                                      hintText: Languages.of(context)!
+                                          .labelSearchSomething,
                                       hintStyle: TextStyle(
                                         fontSize: 14,
                                         fontFamily: Constants.appFont,
-                                        color: Constants.colorGray,
+                                        color: Color(Constants.colorGray),
                                       ),
                                       border: OutlineInputBorder(
                                         borderRadius: const BorderRadius.all(
@@ -124,16 +130,19 @@ class _SearchScreenState extends State<SearchScreen> {
                                   ? Column(
                                       children: [
                                         Padding(
-                                          padding:
-                                              const EdgeInsets.only(top: 20, left: 15, right: 15),
+                                          padding: const EdgeInsets.only(
+                                              top: 20, left: 15, right: 15),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                Languages.of(context)!.labelRecentlySearches,
+                                                Languages.of(context)!
+                                                    .labelRecentlySearches,
                                                 style: TextStyle(
                                                   fontSize: 16,
-                                                  fontFamily: Constants.appFont,
+                                                  fontFamily:
+                                                      Constants.appFont,
                                                 ),
                                               ),
                                               InkWell(
@@ -143,28 +152,37 @@ class _SearchScreenState extends State<SearchScreen> {
                                                   });
                                                 },
                                                 child: Text(
-                                                  Languages.of(context)!.labelClear,
+                                                  Languages.of(context)!
+                                                      .labelClear,
                                                   style: TextStyle(
                                                       fontSize: 16,
-                                                      fontFamily: Constants.appFont,
-                                                      color: Constants.colorTheme),
+                                                      fontFamily:
+                                                          Constants.appFont,
+                                                      color: Color(Constants
+                                                          .colorTheme)),
                                                 ),
                                               ),
                                             ],
                                           ),
                                         ),
                                         ListView.builder(
-                                          physics: NeverScrollableScrollPhysics(),
+                                          physics:
+                                              NeverScrollableScrollPhysics(),
                                           shrinkWrap: true,
                                           scrollDirection: Axis.vertical,
                                           itemCount: searchHistoryList.length,
-                                          itemBuilder: (BuildContext context, int index) => InkWell(
+                                          itemBuilder: (BuildContext context,
+                                                  int index) =>
+                                              InkWell(
                                             onTap: () {
-                                              searchController.text = searchHistoryList[index];
-                                              onSearchTextChanged(searchController.text);
+                                              searchController.text =
+                                                  searchHistoryList[index];
+                                              onSearchTextChanged(
+                                                  searchController.text);
                                             },
                                             child: Padding(
-                                              padding: const EdgeInsets.only(left: 15.0, top: 15),
+                                              padding: const EdgeInsets.only(
+                                                  left: 15.0, top: 15),
                                               child: Row(
                                                 children: [
                                                   RichText(
@@ -173,8 +191,11 @@ class _SearchScreenState extends State<SearchScreen> {
                                                         WidgetSpan(
                                                           child: Padding(
                                                             padding:
-                                                                const EdgeInsets.only(right: 10),
-                                                            child: SvgPicture.asset(
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    right: 10),
+                                                            child: SvgPicture
+                                                                .asset(
                                                               'images/ic_clock.svg',
                                                               width: 15,
                                                               height: 15,
@@ -182,10 +203,16 @@ class _SearchScreenState extends State<SearchScreen> {
                                                           ),
                                                         ),
                                                         TextSpan(
-                                                            text: searchHistoryList[index],
+                                                            text:
+                                                                searchHistoryList[
+                                                                    index],
                                                             style: TextStyle(
-                                                                color: Constants.colorBlack,
-                                                                fontFamily: Constants.appFont,
+                                                                color: Color(
+                                                                    Constants
+                                                                        .colorBlack),
+                                                                fontFamily:
+                                                                    Constants
+                                                                        .appFont,
                                                                 fontSize: 14)),
                                                       ],
                                                     ),
@@ -202,107 +229,144 @@ class _SearchScreenState extends State<SearchScreen> {
                                 height: 15,
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 15, top: 10),
+                                padding:
+                                    const EdgeInsets.only(left: 15, top: 10),
                                 child: Text(
                                   Languages.of(context)!.labelSearchByFood,
-                                  style: TextStyle(fontSize: 18.0, fontFamily: Constants.appFont),
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontFamily: Constants.appFont),
                                 ),
                               ),
                               cuisineList.length == 0
                                   ? Container(
-                                      child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Image(
-                                            width: ScreenUtil().setWidth(100),
-                                            height: ScreenUtil().setHeight(100),
-                                            image: AssetImage('images/ic_no_rest.png'),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsets.only(top: ScreenUtil().setHeight(10)),
-                                            child: Text(
-                                              Languages.of(context)!.labelNoData,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontSize: ScreenUtil().setSp(18),
-                                                fontFamily: Constants.appFontBold,
-                                                color: Constants.colorTheme,
-                                              ),
-                                            ),
-                                          )
-                                        ],
+                                child: Column(
+                                  crossAxisAlignment:
+                                  CrossAxisAlignment.stretch,
+                                  mainAxisAlignment:
+                                  MainAxisAlignment.center,
+                                  children: [
+                                    Image(
+                                      width: ScreenUtil().setWidth(100),
+                                      height: ScreenUtil().setHeight(100),
+                                      image: AssetImage(
+                                          'images/ic_no_rest.png'),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top:
+                                          ScreenUtil().setHeight(10)),
+                                      child: Text(
+                                        Languages.of(context)!.labelNoData,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          fontSize:
+                                          ScreenUtil().setSp(18),
+                                          fontFamily:
+                                          Constants.appFontBold,
+                                          color: Color(
+                                              Constants.colorTheme),
+                                        ),
                                       ),
                                     )
+                                  ],
+                                ),
+                              )
                                   : Padding(
-                                      padding: const EdgeInsets.only(top: 10, bottom: 10),
-                                      child: SizedBox(
-                                        height: ScreenUtil().setHeight(147),
-                                        width: ScreenUtil().setWidth(114),
-                                        child: ListView.builder(
-                                          physics: ClampingScrollPhysics(),
-                                          shrinkWrap: true,
-                                          scrollDirection: Axis.horizontal,
-                                          itemCount: cuisineList.length,
-                                          itemBuilder: (BuildContext context, int index) => Padding(
-                                            padding: const EdgeInsets.only(
-                                              left: 10,
-                                            ),
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                Navigator.of(context).push(Transitions(
-                                                    transitionType: TransitionType.none,
-                                                    curve: Curves.bounceInOut,
-                                                    reverseCurve: Curves.fastLinearToSlowEaseIn,
-                                                    widget: SingleCuisineDetailsScreen(
-                                                      cuisineId: vendorList[index].id,
-                                                      strCuisineName: cuisineList[index].name,
-                                                    )));
-                                              },
-                                              child: Column(
-                                                children: [
-                                                  ClipRRect(
-                                                    borderRadius: BorderRadius.circular(15.0),
-                                                    child: CachedNetworkImage(
-                                                      height: 110,
-                                                      width: 110,
-                                                      imageUrl: cuisineList[index].image!,
-                                                      fit: BoxFit.cover,
-                                                      placeholder: (context, url) =>
-                                                          SpinKitFadingCircle(
-                                                              color: Constants.colorTheme),
-                                                      errorWidget: (context, url, error) =>
-                                                          Container(
-                                                        child: Center(
-                                                            child:
-                                                                Image.asset('images/noimage.png')),
+                                padding: const EdgeInsets.only(
+                                    top: 10, bottom: 10),
+                                child: SizedBox(
+                                  height: ScreenUtil().setHeight(147),
+                                  width: ScreenUtil().setWidth(114),
+                                  child: ListView.builder(
+                                    physics: ClampingScrollPhysics(),
+                                    shrinkWrap: true,
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: cuisineList.length,
+                                    itemBuilder: (BuildContext context,
+                                        int index) =>
+                                        Padding(
+                                          padding: const EdgeInsets.only(
+                                            left: 10,
+                                          ),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.of(context).push(
+                                                  Transitions(
+                                                      transitionType:
+                                                      TransitionType.none,
+                                                      curve:
+                                                      Curves.bounceInOut,
+                                                      reverseCurve: Curves
+                                                          .fastLinearToSlowEaseIn,
+                                                      widget:
+                                                      SingleCuisineDetailsScreen(
+                                                        cuisineId:
+                                                        vendorList[index]
+                                                            .id,
+                                                        strCuisineName:
+                                                        cuisineList[index]
+                                                            .name,
+                                                      )));
+                                            },
+                                            child: Column(
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius:
+                                                  BorderRadius.circular(
+                                                      15.0),
+                                                  child: CachedNetworkImage(
+                                                    height: 110,
+                                                    width: 110,
+                                                    imageUrl:
+                                                    cuisineList[index]
+                                                        .image!,
+                                                    fit: BoxFit.cover,
+                                                    placeholder: (context,
+                                                        url) =>
+                                                        SpinKitFadingCircle(
+                                                            color: Color(
+                                                                Constants
+                                                                    .colorTheme)),
+                                                    errorWidget: (context,
+                                                        url, error) =>
+                                                        Container(
+                                                          child: Center(
+                                                              child: Image.asset('images/noimage.png')),
+                                                        ),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Center(
+                                                    child: Text(
+                                                      cuisineList[index]
+                                                          .name!,
+                                                      style: TextStyle(
+                                                        fontFamily: Constants
+                                                            .appFontBold,
+                                                        fontSize:
+                                                        ScreenUtil()
+                                                            .setSp(
+                                                            16.0),
                                                       ),
                                                     ),
                                                   ),
-                                                  Expanded(
-                                                    child: Center(
-                                                      child: Text(
-                                                        cuisineList[index].name!,
-                                                        style: TextStyle(
-                                                          fontFamily: Constants.appFontBold,
-                                                          fontSize: ScreenUtil().setSp(16.0),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              ),
+                                                )
+                                              ],
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    ),
+                                  ),
+                                ),
+                              ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 15, top: 10),
+                                padding:
+                                    const EdgeInsets.only(left: 15, top: 10),
                                 child: Text(
                                   Languages.of(context)!.labelSearchByTopBrands,
-                                  style: TextStyle(fontSize: 18.0, fontFamily: Constants.appFont),
+                                  style: TextStyle(
+                                      fontSize: 18.0,
+                                      fontFamily: Constants.appFont),
                                 ),
                               ),
                               Container(
@@ -311,24 +375,31 @@ class _SearchScreenState extends State<SearchScreen> {
                                   if (vendorList.length == 0) {
                                     return Container(
                                       child: Column(
-                                        crossAxisAlignment: CrossAxisAlignment.stretch,
-                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.stretch,
+                                        mainAxisAlignment:
+                                        MainAxisAlignment.center,
                                         children: [
                                           Image(
                                             width: ScreenUtil().setWidth(100),
                                             height: ScreenUtil().setHeight(100),
-                                            image: AssetImage('images/ic_no_rest.png'),
+                                            image: AssetImage(
+                                                'images/ic_no_rest.png'),
                                           ),
                                           Padding(
-                                            padding:
-                                                EdgeInsets.only(top: ScreenUtil().setHeight(10)),
+                                            padding: EdgeInsets.only(
+                                                top:
+                                                ScreenUtil().setHeight(10)),
                                             child: Text(
                                               Languages.of(context)!.labelNoData,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
-                                                fontSize: ScreenUtil().setSp(18),
-                                                fontFamily: Constants.appFontBold,
-                                                color: Constants.colorTheme,
+                                                fontSize:
+                                                ScreenUtil().setSp(18),
+                                                fontFamily:
+                                                Constants.appFontBold,
+                                                color: Color(
+                                                    Constants.colorTheme),
                                               ),
                                             ),
                                           )
@@ -339,104 +410,116 @@ class _SearchScreenState extends State<SearchScreen> {
                                     return Padding(
                                       padding: const EdgeInsets.only(top: 10),
                                       child: GridView.builder(
+
                                         scrollDirection: Axis.horizontal,
                                         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 2,
-                                          mainAxisExtent: ScreenUtil().screenWidth /
-                                              1.1, // <== change the height to fit your needs
+                                          mainAxisExtent: ScreenUtil().screenWidth / 1.1, // <== change the height to fit your needs
                                         ),
                                         itemCount: vendorList.length,
                                         itemBuilder: (context, index) {
                                           return Container(
                                             width: ScreenUtil().setWidth(220),
                                             child: Padding(
-                                              padding: const EdgeInsets.only(left: 15),
+                                              padding: const EdgeInsets.only(
+                                                  left: 15),
                                               child: GestureDetector(
                                                 onTap: () {
                                                   Navigator.of(context).push(
                                                     Transitions(
-                                                      transitionType: TransitionType.fade,
+                                                      transitionType:
+                                                      TransitionType.fade,
                                                       curve: Curves.bounceInOut,
-                                                      reverseCurve: Curves.fastLinearToSlowEaseIn,
-                                                      widget: RestaurantsDetailsScreen(
-                                                        restaurantId: vendorList[index].id,
+                                                      reverseCurve: Curves
+                                                          .fastLinearToSlowEaseIn,
+                                                      widget:
+                                                      RestaurantsDetailsScreen(
+                                                        restaurantId:
+                                                        vendorList[index]
+                                                            .id,
                                                         isFav: false,
                                                       ),
                                                     ),
                                                   );
                                                 },
                                                 child: Card(
-                                                  margin: EdgeInsets.only(bottom: 20),
+                                                  margin: EdgeInsets.only(
+                                                      bottom: 20),
                                                   shape: RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(20.0),
+                                                    borderRadius:
+                                                    BorderRadius.circular(
+                                                        20.0),
                                                   ),
                                                   child: Row(
-                                                    mainAxisSize: MainAxisSize.max,
+                                                    mainAxisSize:
+                                                    MainAxisSize.max,
                                                     children: [
                                                       ClipRRect(
-                                                        borderRadius: BorderRadius.circular(15.0),
-                                                        child: CachedNetworkImage(
+                                                        borderRadius:
+                                                        BorderRadius
+                                                            .circular(15.0),
+                                                        child:
+                                                        CachedNetworkImage(
                                                           height: 100,
                                                           width: 100,
-                                                          imageUrl: vendorList[index].image!,
+                                                          imageUrl:
+                                                          vendorList[index]
+                                                              .image!,
                                                           fit: BoxFit.fill,
-                                                          placeholder: (context, url) =>
+                                                          placeholder: (context,
+                                                              url) =>
                                                               SpinKitFadingCircle(
-                                                                  color:
-                                                                      Constants.colorTheme),
-                                                          errorWidget: (context, url, error) =>
+                                                                  color: Color(
+                                                                      Constants
+                                                                          .colorTheme)),
+                                                          errorWidget: (context,
+                                                              url, error) =>
                                                               Container(
-                                                            child: Center(
-                                                                child: Image.asset(
-                                                                    'images/noimage.png')),
-                                                          ),
+                                                                child: Center(
+                                                                    child: Image.asset('images/noimage.png')),
+                                                              ),
                                                         ),
                                                       ),
                                                       Container(
                                                         width: ScreenUtil().screenWidth / 1.7,
                                                         child: Column(
                                                           mainAxisAlignment:
-                                                              MainAxisAlignment.spaceEvenly,
+                                                          MainAxisAlignment.spaceEvenly,
                                                           children: [
                                                             Container(
                                                               child: Column(
                                                                 children: [
                                                                   Padding(
-                                                                    padding: const EdgeInsets.only(
-                                                                      left: 10,
-                                                                      right: 10,
+                                                                    padding:
+                                                                    const EdgeInsets
+                                                                        .only(left: 10, right: 10,
                                                                     ),
-                                                                    child: Row(
+                                                                    child:
+                                                                    Row(
                                                                       mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
+                                                                      MainAxisAlignment.spaceBetween,
                                                                       children: [
                                                                         Text(
                                                                           vendorList[index].name!,
-                                                                          style: TextStyle(
-                                                                              fontFamily: Constants
-                                                                                  .appFontBold,
-                                                                              fontSize: ScreenUtil()
-                                                                                  .setSp(16.0)),
+                                                                          style:
+                                                                          TextStyle(fontFamily: Constants.appFontBold, fontSize: ScreenUtil().setSp(16.0)),
                                                                         ),
                                                                       ],
                                                                     ),
                                                                   ),
                                                                   Container(
-                                                                    alignment: Alignment.topLeft,
-                                                                    child: Padding(
+                                                                    alignment:
+                                                                    Alignment.topLeft,
+                                                                    child:
+                                                                    Padding(
                                                                       padding:
-                                                                          const EdgeInsets.only(
-                                                                              left: 10),
-                                                                      child: Text(
-                                                                        getRestaurantsFood(index),
+                                                                      const EdgeInsets.only(left: 10),
+                                                                      child:
+                                                                      Text(getRestaurantsFood(index),
                                                                         style: TextStyle(
-                                                                            fontFamily:
-                                                                                Constants.appFont,
-                                                                            color: Constants
-                                                                                .colorGray,
-                                                                            fontSize: ScreenUtil()
-                                                                                .setSp(12.0)),
+                                                                            fontFamily: Constants.appFont,
+                                                                            color: Color(Constants.colorGray),
+                                                                            fontSize: ScreenUtil().setSp(12.0)),
                                                                       ),
                                                                     ),
                                                                   ),
@@ -446,114 +529,73 @@ class _SearchScreenState extends State<SearchScreen> {
                                                             Container(
                                                               alignment: Alignment.topLeft,
                                                               child: Padding(
-                                                                padding:
-                                                                    const EdgeInsets.only(left: 10),
+                                                                padding: const EdgeInsets.only(left: 10),
                                                                 child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                   children: [
                                                                     Container(
-                                                                      child: Row(
+                                                                      child:
+                                                                      Row(
                                                                         children: [
                                                                           RatingBar.builder(
-                                                                            initialRating:
-                                                                                vendorList[index]
-                                                                                    .rate
-                                                                                    .toDouble(),
+                                                                            initialRating: vendorList[index].rate.toDouble(),
                                                                             minRating: 1,
                                                                             ignoreGestures: true,
-                                                                            direction:
-                                                                                Axis.horizontal,
-                                                                            itemSize: ScreenUtil()
-                                                                                .setWidth(12),
+                                                                            direction: Axis.horizontal,
+                                                                            itemSize: ScreenUtil().setWidth(12),
                                                                             allowHalfRating: true,
-                                                                            itemBuilder:
-                                                                                (context, _) =>
-                                                                                    Icon(
+                                                                            itemBuilder: (context, _) => Icon(
                                                                               Icons.star,
-                                                                              color: Constants.colorTheme,
-                                                                            ),
-                                                                            onRatingUpdate:
-                                                                                (double rating) {
-                                                                              print(rating);
-                                                                            },
+                                                                              color: Colors.amber,
+                                                                            ), onRatingUpdate: (double rating) {
+                                                                            print(rating);
+                                                                          },
                                                                           ),
                                                                           Text(
                                                                             '(${vendorList[index].review})',
                                                                             style: TextStyle(
-                                                                              fontSize: ScreenUtil()
-                                                                                  .setSp(12.0),
-                                                                              fontFamily:
-                                                                                  Constants.appFont,
-                                                                              color:
-                                                                                  Color(0xFF132229),
+                                                                              fontSize: ScreenUtil().setSp(12.0),
+                                                                              fontFamily: Constants.appFont,
+                                                                              color: Color(0xFF132229),
                                                                             ),
                                                                           ),
                                                                         ],
                                                                       ),
                                                                     ),
                                                                     Container(
-                                                                      child: Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.only(
-                                                                                right: 0),
-                                                                        child: vendorList[index]
-                                                                                    .vendorType ==
-                                                                                'veg'
+                                                                      child:
+                                                                      Padding(
+                                                                        padding: const EdgeInsets.only(right: 0),
+                                                                        child: vendorList[index].vendorType == 'veg'
                                                                             ? Row(
-                                                                                children: [
-                                                                                  Padding(
-                                                                                    padding:
-                                                                                        const EdgeInsets
-                                                                                                .only(
-                                                                                            right:
-                                                                                                2),
-                                                                                    child:
-                                                                                        SvgPicture
-                                                                                            .asset(
-                                                                                      'images/ic_veg.svg',
-                                                                                      height: ScreenUtil()
-                                                                                          .setHeight(
-                                                                                              10.0),
-                                                                                      width: ScreenUtil()
-                                                                                          .setHeight(
-                                                                                              10.0),
-                                                                                    ),
-                                                                                  ),
-                                                                                ],
-                                                                              )
-                                                                            : Row(
-                                                                                children: [
-                                                                                  Padding(
-                                                                                    padding:
-                                                                                        const EdgeInsets
-                                                                                                .only(
-                                                                                            right:
-                                                                                                2),
-                                                                                    child:
-                                                                                        SvgPicture
-                                                                                            .asset(
-                                                                                      'images/ic_veg.svg',
-                                                                                      height: ScreenUtil()
-                                                                                          .setHeight(
-                                                                                              10.0),
-                                                                                      width: ScreenUtil()
-                                                                                          .setHeight(
-                                                                                              10.0),
-                                                                                    ),
-                                                                                  ),
-                                                                                  SvgPicture.asset(
-                                                                                    'images/ic_non_veg.svg',
-                                                                                    height: ScreenUtil()
-                                                                                        .setHeight(
-                                                                                            10.0),
-                                                                                    width: ScreenUtil()
-                                                                                        .setHeight(
-                                                                                            10.0),
-                                                                                  )
-                                                                                ],
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.only(right: 2),
+                                                                              child: SvgPicture.asset(
+                                                                                'images/ic_veg.svg',
+                                                                                height: ScreenUtil().setHeight(10.0),
+                                                                                width: ScreenUtil().setHeight(10.0),
                                                                               ),
+                                                                            ),
+                                                                          ],
+                                                                        )
+                                                                            : Row(
+                                                                          children: [
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.only(right: 2),
+                                                                              child: SvgPicture.asset(
+                                                                                'images/ic_veg.svg',
+                                                                                height: ScreenUtil().setHeight(10.0),
+                                                                                width: ScreenUtil().setHeight(10.0),
+                                                                              ),
+                                                                            ),
+                                                                            SvgPicture.asset(
+                                                                              'images/ic_non_veg.svg',
+                                                                              height: ScreenUtil().setHeight(10.0),
+                                                                              width: ScreenUtil().setHeight(10.0),
+                                                                            )
+                                                                          ],
+                                                                        ),
                                                                       ),
                                                                     )
                                                                   ],
@@ -602,7 +644,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   Future<BaseModel<SearchListModel>> onSearchTextChanged(String text) async {
     SearchListModel response;
-    try {
+    try{
       cuisineList.clear();
       vendorList.clear();
       // progressDialog.show();
@@ -611,7 +653,7 @@ class _SearchScreenState extends State<SearchScreen> {
         'lang': SharedPreferenceUtil.getString('selectedLng'),
         'name': text,
       };
-      response = await RestClient(RetroApi().dioData()).search(body);
+      response  = await RestClient(RetroApi().dioData()).search(body);
       print(response.success);
       // Constants.hideDialog(context);
       if (response.success!) {
@@ -633,12 +675,15 @@ class _SearchScreenState extends State<SearchScreen> {
       } else {
         Constants.toastMessage(Languages.of(context)!.labelNoData);
       }
-    } catch (error, stacktrace) {
+
+    }catch (error, stacktrace) {
+
       print("Exception occurred: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
     return BaseModel()..data = response;
   }
+
 
   void onEditCompleted() {
     setState(() {
@@ -649,7 +694,8 @@ class _SearchScreenState extends State<SearchScreen> {
         searchHistoryList.add(searchController.text);
       }
     });
-    SharedPreferenceUtil.putStringList(Constants.recentSearch, searchHistoryList);
+    SharedPreferenceUtil.putStringList(
+        Constants.recentSearch, searchHistoryList);
     print('=====================================HISTORY+++++++++++++++++' +
         searchHistoryList.toString());
   }

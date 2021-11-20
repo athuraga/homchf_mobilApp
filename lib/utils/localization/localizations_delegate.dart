@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mealup/utils/localization/language/languageArabic.dart';
-import 'package:mealup/utils/localization/language/languageSpanish.dart';
-import 'package:mealup/utils/localization/language/language_en.dart';
+import 'package:homchf/utils/localization/language/languageArabic.dart';
+import 'package:homchf/utils/localization/language/languageSpanish.dart';
+import 'package:homchf/utils/localization/language/language_en.dart';
 
 import 'language/languages.dart';
 

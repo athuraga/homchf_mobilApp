@@ -7,21 +7,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mealup/model/cartmodel.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/model/customization_item_model.dart';
-import 'package:mealup/model/single_restaurants_details_model.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/bottom_navigation/dashboard_screen.dart';
-import 'package:mealup/screens/offer_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/database_helper.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/model/cartmodel.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/model/customization_item_model.dart';
+import 'package:homchf/model/single_restaurants_details_model.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/bottom_navigation/dashboard_screen.dart';
+import 'package:homchf/screens/offer_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/database_helper.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -110,7 +110,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
             },
             child: Container(
               height: ScreenUtil().setHeight(50),
-              color: Constants.colorBlack,
+              color: Color(Constants.colorBlack),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -121,7 +121,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                           " : ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
                           totalCartAmount.toString(),
                       style: TextStyle(
-                        color: Constants.colorWhite,
+                        color: Colors.white,
                         fontFamily: Constants.appFont,
                         fontSize: ScreenUtil().setSp(16),
                       ),
@@ -135,7 +135,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                           TextSpan(
                             text: Languages.of(context)!.labelContinue,
                             style: TextStyle(
-                                color: Constants.colorWhite,
+                                color: Colors.white,
                                 fontFamily: Constants.appFont,
                                 fontSize: ScreenUtil().setSp(18)),
                           ),
@@ -145,7 +145,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                               child: SvgPicture.asset(
                                 'images/ic_green_arrow.svg',
                                 width: ScreenUtil().setWidth(18),
-                                color: Constants.colorTheme,
+                                color: Color(Constants.colorTheme),
                                 height: ScreenUtil().setHeight(18),
                               ),
                             ),
@@ -160,6 +160,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
           ),
         ),
         appBar: AppBar(
+          backgroundColor: Color(Constants.colorAppbar),
           elevation: 0,
           actions: [
             Padding(
@@ -237,7 +238,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                   imageUrl: strRestaurantImage!,
                                   fit: BoxFit.cover,
                                   placeholder: (context, url) =>
-                                      SpinKitFadingCircle(color: Constants.colorTheme),
+                                      SpinKitFadingCircle(color: Color(Constants.colorTheme)),
                                   errorWidget: (context, url, error) => Container(
                                     child: Center(child: Image.asset('images/noimage.png')),
                                   ),
@@ -264,7 +265,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                           strRestaurantsAddress ?? 'Not available',
                                           style: TextStyle(
                                               fontFamily: Constants.appFont,
-                                              color: Constants.colorBlack,
+                                              color: Color(Constants.colorBlack),
                                               fontSize: ScreenUtil().setSp(12)),
                                         ),
                                       ),
@@ -272,7 +273,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                         '',
                                         style: TextStyle(
                                             fontFamily: Constants.appFont,
-                                            color: Constants.colorGray,
+                                            color: Color(Constants.colorGray),
                                             fontSize: ScreenUtil().setSp(12)),
                                       ),
                                     ],
@@ -319,7 +320,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                             TextSpan(
                                                 text: strRestaurantsReview,
                                                 style: TextStyle(
-                                                    color: Constants.colorBlack,
+                                                    color: Color(Constants.colorBlack),
                                                     fontFamily: Constants.appFontBold,
                                                     fontSize: ScreenUtil().setSp(14))),
                                           ],
@@ -330,7 +331,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                       '$strRestaurantsRate+ ${Languages.of(context)!.labelRatings}',
                                       style: TextStyle(
                                           fontFamily: Constants.appFont,
-                                          color: Constants.colorGray,
+                                          color: Color(Constants.colorGray),
                                           fontSize: ScreenUtil().setSp(12)),
                                     ),
                                   ],
@@ -358,7 +359,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                                 Constants.appSettingCurrencySymbol),
                                             style: TextStyle(
                                                 fontFamily: Constants.appFont,
-                                                color: Constants.colorTheme,
+                                                color: Color(Constants.colorTheme),
                                                 fontSize: ScreenUtil().setSp(18)),
                                           ),
                                           Padding(
@@ -368,7 +369,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                               strRestaurantsForTwoPerson ?? '',
                                               style: TextStyle(
                                                   fontFamily: Constants.appFont,
-                                                  color: Constants.colorBlack,
+                                                  color: Color(Constants.colorBlack),
                                                   fontSize: ScreenUtil().setSp(16)),
                                             ),
                                           ),
@@ -379,7 +380,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                       Languages.of(context)!.labelFor2Persons,
                                       style: TextStyle(
                                           fontFamily: Constants.appFont,
-                                          color: Constants.colorGray,
+                                          color: Color(Constants.colorGray),
                                           fontSize: ScreenUtil().setSp(12)),
                                     ),
                                   ],
@@ -414,7 +415,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                           'Veg.',
                                           style: TextStyle(
                                               fontFamily: Constants.appFont,
-                                              color: Constants.colorGray,
+                                              color: Color(Constants.colorGray),
                                               fontSize: ScreenUtil().setSp(12)),
                                         ),
                                       ],
@@ -444,7 +445,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                           'Non Veg.',
                                           style: TextStyle(
                                               fontFamily: Constants.appFont,
-                                              color: Constants.colorGray,
+                                              color: Color(Constants.colorGray),
                                               fontSize: ScreenUtil().setSp(12)),
                                         ),
                                       ],
@@ -484,7 +485,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                           'Veg. & Non Veg.',
                                           style: TextStyle(
                                               fontFamily: Constants.appFont,
-                                              color: Constants.colorGray,
+                                              color: Color(Constants.colorGray),
                                               fontSize: ScreenUtil().setSp(12)),
                                         ),
                                       ],
@@ -544,14 +545,14 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                           'images/search.svg',
                                           width: ScreenUtil().setWidth(15),
                                           height: ScreenUtil().setHeight(15),
-                                          color: Constants.colorBlack,
+                                          color: Color(Constants.colorBlack),
                                         ),
                                       ),
                                       hintText: Languages.of(context)!.labelSearchItems,
                                       hintStyle: TextStyle(
                                         fontSize: ScreenUtil().setSp(16),
                                         fontFamily: Constants.appFont,
-                                        color: Constants.colorGray,
+                                        color: Color(Constants.colorGray),
                                       ),
                                       border: OutlineInputBorder(
                                         borderSide: BorderSide.none,
@@ -893,7 +894,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                         fontSize: ScreenUtil().setSp(16),
                         fontWeight: FontWeight.bold,
                         fontFamily: Constants.appFont,
-                        color: Constants.colorBlack),
+                        color: Color(Constants.colorBlack)),
                   ),
                   WidgetSpan(
                     child: Padding(
@@ -951,7 +952,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                           imageUrl: item.image!,
                           fit: BoxFit.cover,
                           placeholder: (context, url) =>
-                              SpinKitFadingCircle(color: Constants.colorTheme),
+                              SpinKitFadingCircle(color: Color(Constants.colorTheme)),
                           errorWidget: (context, url, error) => Container(
                             child: Center(child: Image.asset('images/noimage.png')),
                           ),
@@ -986,14 +987,11 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                         padding: EdgeInsets.only(
                                           left: ScreenUtil().setWidth(6),
                                         ),
-                                        child: Container(
-                                          width: MediaQuery.of(context).size.width/2.5,
-                                          child: Text(
-                                            item.name!,
-                                            style: TextStyle(
-                                                fontFamily: Constants.appFontBold,
-                                                fontSize: ScreenUtil().setSp(12)),
-                                          ),
+                                        child: Text(
+                                          item.name!,
+                                          style: TextStyle(
+                                              fontFamily: Constants.appFontBold,
+                                              fontSize: ScreenUtil().setSp(12)),
                                         ),
                                       ),
                                     ],
@@ -1009,7 +1007,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                       '',
                                       style: TextStyle(
                                           fontFamily: Constants.appFont,
-                                          color: Constants.colorGray,
+                                          color: Color(Constants.colorGray),
                                           fontSize: ScreenUtil().setSp(12)),
                                     ),
                                   ),
@@ -1024,7 +1022,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                         item.price.toString(),
                                     style: TextStyle(
                                         fontFamily: Constants.appFont,
-                                        color: Constants.colorBlack,
+                                        color: Color(Constants.colorBlack),
                                         fontSize: ScreenUtil().setSp(16)),
                                   ),
                                 ),
@@ -1167,7 +1165,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                         style: TextStyle(
                                             fontWeight: FontWeight.w900,
                                             fontSize: 18,
-                                            color: Constants.colorTheme),
+                                            color: Color(Constants.colorTheme)),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
@@ -1275,7 +1273,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 14,
-                                            color: Constants.colorTheme),
+                                            color: Color(Constants.colorTheme)),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
@@ -1461,7 +1459,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
                                             fontSize: 18,
-                                            color: Constants.colorTheme),
+                                            color: Color(Constants.colorTheme)),
                                         textAlign: TextAlign.center,
                                       ),
                                     ),
@@ -1536,7 +1534,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                             style: TextStyle(
                                 fontSize: ScreenUtil().setSp(14),
                                 fontFamily: Constants.appFont,
-                                color: Constants.colorBlack),
+                                color: Color(Constants.colorBlack)),
                           ),
                         ),
                         SizedBox(
@@ -1561,7 +1559,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: Constants.appFontBold,
-                                      color: Constants.colorGray),
+                                      color: Color(Constants.colorGray)),
                                 ),
                               ),
                               Padding(
@@ -1583,7 +1581,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                         fontFamily: Constants.appFontBold,
-                                        color: Constants.colorBlue),
+                                        color: Color(Constants.colorBlue)),
                                   ),
                                 ),
                               ),
@@ -1839,7 +1837,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                 Navigator.pop(context);
                               },
                               child: Container(
-                                color: Constants.colorBlack,
+                                color: Color(Constants.colorBlack),
                                 child: Center(
                                   child: Text(
                                     '${Languages.of(context)!.labelItem} ${totalQty + 1}' +
@@ -1847,7 +1845,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                             '${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} ${currentFoodItemPrice + tempPrice}',
                                     style: TextStyle(
                                         fontFamily: Constants.appFont,
-                                        color: Constants.colorWhite,
+                                        color: Colors.white,
                                         fontSize: ScreenUtil().setSp(16)),
                                   ),
                                 ),
@@ -1874,7 +1872,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                     0);
                               },
                               child: Container(
-                                color: Constants.colorBlack,
+                                color: Color(Constants.colorBlack),
                                 child: Center(
                                   child: RichText(
                                     text: TextSpan(
@@ -1883,7 +1881,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                           text: Languages.of(context)!.labelContinue,
                                           style: TextStyle(
                                               fontFamily: Constants.appFont,
-                                              color:Constants.colorWhite,
+                                              color: Colors.white,
                                               fontSize: ScreenUtil().setSp(16)),
                                         ),
                                         WidgetSpan(
@@ -2146,7 +2144,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                 Navigator.pop(context);
                               },
                               child: Container(
-                                color: Constants.colorBlack,
+                                color: Color(Constants.colorBlack),
                                 child: Center(
                                   child: Text(
                                     'Item ${totalQty + 1}' +
@@ -2154,7 +2152,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                             '${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} ${currentFoodItemPrice + tempPrice}',
                                     style: TextStyle(
                                         fontFamily: Constants.appFont,
-                                        color:Constants.colorWhite,
+                                        color: Colors.white,
                                         fontSize: ScreenUtil().setSp(16)),
                                   ),
                                 ),
@@ -2182,7 +2180,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                     item.itemQty);
                               },
                               child: Container(
-                                color: Constants.colorBlack,
+                                color: Color(Constants.colorBlack),
                                 child: Center(
                                   child: RichText(
                                     text: TextSpan(
@@ -2191,7 +2189,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                           text: 'Continue',
                                           style: TextStyle(
                                               fontFamily: Constants.appFont,
-                                              color: Constants.colorWhite,
+                                              color: Colors.white,
                                               fontSize: ScreenUtil().setSp(16)),
                                         ),
                                         WidgetSpan(
@@ -2371,7 +2369,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
           height: ScreenUtil().setHeight(15),
         ),
       ),
-      decoration: myBoxDecorationChecked(false, Constants.colorTheme),
+      decoration: myBoxDecorationChecked(false, Color(Constants.colorTheme)),
     );
   }
 
@@ -2379,7 +2377,7 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
     return Container(
       width: 25,
       height: ScreenUtil().setHeight(25),
-      decoration: myBoxDecorationChecked(true, Constants.colorWhite),
+      decoration: myBoxDecorationChecked(true, Colors.white),
     );
   }
 

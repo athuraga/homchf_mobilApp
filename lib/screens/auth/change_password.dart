@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:mealup/model/send_otp_model.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/otp_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_lable_widget.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/card_textfield.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/hero_image_app_logo.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/rounded_corner_app_button.dart';
+import 'package:homchf/model/send_otp_model.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/otp_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_lable_widget.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/card_textfield.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/hero_image_app_logo.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/rounded_corner_app_button.dart';
 
 
 class ChangePassword extends StatefulWidget {
@@ -111,7 +111,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                           child: Text(
                             Languages.of(context)!.labelChangePasswordBottomline,
                             style: TextStyle(
-                              color: Constants.colorGray,
+                              color: Color(Constants.colorGray),
                               fontSize: 10.0,
                             ),
                             textAlign: TextAlign.center,

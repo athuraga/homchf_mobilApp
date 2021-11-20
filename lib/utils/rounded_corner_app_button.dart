@@ -11,8 +11,8 @@ class RoundedCornerAppButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: Constants.colorTheme,
-        onPrimary: Constants.colorWhite,
+        primary: Color(Constants.colorTheme),
+        onPrimary: Colors.white,
         shape:   RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0),),
       ),
       child: Padding(
@@ -23,7 +23,7 @@ class RoundedCornerAppButton extends StatelessWidget {
           style: TextStyle(
               fontFamily: Constants.appFont,
               fontWeight: FontWeight.w900,
-              color: Constants.colorWhite,
+              color: Colors.white,
               fontSize: 16.0),
         ),
       ),

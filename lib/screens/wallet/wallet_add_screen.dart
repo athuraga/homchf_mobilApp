@@ -1,17 +1,17 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/wallet/wallet_payment_method_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/wallet/wallet_payment_method_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
 class WalletAddScreen extends StatefulWidget {
@@ -81,14 +81,14 @@ class _WalletAddScreenState extends State<WalletAddScreen> {
                                     Text(
                                       Languages.of(context)!.mealUpWallet,
                                       style: TextStyle(
-                                          color: Constants.colorBlack,
+                                          color: Color(Constants.colorBlack),
                                           fontFamily: Constants.appFontBold,
                                           fontSize: 22),
                                     ),
                                     Text(
                                       "${Languages.of(context)!.availableMealUpBalance} ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} $balance",
                                       style: TextStyle(
-                                          color: Constants.colorBlack,
+                                          color: Color(Constants.colorBlack),
                                           fontFamily: Constants.appFont,
                                           fontSize: 16),
                                     ),
@@ -102,7 +102,7 @@ class _WalletAddScreenState extends State<WalletAddScreen> {
                                         Text(
                                           Languages.of(context)!.addMoney,
                                           style: TextStyle(
-                                              color: Constants.colorBlack,
+                                              color: Color(Constants.colorBlack),
                                               fontFamily: Constants.appFontBold,
                                               fontSize: 20),
                                         ),
@@ -125,7 +125,7 @@ class _WalletAddScreenState extends State<WalletAddScreen> {
                                             ),
                                             hintText: Languages.of(context)!.enterAmount,
                                             hintStyle: TextStyle(
-                                                color: Constants.colorGray,
+                                                color: Color(Constants.colorGray),
                                                 fontSize: 25,
                                                 fontFamily: Constants.appFontBold),
                                           ),
@@ -137,7 +137,7 @@ class _WalletAddScreenState extends State<WalletAddScreen> {
                                           child: Text(
                                             Languages.of(context)!.moneyWillBeAddedToMealUpWallet,
                                             style: TextStyle(
-                                                color: Constants.colorBlack,
+                                                color: Color(Constants.colorBlack),
                                                 fontFamily: Constants.appFont,
                                                 fontSize: 14),
                                           ),
@@ -180,7 +180,7 @@ class _WalletAddScreenState extends State<WalletAddScreen> {
                                   child: Text(
                                     'Process',
                                     style: TextStyle(
-                                        color: Constants.colorWhite,
+                                        color: Colors.white,
                                         fontFamily: Constants.appFontBold,
                                         fontSize: 20),
                                   ),

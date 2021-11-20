@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/screens/wallet/wallet_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/rounded_corner_app_button.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/screens/wallet/wallet_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/rounded_corner_app_button.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:dio/dio.dart';
 
@@ -108,7 +108,7 @@ class _WalletPaymentStripeState extends State<WalletPaymentStripe> {
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Container(
-          color: Constants.colorWhite,
+          color: Colors.white,
           child: ListView(
             scrollDirection: Axis.vertical,
             controller: _controller,

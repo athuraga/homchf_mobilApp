@@ -10,26 +10,26 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mealup/componants/custom_appbar.dart';
-import 'package:mealup/model/AllCuisinesModel.dart';
-import 'package:mealup/model/banner_response.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/model/exploreRestaurantsListModel.dart';
-import 'package:mealup/model/nearByRestaurantsModel.dart';
-import 'package:mealup/model/nonVegRestaurantsModel.dart';
-import 'package:mealup/model/top_restaurants_model.dart';
-import 'package:mealup/model/vegRestaurantsModel.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/offer_screen.dart';
-import 'package:mealup/screens/set_location_screen.dart';
-import 'package:mealup/screens/single_cuisine_details_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/componants/custom_appbar.dart';
+import 'package:homchf/model/AllCuisinesModel.dart';
+import 'package:homchf/model/banner_response.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/model/exploreRestaurantsListModel.dart';
+import 'package:homchf/model/nearByRestaurantsModel.dart';
+import 'package:homchf/model/nonVegRestaurantsModel.dart';
+import 'package:homchf/model/top_restaurants_model.dart';
+import 'package:homchf/model/vegRestaurantsModel.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/offer_screen.dart';
+import 'package:homchf/screens/set_location_screen.dart';
+import 'package:homchf/screens/single_cuisine_details_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -86,6 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   var aspectRatio = 0.0;
   int _current = 0;
+
 
   Future<Position> locateUser() async {
     return Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
@@ -152,6 +153,7 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+
   @override
   Widget build(BuildContext context) {
     dynamic screenWidth = MediaQuery.of(context).size.width;
@@ -164,22 +166,17 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           appBar: CustomAppbar(
             isFilter: false,
-            onOfferTap: () {
-              Navigator.of(context).push(Transitions(
+            onOfferTap: () {Navigator.of(context).push(Transitions(
                   transitionType: TransitionType.slideUp,
                   curve: Curves.bounceInOut,
                   reverseCurve: Curves.fastLinearToSlowEaseIn,
-                  widget: OfferScreen()));
-            },
-            onSearchTap: () {
-              Navigator.of(context).push(Transitions(
+                  widget: OfferScreen()));},
+            onSearchTap: () {Navigator.of(context).push(Transitions(
                   transitionType: TransitionType.slideUp,
                   curve: Curves.bounceInOut,
                   reverseCurve: Curves.fastLinearToSlowEaseIn,
-                  widget: SearchScreen()));
-            },
-            onLocationTap: () {
-              if (SharedPreferenceUtil.getBool(Constants.isLoggedIn) == true) {
+                  widget: SearchScreen()));},
+            onLocationTap: () {if (SharedPreferenceUtil.getBool(Constants.isLoggedIn) == true) {
                 Navigator.of(context).push(Transitions(
                     transitionType: TransitionType.none,
                     curve: Curves.bounceInOut,
@@ -199,17 +196,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         (Route<dynamic> route) => false),
                   );
                 }
-              }
-            },
-            strSelectedAddress: SharedPreferenceUtil.getString(Constants.selectedAddress).isEmpty
-                ? ''
-                : SharedPreferenceUtil.getString(Constants.selectedAddress),
+              }},
+            strSelectedAddress: SharedPreferenceUtil.getString(Constants.selectedAddress).isEmpty ? '' : SharedPreferenceUtil.getString(Constants.selectedAddress),
           ),
           body: SmartRefresher(
             enablePullDown: true,
             header: MaterialClassicHeader(
-              backgroundColor: Constants.colorTheme,
-              color: Constants.colorWhite,
+              backgroundColor: Color(Constants.colorTheme),
+              color: Colors.white,
             ),
             controller: _refreshController,
             onRefresh: _onRefresh,
@@ -217,7 +211,7 @@ class _HomeScreenState extends State<HomeScreen> {
               inAsyncCall: _isSyncing,
               child: Container(
                 decoration: BoxDecoration(
-                    color: Constants.colorBackground,
+                    color: Color(Constants.colorScreenBackGround),
                     image: DecorationImage(
                       image: AssetImage('images/ic_background_image.png'),
                       fit: BoxFit.cover,
@@ -233,13 +227,13 @@ class _HomeScreenState extends State<HomeScreen> {
                           visible: isBusinessAvailable,
                           child: Container(
                             margin: EdgeInsets.only(bottom: ScreenUtil().setHeight(15)),
-                            decoration: new BoxDecoration(color: Constants.colorLikeLight),
+                            decoration: new BoxDecoration(color: Color(Constants.colorLikeLight)),
                             child: ListTile(
                               leading: SvgPicture.asset(
                                 'images/ic_information.svg',
                                 width: ScreenUtil().setWidth(25),
                                 height: ScreenUtil().setHeight(25),
-                                color: Constants.colorLike,
+                                color: Color(Constants.colorLike),
                               ),
                               title: Transform(
                                 transform: Matrix4.translationValues(-20, 0.0, 0.0),
@@ -247,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   SharedPreferenceUtil.getString(
                                       Constants.appSettingBusinessMessage),
                                   style: TextStyle(
-                                      color: Constants.colorLike,
+                                      color: Color(Constants.colorLike),
                                       fontSize: ScreenUtil().setSp(14),
                                       fontFamily: Constants.appFontBold),
                                 ),
@@ -282,7 +276,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                             style: TextStyle(
                                               fontSize: ScreenUtil().setSp(18),
                                               fontFamily: Constants.appFontBold,
-                                              color: Constants.colorTheme,
+                                              color: Color(Constants.colorTheme),
                                             ),
                                           ),
                                         )
@@ -325,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 imageUrl: _allCuisineListData[index].image!,
                                                 fit: BoxFit.fill,
                                                 placeholder: (context, url) => SpinKitFadingCircle(
-                                                    color: Constants.colorTheme),
+                                                    color: Color(Constants.colorTheme)),
                                                 errorWidget: (context, url, error) => Container(
                                                   child: Center(
                                                       child: Image.asset('images/noimage.png')),
@@ -358,9 +352,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                               ),
-                        SizedBox(
-                          height: 10,
-                        ),
+                        SizedBox(height: 10,),
                         Visibility(
                           visible: banenrList.length > 0 ? true : false,
                           child: CarouselSlider(
@@ -398,9 +390,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             }).toList(),
                           ),
                         ),
-                        SizedBox(
-                          height: 15,
-                        ),
+                        SizedBox(height: 15,),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -412,11 +402,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: Icon(
-                                  Icons.arrow_forward,
-                                  color: Constants.colorTheme,
-                                ))
+                              padding: const EdgeInsets.only(right: 20),
+                                child: Icon(Icons.arrow_forward,
+                                  color: Color(Constants.colorTheme),)
+                            )
                           ],
                         ),
                         SizedBox(height: 15),
@@ -436,15 +425,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                             image: AssetImage('images/ic_no_rest.png'),
                                           ),
                                           Padding(
-                                            padding:
-                                                EdgeInsets.only(top: ScreenUtil().setHeight(10)),
+                                            padding: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
                                             child: Text(
                                               Languages.of(context)!.labelNoRestNear,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontSize: ScreenUtil().setSp(18),
                                                 fontFamily: Constants.appFontBold,
-                                                color: Constants.colorTheme,
+                                                color: Color(Constants.colorTheme),
                                               ),
                                             ),
                                           )
@@ -457,8 +445,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 scrollDirection: Axis.horizontal,
                                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
-                                  mainAxisExtent: ScreenUtil().screenWidth /
-                                      1.1, // <== change the height to fit your needs
+                                  mainAxisExtent: ScreenUtil().screenWidth / 1.1, // <== change the height to fit your needs
                                 ),
                                 itemCount: _nearbyListData.length,
                                 itemBuilder: (context, index) {
@@ -492,9 +479,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   width: 100,
                                                   imageUrl: _nearbyListData[index].image!,
                                                   fit: BoxFit.fill,
-                                                  placeholder: (context, url) =>
-                                                      SpinKitFadingCircle(
-                                                          color: Constants.colorTheme),
+                                                  placeholder: (context, url) => SpinKitFadingCircle(
+                                                      color: Color(Constants.colorTheme)),
                                                   errorWidget: (context, url, error) => Container(
                                                     child: Center(
                                                         child: Image.asset('images/noimage.png')),
@@ -506,14 +492,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   padding: EdgeInsets.only(top: 5, bottom: 5),
                                                   width: ScreenUtil().screenWidth / 2,
                                                   child: Column(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.spaceEvenly,
+                                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                                     children: [
                                                       Column(
                                                         children: [
                                                           Container(
-                                                            padding: EdgeInsets.only(
-                                                                left: 10, right: 10),
+                                                            padding:
+                                                                EdgeInsets.only(left: 10, right: 10),
                                                             child: Row(
                                                               children: [
                                                                 Expanded(
@@ -524,15 +509,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     style: TextStyle(
                                                                         fontFamily:
                                                                             Constants.appFontBold,
-                                                                        fontSize: ScreenUtil()
-                                                                            .setSp(16.0)),
+                                                                        fontSize:
+                                                                            ScreenUtil().setSp(16.0)),
                                                                   ),
                                                                 ),
                                                                 GestureDetector(
                                                                   onTap: () {
-                                                                    if (SharedPreferenceUtil
-                                                                        .getBool(
-                                                                            Constants.isLoggedIn)) {
+                                                                    if (SharedPreferenceUtil.getBool(
+                                                                        Constants.isLoggedIn)) {
                                                                       Constants.checkNetwork()
                                                                           .whenComplete(() =>
                                                                               callAddRemoveFavorite(
@@ -545,12 +529,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                           .labelPleaseLoginToAddFavorite);
                                                                     }
                                                                   },
-                                                                  child: _nearbyListData[index]
-                                                                          .like!
+                                                                  child: _nearbyListData[index].like!
                                                                       ? SvgPicture.asset(
                                                                           'images/ic_filled_heart.svg',
-                                                                          color:
-                                                                              Constants.colorLike,
+                                                                          color: Color(
+                                                                              Constants.colorLike),
                                                                           width: 20,
                                                                         )
                                                                       : SvgPicture.asset(
@@ -572,7 +555,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 overflow: TextOverflow.ellipsis,
                                                                 style: TextStyle(
                                                                     fontFamily: Constants.appFont,
-                                                                    color: Constants.colorGray,
+                                                                    color:
+                                                                        Color(Constants.colorGray),
                                                                     fontSize:
                                                                         ScreenUtil().setSp(12.0)),
                                                               ),
@@ -589,24 +573,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             child: Row(
                                                               children: [
                                                                 RatingBar.builder(
-                                                                  initialRating:
-                                                                      _nearbyListData[index]
-                                                                          .rate
-                                                                          .toDouble(),
+                                                                  initialRating: _nearbyListData[index]
+                                                                      .rate
+                                                                      .toDouble(),
                                                                   ignoreGestures: true,
                                                                   minRating: 1,
                                                                   direction: Axis.horizontal,
-                                                                  itemSize:
-                                                                      ScreenUtil().setWidth(12),
+                                                                  itemSize: ScreenUtil().setWidth(12),
                                                                   allowHalfRating: true,
                                                                   itemBuilder: (context, _) => Icon(
                                                                     Icons.star,
                                                                     color: Colors.amber,
-                                                                  ),
-                                                                  onRatingUpdate: (double rating) {
-                                                                    print(rating);
-                                                                  },
+                                                                  ), onRatingUpdate: (double rating) {
+                                                                  print(rating);
+                                                                },
                                                                 ),
+
                                                                 Text(
                                                                   '(${_nearbyListData[index].review})',
                                                                   style: TextStyle(
@@ -622,15 +604,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                           Container(
                                                             padding: EdgeInsets.only(right: 10),
                                                             child: (() {
-                                                              if (_nearbyListData[index]
-                                                                      .vendorType ==
+                                                              if (_nearbyListData[index].vendorType ==
                                                                   'veg') {
                                                                 return Row(
                                                                   children: [
                                                                     Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.only(
-                                                                              right: 2),
+                                                                      padding: const EdgeInsets.only(
+                                                                          right: 2),
                                                                       child: SvgPicture.asset(
                                                                         'images/ic_veg.svg',
                                                                         height: ScreenUtil()
@@ -647,9 +627,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 return Row(
                                                                   children: [
                                                                     Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.only(
-                                                                              right: 2),
+                                                                      padding: const EdgeInsets.only(
+                                                                          right: 2),
                                                                       child: SvgPicture.asset(
                                                                         'images/ic_non_veg.svg',
                                                                         height: ScreenUtil()
@@ -666,9 +645,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 return Row(
                                                                   children: [
                                                                     Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.only(
-                                                                              right: 2),
+                                                                      padding: const EdgeInsets.only(
+                                                                          right: 2),
                                                                       child: SvgPicture.asset(
                                                                         'images/ic_veg.svg',
                                                                         height: ScreenUtil()
@@ -717,11 +695,9 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: Icon(
-                                  Icons.arrow_forward,
-                                  color: Constants.colorTheme,
-                                ))
+                              padding: const EdgeInsets.only(right: 20),
+                              child: Icon(Icons.arrow_forward,color: Color(Constants.colorTheme),)
+                            )
                           ],
                         ),
                         SizedBox(height: 15),
@@ -740,15 +716,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                             image: AssetImage('images/ic_no_rest.png'),
                                           ),
                                           Padding(
-                                            padding:
-                                                EdgeInsets.only(top: ScreenUtil().setHeight(10)),
+                                            padding: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
                                             child: Text(
                                               Languages.of(context)!.labelNoData,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontSize: ScreenUtil().setSp(18),
                                                 fontFamily: Constants.appFontBold,
-                                                color: Constants.colorTheme,
+                                                color: Color(Constants.colorTheme),
                                               ),
                                             ),
                                           )
@@ -798,12 +773,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       fit: BoxFit.fill,
                                                       placeholder: (context, url) =>
                                                           SpinKitFadingCircle(
-                                                              color: Constants.colorTheme),
-                                                      errorWidget: (context, url, error) =>
-                                                          Container(
+                                                              color: Color(Constants.colorTheme)),
+                                                      errorWidget: (context, url, error) => Container(
                                                         child: Center(
-                                                            child:
-                                                                Image.asset('images/noimage.png')),
+                                                            child: Image.asset('images/noimage.png')),
                                                       ),
                                                     ),
                                                   ),
@@ -818,18 +791,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             child: Column(
                                                               children: [
                                                                 Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                   children: [
-                                                                    Text(
-                                                                      _topListData[index].name!,
+                                                                    Text(_topListData[index].name!,
                                                                       maxLines: 1,
-                                                                      overflow:
-                                                                          TextOverflow.ellipsis,
+                                                                      overflow: TextOverflow.ellipsis,
                                                                       style: TextStyle(
-                                                                          fontFamily:
-                                                                              Constants.appFontBold,
+                                                                          fontFamily: Constants
+                                                                              .appFontBold,
                                                                           fontSize: ScreenUtil()
                                                                               .setSp(16.0)),
                                                                     ),
@@ -855,19 +824,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                                 .like!
                                                                             ? SvgPicture.asset(
                                                                                 'images/ic_filled_heart.svg',
-                                                                                color: Constants
-                                                                                    .colorLike,
+                                                                                color: Color(Constants
+                                                                                    .colorLike),
                                                                                 height: ScreenUtil()
-                                                                                    .setHeight(
-                                                                                        20.0),
+                                                                                    .setHeight(20.0),
                                                                                 width: ScreenUtil()
                                                                                     .setWidth(20.0),
                                                                               )
                                                                             : SvgPicture.asset(
                                                                                 'images/ic_heart.svg',
                                                                                 height: ScreenUtil()
-                                                                                    .setHeight(
-                                                                                        20.0),
+                                                                                    .setHeight(20.0),
                                                                                 width: ScreenUtil()
                                                                                     .setWidth(20.0),
                                                                               ),
@@ -884,9 +851,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     style: TextStyle(
                                                                         fontFamily:
                                                                             Constants.appFont,
-                                                                        color: Constants.colorGray,
-                                                                        fontSize: ScreenUtil()
-                                                                            .setSp(12.0)),
+                                                                        color: Color(
+                                                                            Constants.colorGray),
+                                                                        fontSize:
+                                                                            ScreenUtil().setSp(12.0)),
                                                                   ),
                                                                 ),
                                                               ],
@@ -930,34 +898,26 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 ),
                                                                 Row(
                                                                   mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
+                                                                      MainAxisAlignment.spaceBetween,
                                                                   children: [
                                                                     Container(
                                                                       child: Row(
                                                                         children: [
                                                                           RatingBar.builder(
-                                                                            initialRating:
-                                                                                _topListData[index]
-                                                                                    .rate
-                                                                                    .toDouble(),
+                                                                            initialRating:  _topListData[index]
+                                                                                .rate
+                                                                                .toDouble(),
                                                                             ignoreGestures: true,
                                                                             minRating: 1,
-                                                                            direction:
-                                                                                Axis.horizontal,
-                                                                            itemSize: ScreenUtil()
-                                                                                .setWidth(12),
+                                                                            direction: Axis.horizontal,
+                                                                            itemSize: ScreenUtil().setWidth(12),
                                                                             allowHalfRating: true,
-                                                                            itemBuilder:
-                                                                                (context, _) =>
-                                                                                    Icon(
+                                                                            itemBuilder: (context, _) => Icon(
                                                                               Icons.star,
                                                                               color: Colors.amber,
-                                                                            ),
-                                                                            onRatingUpdate:
-                                                                                (double rating) {
-                                                                              print(rating);
-                                                                            },
+                                                                            ), onRatingUpdate: (double rating) {
+                                                                            print(rating);
+                                                                          },
                                                                           ),
                                                                           Text(
                                                                             '(${_topListData[index].review})',
@@ -1078,11 +1038,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: Icon(
-                                  Icons.arrow_forward,
-                                  color: Constants.colorTheme,
-                                ))
+                              padding: const EdgeInsets.only(right: 20),
+                                child: Icon(Icons.arrow_forward,
+                                  color: Color(Constants.colorTheme),)
+                            )
                           ],
                         ),
                         SizedBox(height: 15),
@@ -1101,15 +1060,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                             image: AssetImage('images/ic_no_rest.png'),
                                           ),
                                           Padding(
-                                            padding:
-                                                EdgeInsets.only(top: ScreenUtil().setHeight(10)),
+                                            padding: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
                                             child: Text(
                                               Languages.of(context)!.labelNoData,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontSize: ScreenUtil().setSp(18),
                                                 fontFamily: Constants.appFontBold,
-                                                color: Constants.colorTheme,
+                                                color: Color(Constants.colorTheme),
                                               ),
                                             ),
                                           )
@@ -1157,14 +1115,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                       width: 100,
                                                       imageUrl: _vegListData[index].image!,
                                                       fit: BoxFit.fill,
-                                                      placeholder: (context, url) =>
-                                                          SpinKitFadingCircle(
-                                                              color: Constants.colorTheme),
-                                                      errorWidget: (context, url, error) =>
-                                                          Container(
+                                                      placeholder: (context, url) => SpinKitFadingCircle(color: Color(Constants.colorTheme)),
+                                                      errorWidget: (context, url, error) => Container(
                                                         child: Center(
-                                                            child:
-                                                                Image.asset('images/noimage.png')),
+                                                            child: Image.asset('images/noimage.png')),
                                                       ),
                                                     ),
                                                   ),
@@ -1179,52 +1133,48 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             child: Column(
                                                               children: [
                                                                 Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
+                                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                                   children: [
                                                                     Text(
                                                                       _vegListData[index].name!,
-                                                                      overflow:
-                                                                          TextOverflow.ellipsis,
+                                                                      overflow: TextOverflow.ellipsis,
                                                                       maxLines: 1,
                                                                       style: TextStyle(
                                                                           fontFamily:
-                                                                              Constants.appFontBold,
+                                                                          Constants.appFontBold,
                                                                           fontSize: ScreenUtil()
                                                                               .setSp(16.0)),
                                                                     ),
                                                                     GestureDetector(
                                                                       onTap: () {
-                                                                        if (SharedPreferenceUtil
-                                                                            .getBool(Constants
-                                                                                .isLoggedIn)) {
+                                                                        if (SharedPreferenceUtil.getBool(
+                                                                            Constants.isLoggedIn)) {
                                                                           Constants.checkNetwork()
                                                                               .whenComplete(() =>
-                                                                                  callAddRemoveFavorite(
-                                                                                      _vegListData[
-                                                                                              index]
-                                                                                          .id));
+                                                                              callAddRemoveFavorite(
+                                                                                  _vegListData[
+                                                                                  index]
+                                                                                      .id));
                                                                         } else {
-                                                                          Constants.toastMessage(
-                                                                              Languages.of(context)!
-                                                                                  .labelPleaseLoginToAddFavorite);
+                                                                          Constants.toastMessage(Languages
+                                                                              .of(context)!
+                                                                              .labelPleaseLoginToAddFavorite);
                                                                         }
                                                                       },
                                                                       child: Container(
-                                                                        child: _vegListData[index]
-                                                                                .like!
+                                                                        child: _vegListData[index].like!
                                                                             ? SvgPicture.asset(
-                                                                                'images/ic_filled_heart.svg',
-                                                                                color: Constants
-                                                                                    .colorLike,
-                                                                                height: 20,
-                                                                                width: 20,
-                                                                              )
+                                                                          'images/ic_filled_heart.svg',
+                                                                          color: Color(Constants
+                                                                              .colorLike),
+                                                                          height: 20,
+                                                                          width:20,
+                                                                        )
                                                                             : SvgPicture.asset(
-                                                                                'images/ic_heart.svg',
-                                                                                width: 20,
-                                                                              ),
+                                                                          'images/ic_heart.svg',
+
+                                                                          width: 20,
+                                                                        ),
                                                                       ),
                                                                     )
                                                                   ],
@@ -1236,11 +1186,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     overflow: TextOverflow.ellipsis,
                                                                     maxLines: 2,
                                                                     style: TextStyle(
-                                                                        fontFamily:
-                                                                            Constants.appFont,
-                                                                        color: Constants.colorGray,
-                                                                        fontSize: ScreenUtil()
-                                                                            .setSp(12.0)),
+                                                                        fontFamily: Constants.appFont,
+                                                                        color:
+                                                                        Color(Constants.colorGray),
+                                                                        fontSize:
+                                                                        ScreenUtil().setSp(12.0)),
                                                                   ),
                                                                 ),
                                                               ],
@@ -1251,14 +1201,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             child: Column(
                                                               children: [
                                                                 Padding(
-                                                                  padding: const EdgeInsets.only(
-                                                                      bottom: 3),
+                                                                  padding:
+                                                                  const EdgeInsets.only(bottom: 3),
                                                                   child: Row(
                                                                     children: [
                                                                       Padding(
-                                                                        padding:
-                                                                            const EdgeInsets.only(
-                                                                                right: 5),
+                                                                        padding: const EdgeInsets.only(
+                                                                            right: 5),
                                                                         child: SvgPicture.asset(
                                                                           'images/ic_map.svg',
                                                                           width: 10,
@@ -1267,15 +1216,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                       ),
                                                                       Text(
                                                                         _vegListData[index]
-                                                                                .distance
-                                                                                .toString() +
+                                                                            .distance
+                                                                            .toString() +
                                                                             Languages.of(context)!
                                                                                 .labelKmFarAway,
                                                                         style: TextStyle(
-                                                                          fontSize: ScreenUtil()
-                                                                              .setSp(12.0),
+                                                                          fontSize:
+                                                                          ScreenUtil().setSp(12.0),
                                                                           fontFamily:
-                                                                              Constants.appFont,
+                                                                          Constants.appFont,
                                                                           color: Color(0xFF132229),
                                                                         ),
                                                                       )
@@ -1284,44 +1233,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 ),
                                                                 Row(
                                                                   mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
+                                                                  MainAxisAlignment.spaceBetween,
                                                                   children: [
                                                                     Container(
                                                                       child: Row(
                                                                         children: [
                                                                           RatingBar.builder(
-                                                                            initialRating:
-                                                                                _vegListData[index]
-                                                                                    .rate
-                                                                                    .toDouble(),
+                                                                            initialRating:  _vegListData[index]
+                                                                                .rate
+                                                                                .toDouble(),
                                                                             ignoreGestures: true,
                                                                             minRating: 1,
-                                                                            direction:
-                                                                                Axis.horizontal,
-                                                                            itemSize: ScreenUtil()
-                                                                                .setWidth(12),
+                                                                            direction: Axis.horizontal,
+                                                                            itemSize: ScreenUtil().setWidth(12),
                                                                             allowHalfRating: true,
-                                                                            itemBuilder:
-                                                                                (context, _) =>
-                                                                                    Icon(
+                                                                            itemBuilder: (context, _) => Icon(
                                                                               Icons.star,
                                                                               color: Colors.amber,
-                                                                            ),
-                                                                            onRatingUpdate:
-                                                                                (double rating) {
-                                                                              print(rating);
-                                                                            },
+                                                                            ), onRatingUpdate: (double rating) {
+                                                                            print(rating);
+                                                                          },
                                                                           ),
                                                                           Text(
                                                                             '(${_vegListData[index].review})',
                                                                             style: TextStyle(
-                                                                              fontSize: ScreenUtil()
-                                                                                  .setSp(12.0),
+                                                                              fontSize: ScreenUtil().setSp(12.0),
                                                                               fontFamily:
-                                                                                  Constants.appFont,
-                                                                              color:
-                                                                                  Color(0xFF132229),
+                                                                              Constants.appFont,
+                                                                              color: Color(0xFF132229),
                                                                             ),
                                                                           ),
                                                                         ],
@@ -1330,17 +1269,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                     Container(
                                                                       child: (() {
                                                                         if (_vegListData[index]
-                                                                                .vendorType ==
+                                                                            .vendorType ==
                                                                             'veg') {
                                                                           return Row(
                                                                             children: [
                                                                               Padding(
                                                                                 padding:
-                                                                                    const EdgeInsets
-                                                                                            .only(
-                                                                                        right: 2),
-                                                                                child: SvgPicture
-                                                                                    .asset(
+                                                                                const EdgeInsets.only(right: 2),
+                                                                                child: SvgPicture.asset(
                                                                                   'images/ic_veg.svg',
                                                                                   height: 10,
                                                                                   width: 10,
@@ -1348,19 +1284,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                               ),
                                                                             ],
                                                                           );
-                                                                        } else if (_vegListData[
-                                                                                    index]
-                                                                                .vendorType ==
+                                                                        } else if (_vegListData[index]
+                                                                            .vendorType ==
                                                                             'non_veg') {
                                                                           return Row(
                                                                             children: [
                                                                               Padding(
                                                                                 padding:
-                                                                                    const EdgeInsets
-                                                                                            .only(
-                                                                                        right: 2),
-                                                                                child: SvgPicture
-                                                                                    .asset(
+                                                                                const EdgeInsets
+                                                                                    .only(right: 2),
+                                                                                child: SvgPicture.asset(
                                                                                   'images/ic_non_veg.svg',
                                                                                   height: 10,
                                                                                   width: 10,
@@ -1368,19 +1301,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                               ),
                                                                             ],
                                                                           );
-                                                                        } else if (_vegListData[
-                                                                                    index]
-                                                                                .vendorType ==
+                                                                        } else if (_vegListData[index]
+                                                                            .vendorType ==
                                                                             'all') {
                                                                           return Row(
                                                                             children: [
                                                                               Padding(
                                                                                 padding:
-                                                                                    const EdgeInsets
-                                                                                            .only(
-                                                                                        right: 2),
-                                                                                child: SvgPicture
-                                                                                    .asset(
+                                                                                const EdgeInsets
+                                                                                    .only(right: 2),
+                                                                                child: SvgPicture.asset(
                                                                                   'images/ic_veg.svg',
                                                                                   height: 10,
                                                                                   width: 10,
@@ -1426,11 +1356,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             Padding(
-                                padding: const EdgeInsets.only(right: 20),
-                                child: Icon(
-                                  Icons.arrow_forward,
-                                  color: Constants.colorTheme,
-                                ))
+                              padding: const EdgeInsets.only(right: 20),
+                                child: Icon(Icons.arrow_forward,
+                                  color: Color(Constants.colorTheme),)
+                            )
                           ],
                         ),
                         SizedBox(height: 15),
@@ -1449,15 +1378,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                             image: AssetImage('images/ic_no_rest.png'),
                                           ),
                                           Padding(
-                                            padding:
-                                                EdgeInsets.only(top: ScreenUtil().setHeight(10)),
+                                            padding: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
                                             child: Text(
                                               Languages.of(context)!.labelNoData,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontSize: ScreenUtil().setSp(18),
                                                 fontFamily: Constants.appFontBold,
-                                                color: Constants.colorTheme,
+                                                color: Color(Constants.colorTheme),
                                               ),
                                             ),
                                           )
@@ -1466,292 +1394,289 @@ class _HomeScreenState extends State<HomeScreen> {
                                     )
                                   : Container()
                               : GridView.builder(
-                                  scrollDirection: Axis.horizontal,
-                                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    mainAxisExtent: ScreenUtil().screenWidth / 1.1,
-                                  ),
-                                  itemCount: _nonvegListData.length,
-                                  itemBuilder: (context, index) {
-                                    return Container(
-                                      padding: const EdgeInsets.only(left: 15, right: 15),
-                                      child: GestureDetector(
-                                        onTap: () {
-                                          Navigator.of(context).push(
-                                            Transitions(
-                                              transitionType: TransitionType.fade,
-                                              curve: Curves.bounceInOut,
-                                              reverseCurve: Curves.fastLinearToSlowEaseIn,
-                                              widget: RestaurantsDetailsScreen(
-                                                restaurantId: _nonvegListData[index].id,
-                                                isFav: _nonvegListData[index].like,
-                                              ),
+                            scrollDirection: Axis.horizontal,
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              mainAxisExtent: ScreenUtil().screenWidth / 1.1,
+                            ),
+                            itemCount: _nonvegListData.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                padding: const EdgeInsets.only(left: 15, right: 15),
+                                child: GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                      Transitions(
+                                        transitionType: TransitionType.fade,
+                                        curve: Curves.bounceInOut,
+                                        reverseCurve: Curves.fastLinearToSlowEaseIn,
+                                        widget: RestaurantsDetailsScreen(
+                                          restaurantId: _nonvegListData[index].id,
+                                          isFav: _nonvegListData[index].like,
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    margin: EdgeInsets.only(bottom: 20),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        ClipRRect(
+                                          borderRadius: BorderRadius.circular(15.0),
+                                          child: CachedNetworkImage(
+                                            width: 100,
+                                            imageUrl: _nonvegListData[index].image!,
+                                            fit: BoxFit.fill,
+                                            placeholder: (context, url) =>
+                                                SpinKitFadingCircle(
+                                                    color: Color(Constants.colorTheme)),
+                                            errorWidget: (context, url, error) => Container(
+                                              child: Center(
+                                                  child: Image.asset('images/noimage.png')),
                                             ),
-                                          );
-                                        },
-                                        child: Card(
-                                          margin: EdgeInsets.only(bottom: 20),
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(20.0),
                                           ),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.max,
-                                            children: [
-                                              ClipRRect(
-                                                borderRadius: BorderRadius.circular(15.0),
-                                                child: CachedNetworkImage(
-                                                  width: 100,
-                                                  imageUrl: _nonvegListData[index].image!,
-                                                  fit: BoxFit.fill,
-                                                  placeholder: (context, url) =>
-                                                      SpinKitFadingCircle(
-                                                          color: Constants.colorTheme),
-                                                  errorWidget: (context, url, error) => Container(
-                                                    child: Center(
-                                                        child: Image.asset('images/noimage.png')),
-                                                  ),
-                                                ),
-                                              ),
-                                              Expanded(
-                                                child: Container(
-                                                  padding: const EdgeInsets.all(10),
-                                                  width: ScreenUtil().screenWidth / 2,
-                                                  child: Wrap(
-                                                    alignment: WrapAlignment.spaceBetween,
+                                        ),
+                                        Expanded(
+                                          child: Container(
+                                            padding: const EdgeInsets.all(10),
+                                            width: ScreenUtil().screenWidth / 2,
+                                            child: Wrap(
+                                              alignment: WrapAlignment.spaceBetween,
+                                              children: [
+                                                Container(
+                                                  child: Column(
                                                     children: [
-                                                      Container(
-                                                        child: Column(
-                                                          children: [
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment.spaceBetween,
-                                                              children: [
-                                                                Container(
-                                                                  width: ScreenUtil().setWidth(130),
-                                                                  child: Text(
-                                                                    _nonvegListData[index].name!,
-                                                                    style: TextStyle(
-                                                                        fontFamily:
-                                                                            Constants.appFontBold,
-                                                                        fontSize: ScreenUtil()
-                                                                            .setSp(16.0)),
-                                                                  ),
-                                                                ),
-                                                                GestureDetector(
-                                                                  onTap: () {
-                                                                    if (SharedPreferenceUtil
-                                                                        .getBool(
-                                                                            Constants.isLoggedIn)) {
-                                                                      Constants.checkNetwork()
-                                                                          .whenComplete(() =>
-                                                                              callAddRemoveFavorite(
-                                                                                  _nonvegListData[
-                                                                                          index]
-                                                                                      .id));
-                                                                    } else {
-                                                                      Constants.toastMessage(Languages
-                                                                              .of(context)!
-                                                                          .labelPleaseLoginToAddFavorite);
-                                                                    }
-                                                                  },
-                                                                  child: Container(
-                                                                    child: _nonvegListData[index]
-                                                                            .like!
-                                                                        ? SvgPicture.asset(
-                                                                            'images/ic_filled_heart.svg',
-                                                                            color:
-                                                                                Constants.colorLike,
-                                                                            height: ScreenUtil()
-                                                                                .setHeight(20.0),
-                                                                            width: ScreenUtil()
-                                                                                .setWidth(20.0),
-                                                                          )
-                                                                        : SvgPicture.asset(
-                                                                            'images/ic_heart.svg',
-                                                                            height: ScreenUtil()
-                                                                                .setHeight(20.0),
-                                                                            width: ScreenUtil()
-                                                                                .setWidth(20.0),
-                                                                          ),
-                                                                  ),
-                                                                )
-                                                              ],
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                            width: ScreenUtil().setWidth(130),
+                                                            child: Text(
+                                                              _nonvegListData[index].name!,
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                  Constants.appFontBold,
+                                                                  fontSize: ScreenUtil()
+                                                                      .setSp(16.0)),
                                                             ),
-                                                            Container(
-                                                              alignment: Alignment.topLeft,
-                                                              child: Text(
-                                                                getNonVegRestaurantsFood(index),
-                                                                style: TextStyle(
-                                                                    fontFamily: Constants.appFont,
-                                                                    color: Constants.colorGray,
-                                                                    fontSize:
-                                                                        ScreenUtil().setSp(12.0)),
+                                                          ),
+                                                          GestureDetector(
+                                                            onTap: () {
+                                                              if (SharedPreferenceUtil
+                                                                  .getBool(
+                                                                  Constants.isLoggedIn)) {
+                                                                Constants.checkNetwork()
+                                                                    .whenComplete(() =>
+                                                                    callAddRemoveFavorite(
+                                                                        _nonvegListData[
+                                                                        index]
+                                                                            .id));
+                                                              } else {
+                                                                Constants.toastMessage(Languages
+                                                                    .of(context)!
+                                                                    .labelPleaseLoginToAddFavorite);
+                                                              }
+                                                            },
+                                                            child: Container(
+                                                              child: _nonvegListData[index]
+                                                                  .like!
+                                                                  ? SvgPicture.asset(
+                                                                'images/ic_filled_heart.svg',
+                                                                color: Color(Constants
+                                                                    .colorLike),
+                                                                height: ScreenUtil()
+                                                                    .setHeight(20.0),
+                                                                width: ScreenUtil()
+                                                                    .setWidth(20.0),
+                                                              )
+                                                                  : SvgPicture.asset(
+                                                                'images/ic_heart.svg',
+                                                                height: ScreenUtil()
+                                                                    .setHeight(20.0),
+                                                                width: ScreenUtil()
+                                                                    .setWidth(20.0),
                                                               ),
                                                             ),
-                                                          ],
-                                                        ),
+                                                          )
+                                                        ],
                                                       ),
                                                       Container(
                                                         alignment: Alignment.topLeft,
-                                                        child: Column(
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets.only(bottom: 3),
-                                                              child: Row(
-                                                                children: [
-                                                                  Padding(
-                                                                    padding: const EdgeInsets.only(
-                                                                        right: 5),
-                                                                    child: SvgPicture.asset(
-                                                                      'images/ic_map.svg',
-                                                                      width: 10,
-                                                                      height: 10,
-                                                                    ),
-                                                                  ),
-                                                                  Text(
-                                                                    _nonvegListData[index]
-                                                                            .distance
-                                                                            .toString() +
-                                                                        Languages.of(context)!
-                                                                            .labelKmFarAway,
-                                                                    style: TextStyle(
-                                                                      fontSize:
-                                                                          ScreenUtil().setSp(12.0),
-                                                                      fontFamily: Constants.appFont,
-                                                                      color: Color(0xFF132229),
-                                                                    ),
-                                                                  )
-                                                                ],
-                                                              ),
-                                                            ),
-                                                            Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment.spaceBetween,
-                                                              children: [
-                                                                Container(
-                                                                  child: Row(
-                                                                    children: [
-                                                                      RatingBar.builder(
-                                                                        initialRating:
-                                                                            _nonvegListData[index]
-                                                                                .rate
-                                                                                .toDouble(),
-                                                                        ignoreGestures: true,
-                                                                        minRating: 1,
-                                                                        direction: Axis.horizontal,
-                                                                        itemSize: ScreenUtil()
-                                                                            .setWidth(12),
-                                                                        allowHalfRating: true,
-                                                                        itemBuilder: (context, _) =>
-                                                                            Icon(
-                                                                          Icons.star,
-                                                                          color: Colors.amber,
-                                                                        ),
-                                                                        onRatingUpdate:
-                                                                            (double rating) {
-                                                                          print(rating);
-                                                                        },
-                                                                      ),
-                                                                      Text(
-                                                                        '(${_nonvegListData[index].review})',
-                                                                        style: TextStyle(
-                                                                          fontSize: ScreenUtil()
-                                                                              .setSp(12.0),
-                                                                          fontFamily:
-                                                                              Constants.appFont,
-                                                                          color: Color(0xFF132229),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                Container(
-                                                                  child: (() {
-                                                                    if (_nonvegListData[index]
-                                                                            .vendorType ==
-                                                                        'veg') {
-                                                                      return Row(
-                                                                        children: [
-                                                                          Padding(
-                                                                            padding:
-                                                                                const EdgeInsets
-                                                                                    .only(right: 2),
-                                                                            child: SvgPicture.asset(
-                                                                              'images/ic_veg.svg',
-                                                                              height: ScreenUtil()
-                                                                                  .setHeight(10.0),
-                                                                              width: ScreenUtil()
-                                                                                  .setHeight(10.0),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      );
-                                                                    } else if (_nonvegListData[
-                                                                                index]
-                                                                            .vendorType ==
-                                                                        'non_veg') {
-                                                                      return Row(
-                                                                        children: [
-                                                                          Padding(
-                                                                            padding:
-                                                                                const EdgeInsets
-                                                                                    .only(right: 2),
-                                                                            child: SvgPicture.asset(
-                                                                              'images/ic_non_veg.svg',
-                                                                              height: ScreenUtil()
-                                                                                  .setHeight(10.0),
-                                                                              width: ScreenUtil()
-                                                                                  .setHeight(10.0),
-                                                                            ),
-                                                                          ),
-                                                                        ],
-                                                                      );
-                                                                    } else if (_nonvegListData[
-                                                                                index]
-                                                                            .vendorType ==
-                                                                        'all') {
-                                                                      return Row(
-                                                                        children: [
-                                                                          Padding(
-                                                                            padding:
-                                                                                const EdgeInsets
-                                                                                    .only(right: 2),
-                                                                            child: SvgPicture.asset(
-                                                                              'images/ic_veg.svg',
-                                                                              height: ScreenUtil()
-                                                                                  .setHeight(10.0),
-                                                                              width: ScreenUtil()
-                                                                                  .setHeight(10.0),
-                                                                            ),
-                                                                          ),
-                                                                          SvgPicture.asset(
-                                                                            'images/ic_non_veg.svg',
-                                                                            height: ScreenUtil()
-                                                                                .setHeight(10.0),
-                                                                            width: ScreenUtil()
-                                                                                .setHeight(10.0),
-                                                                          )
-                                                                        ],
-                                                                      );
-                                                                    }
-                                                                  }()),
-                                                                )
-                                                              ],
-                                                            )
-                                                          ],
+                                                        child: Text(
+                                                          getNonVegRestaurantsFood(index),
+                                                          style: TextStyle(
+                                                              fontFamily: Constants.appFont,
+                                                              color:
+                                                              Color(Constants.colorGray),
+                                                              fontSize:
+                                                              ScreenUtil().setSp(12.0)),
                                                         ),
                                                       ),
                                                     ],
                                                   ),
                                                 ),
-                                              )
-                                            ],
+                                                Container(
+                                                  alignment: Alignment.topLeft,
+                                                  child: Column(
+                                                    children: [
+                                                      Padding(
+                                                        padding:
+                                                        const EdgeInsets.only(bottom: 3),
+                                                        child: Row(
+                                                          children: [
+                                                            Padding(
+                                                              padding: const EdgeInsets.only(
+                                                                  right: 5),
+                                                              child: SvgPicture.asset(
+                                                                'images/ic_map.svg',
+                                                                width: 10,
+                                                                height: 10,
+                                                              ),
+                                                            ),
+                                                            Text(
+                                                              _nonvegListData[index]
+                                                                  .distance
+                                                                  .toString() +
+                                                                  Languages.of(context)!
+                                                                      .labelKmFarAway,
+                                                              style: TextStyle(
+                                                                fontSize:
+                                                                ScreenUtil().setSp(12.0),
+                                                                fontFamily:
+                                                                Constants.appFont,
+                                                                color: Color(0xFF132229),
+                                                              ),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment.spaceBetween,
+                                                        children: [
+                                                          Container(
+                                                            child: Row(
+                                                              children: [
+                                                                RatingBar.builder(
+                                                                  initialRating: _nonvegListData[index]
+                                                                      .rate
+                                                                      .toDouble(),
+                                                                  ignoreGestures: true,
+                                                                  minRating: 1,
+                                                                  direction: Axis.horizontal,
+                                                                  itemSize: ScreenUtil().setWidth(12),
+                                                                  allowHalfRating: true,
+                                                                  itemBuilder: (context, _) => Icon(
+                                                                    Icons.star,
+                                                                    color: Colors.amber,
+                                                                  ), onRatingUpdate: (double rating) {
+                                                                  print(rating);
+                                                                },
+                                                                ),
+                                                                Text(
+                                                                  '(${_nonvegListData[index].review})',
+                                                                  style: TextStyle(
+                                                                    fontSize: ScreenUtil().setSp(12.0),
+                                                                    fontFamily:
+                                                                    Constants.appFont,
+                                                                    color: Color(0xFF132229),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          Container(
+                                                            child: (() {
+                                                              if (_nonvegListData[index]
+                                                                  .vendorType ==
+                                                                  'veg') {
+                                                                return Row(
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding:
+                                                                      const EdgeInsets
+                                                                          .only(right: 2),
+                                                                      child: SvgPicture.asset(
+                                                                        'images/ic_veg.svg',
+                                                                        height: ScreenUtil()
+                                                                            .setHeight(10.0),
+                                                                        width: ScreenUtil()
+                                                                            .setHeight(10.0),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                              } else if (_nonvegListData[
+                                                              index]
+                                                                  .vendorType ==
+                                                                  'non_veg') {
+                                                                return Row(
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding:
+                                                                      const EdgeInsets
+                                                                          .only(right: 2),
+                                                                      child: SvgPicture.asset(
+                                                                        'images/ic_non_veg.svg',
+                                                                        height: ScreenUtil()
+                                                                            .setHeight(10.0),
+                                                                        width: ScreenUtil()
+                                                                            .setHeight(10.0),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                );
+                                                              } else if (_nonvegListData[
+                                                              index]
+                                                                  .vendorType ==
+                                                                  'all') {
+                                                                return Row(
+                                                                  children: [
+                                                                    Padding(
+                                                                      padding:
+                                                                      const EdgeInsets
+                                                                          .only(right: 2),
+                                                                      child: SvgPicture.asset(
+                                                                        'images/ic_veg.svg',
+                                                                        height: ScreenUtil()
+                                                                            .setHeight(10.0),
+                                                                        width: ScreenUtil()
+                                                                            .setHeight(10.0),
+                                                                      ),
+                                                                    ),
+                                                                    SvgPicture.asset(
+                                                                      'images/ic_non_veg.svg',
+                                                                      height: ScreenUtil()
+                                                                          .setHeight(10.0),
+                                                                      width: ScreenUtil()
+                                                                          .setHeight(10.0),
+                                                                    )
+                                                                  ],
+                                                                );
+                                                              }
+                                                            }()),
+                                                          )
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                        ),
-                                      ),
-                                    );
-                                  },
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
+
                                 ),
                         ),
                         SizedBox(height: 10),
@@ -1777,15 +1702,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                             image: AssetImage('images/ic_no_rest.png'),
                                           ),
                                           Padding(
-                                            padding:
-                                                EdgeInsets.only(top: ScreenUtil().setHeight(10)),
+                                            padding: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
                                             child: Text(
                                               Languages.of(context)!.labelNoData,
                                               textAlign: TextAlign.center,
                                               style: TextStyle(
                                                 fontSize: ScreenUtil().setSp(18),
                                                 fontFamily: Constants.appFontBold,
-                                                color: Constants.colorTheme,
+                                                color: Color(Constants.colorTheme),
                                               ),
                                             ),
                                           )
@@ -1827,7 +1751,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                               imageUrl: _exploreResListData[index].image!,
                                               fit: BoxFit.fill,
                                               placeholder: (context, url) => SpinKitFadingCircle(
-                                                  color: Constants.colorTheme),
+                                                  color: Color(Constants.colorTheme)),
                                               errorWidget: (context, url, error) => Container(
                                                 child: Center(
                                                     child: Image.asset('images/noimage.png')),
@@ -1845,15 +1769,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     child: Column(
                                                       children: [
                                                         Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment.spaceBetween,
+                                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                           children: [
                                                             Text(
                                                               _exploreResListData[index].name!,
                                                               style: TextStyle(
-                                                                  fontFamily: Constants.appFontBold,
-                                                                  fontSize:
-                                                                      ScreenUtil().setSp(16.0)),
+                                                                  fontFamily:
+                                                                      Constants.appFontBold,
+                                                                  fontSize: ScreenUtil().setSp(16.0)),
                                                             ),
                                                             GestureDetector(
                                                               onTap: () {
@@ -1879,14 +1802,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                         .like!
                                                                     ? SvgPicture.asset(
                                                                         'images/ic_filled_heart.svg',
-                                                                        color: Constants.colorLike,
+                                                                        color: Color(
+                                                                            Constants.colorLike),
                                                                         height: 20,
                                                                         width: 20,
                                                                       )
                                                                     : SvgPicture.asset(
                                                                         'images/ic_heart.svg',
                                                                         height: 20,
-                                                                        width: 20,
+                                                                        width:20,
                                                                       ),
                                                               ),
                                                             )
@@ -1898,7 +1822,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                             getExploreRestaurantsFood(index),
                                                             style: TextStyle(
                                                                 fontFamily: Constants.appFont,
-                                                                color: Constants.colorGray,
+                                                                color: Color(Constants.colorGray),
                                                                 fontSize: ScreenUtil().setSp(12.0)),
                                                           ),
                                                         ),
@@ -1906,8 +1830,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     ),
                                                   ),
                                                   Padding(
-                                                    padding: EdgeInsets.only(
-                                                        top: ScreenUtil().setHeight(10)),
+                                                    padding: EdgeInsets.only(top: ScreenUtil().setHeight(10)),
                                                     child: Container(
                                                       alignment: Alignment.topLeft,
                                                       child: Column(
@@ -1950,25 +1873,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                 child: Row(
                                                                   children: [
                                                                     RatingBar.builder(
-                                                                      initialRating:
-                                                                          _exploreResListData[index]
-                                                                              .rate
-                                                                              .toDouble(),
+                                                                      initialRating: _exploreResListData[index]
+                                                                          .rate
+                                                                          .toDouble(),
                                                                       ignoreGestures: true,
                                                                       minRating: 1,
                                                                       direction: Axis.horizontal,
-                                                                      itemSize:
-                                                                          ScreenUtil().setWidth(12),
+                                                                      itemSize: ScreenUtil().setWidth(12),
                                                                       allowHalfRating: true,
-                                                                      itemBuilder: (context, _) =>
-                                                                          Icon(
+                                                                      itemBuilder: (context, _) => Icon(
                                                                         Icons.star,
                                                                         color: Colors.amber,
-                                                                      ),
-                                                                      onRatingUpdate:
-                                                                          (double rating) {
-                                                                        print(rating);
-                                                                      },
+                                                                      ), onRatingUpdate: (double rating) {
+                                                                      print(rating);
+                                                                    },
                                                                     ),
                                                                     Text(
                                                                       '(${_exploreResListData[index].review})',
@@ -2022,7 +1940,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                             child: SvgPicture.asset(
                                                                               'images/ic_non_veg.svg',
                                                                               height: 10,
-                                                                              width: 10,
+                                                                              width:10,
                                                                             ),
                                                                           ),
                                                                         ],
@@ -2040,7 +1958,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                                             child: SvgPicture.asset(
                                                                               'images/ic_veg.svg',
                                                                               height: 10,
-                                                                              width: 10,
+                                                                              width:10,
                                                                             ),
                                                                           ),
                                                                           SvgPicture.asset(
@@ -2088,9 +2006,9 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {
         _isSyncing = true;
       });
-    try {
+    try{
       _allCuisineListData.clear();
-      response = await RestClient(RetroApi().dioData()).allCuisine();
+      response  = await RestClient(RetroApi().dioData()).allCuisine();
       print(response.success);
       if (response.success!) {
         if (mounted)
@@ -2105,7 +2023,8 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         Constants.toastMessage(Languages.of(context)!.labelNoData);
       }
-    } catch (error, stacktrace) {
+
+    }catch (error, stacktrace) {
       setState(() {
         _isSyncing = false;
       });
@@ -2117,13 +2036,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<BaseModel<NearByRestaurantModel>> callNearByRestaurants() async {
     NearByRestaurantModel response;
-    try {
+    try{
       _nearbyListData.clear();
       Map<String, String> body = {
         'lat': SharedPreferenceUtil.getString('selectedLat'),
         'lang': SharedPreferenceUtil.getString('selectedLng'),
       };
-      response = await RestClient(RetroApi().dioData()).nearBy(body);
+      response = await RestClient(RetroApi().dioData()).nearBy(body) ;
       print(response.success);
       if (response.success!) {
         if (mounted)
@@ -2137,23 +2056,23 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         Constants.toastMessage(Languages.of(context)!.labelNoData);
       }
-    } catch (error, stacktrace) {
+
+    }catch (error, stacktrace) {
       print("Exception occurred: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
-
     return BaseModel()..data = response;
   }
 
   Future<BaseModel<TopRestaurantsListModel>> callTopRestaurants() async {
     TopRestaurantsListModel response;
-    try {
+    try{
       _topListData.clear();
       Map<String, String> body = {
         'lat': SharedPreferenceUtil.getString('selectedLat'),
         'lang': SharedPreferenceUtil.getString('selectedLng'),
       };
-      response = await RestClient(RetroApi().dioData()).topRest(body);
+      response = await RestClient(RetroApi().dioData()).topRest(body) ;
       print(response.success);
       if (response.success!) {
         if (mounted)
@@ -2167,7 +2086,8 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         Constants.toastMessage(Languages.of(context)!.labelNoData);
       }
-    } catch (error, stacktrace) {
+
+    }catch (error, stacktrace) {
       print("Exception occurred: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
@@ -2176,13 +2096,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<BaseModel<VegRestaurantModel>> callVegRestaurants() async {
     VegRestaurantModel response;
-    try {
+    try{
       _vegListData.clear();
       Map<String, String> body = {
         'lat': SharedPreferenceUtil.getString('selectedLat'),
         'lang': SharedPreferenceUtil.getString('selectedLng'),
       };
-      response = await RestClient(RetroApi().dioData()).vegRest(body);
+      response = await  RestClient(RetroApi().dioData()).vegRest(body);
       print(response.success);
       if (response.success!) {
         if (mounted)
@@ -2196,7 +2116,8 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         Constants.toastMessage(Languages.of(context)!.labelNoData);
       }
-    } catch (error, stacktrace) {
+
+    }catch (error, stacktrace) {
       print("Exception occurred: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
@@ -2205,13 +2126,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<BaseModel<NonVegRestaurantModel>> callNonVegRestaurants() async {
     NonVegRestaurantModel response;
-    try {
+    try{
       _nonvegListData.clear();
       Map<String, String> body = {
         'lat': SharedPreferenceUtil.getString('selectedLat'),
         'lang': SharedPreferenceUtil.getString('selectedLng'),
       };
-      response = await RestClient(RetroApi().dioData()).nonVegRest(body);
+      response = await  RestClient(RetroApi().dioData()).nonVegRest(body);
       print(response.success);
       if (response.success!) {
         if (mounted)
@@ -2225,7 +2146,8 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         Constants.toastMessage(Languages.of(context)!.labelNoData);
       }
-    } catch (error, stacktrace) {
+
+    }catch (error, stacktrace) {
       print("Exception occurred: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
@@ -2234,13 +2156,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<BaseModel<ExploreRestaurantListModel>> callExploreRestaurants() async {
     ExploreRestaurantListModel response;
-    try {
+    try{
       _exploreResListData.clear();
       Map<String, String> body = {
         'lat': SharedPreferenceUtil.getString('selectedLat'),
         'lang': SharedPreferenceUtil.getString('selectedLng'),
       };
-      response = await RestClient(RetroApi().dioData()).exploreRest(body);
+      response  = await RestClient(RetroApi().dioData()).exploreRest(body);
       print(response.success);
       if (response.success!) {
         if (mounted)
@@ -2254,7 +2176,7 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         Constants.toastMessage(Languages.of(context)!.labelNoData);
       }
-    } catch (error, stacktrace) {
+    }catch (error, stacktrace) {
       print("Exception occurred: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
@@ -2263,15 +2185,15 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<BaseModel<CommenRes>> callAddRemoveFavorite(int? vegRestId) async {
     CommenRes response;
-    try {
+    try{
       if (mounted)
-        setState(() {
-          _isSyncing = true;
-        });
-      Map<String, String> body = {
-        'id': vegRestId.toString(),
-      };
-      response = await RestClient(RetroApi().dioData()).favorite(body);
+      setState(() {
+        _isSyncing = true;
+      });
+    Map<String, String> body = {
+      'id': vegRestId.toString(),
+    };
+      response  = await  RestClient(RetroApi().dioData()).favorite(body);
       if (mounted)
         setState(() {
           _isSyncing = false;
@@ -2288,7 +2210,7 @@ class _HomeScreenState extends State<HomeScreen> {
       } else {
         Constants.toastMessage(Languages.of(context)!.labelErrorWhileUpdate);
       }
-    } catch (error, stacktrace) {
+    }catch (error, stacktrace) {
       print("Exception occurred: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
@@ -2297,22 +2219,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Future<BaseModel<BannerResponse>> getBanners() async {
     BannerResponse response;
-    try {
-      response = await RestClient(RetroApi().dioData()).getBanner();
-      if (response.data != null) {
+    try{
+      response  = await RestClient(RetroApi().dioData()).getBanner();
+      if(response.data != null){
         setState(() {
           print("check bannwe lwngrh ${response.data!.length}");
           banenrList = response.data!;
         });
-      } else {
+      }else{
         banenrList = [];
       }
-    } catch (error, stacktrace) {
+
+    }catch (error, stacktrace) {
       print("Exception occurred: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
     return BaseModel()..data = response;
   }
+
 
   String getRestaurantsFood(int index) {
     restaurantsFood.clear();

@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/preference_utils.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/preference_utils.dart';
 
 class RetroApi {
 
@@ -13,6 +13,7 @@ class RetroApi {
     dio.options.followRedirects = false;
     dio.options.connectTimeout = 75000; //5s
     dio.options.receiveTimeout = 3000;
+    print('call api');
     return dio;
   }
 }

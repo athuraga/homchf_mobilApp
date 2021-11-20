@@ -7,26 +7,27 @@ import 'package:flutter_svg/svg.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mealup/main.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/model/update_address_model.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/manage_your_location.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/rounded_corner_app_button.dart';
-import 'package:mealup/utils_google_map/address_search.dart';
-import 'package:mealup/utils_google_map/place_service.dart';
+import 'package:homchf/main.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/model/update_address_model.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/manage_your_location.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/rounded_corner_app_button.dart';
+import 'package:homchf/utils_google_map/address_search.dart';
+import 'package:homchf/utils_google_map/place_service.dart';
 
 import 'package:google_api_headers/google_api_headers.dart';
 import 'package:flutter_google_places/flutter_google_places.dart';
 import 'package:google_maps_webservice/places.dart';
 import 'package:geocoder/geocoder.dart';
 import 'package:geocoder/services/base.dart';
+
 class AddAddressScreen extends StatefulWidget {
   final bool isFromAddAddress;
   final double? currentLat, currentLong;
@@ -153,13 +154,13 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(left: 10),
-                                    hintText: 'full address',
+                                    hintText: 'type full address and tap "search location"',
                                     border: InputBorder.none),
                                 maxLines: 3,
                                 style: TextStyle(
                                   fontFamily: Constants.appFont,
                                   fontSize: 16,
-                                  color: Constants.colorGray,
+                                  color: Color(Constants.colorGray),
                                 ),
                               ),
                             ),
@@ -173,7 +174,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           strLongitude = '';
                           strSearchedAddress = '';
                           final query = _textFullAddress.text.toString();
-                          var addresses = await Geocoder.google('AIzaSyAFlsWFleswXOL-YQ65Hv1tst9KEXTzzMM').findAddressesFromQuery(query);
+                          var addresses = await Geocoder.google('AIzaSyBlPBZZgOLEDGUSQ9U7xFMWymaFlf9uyvQ').findAddressesFromQuery(query);
                           var first = addresses.first;
                           strSearchedAddress = first.addressLine.toString();
                           strLatitude = first.coordinates.latitude.toString();
@@ -209,7 +210,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                           // }
                         },
                         child: Container(
-                        color: Constants.colorTheme,
+                        color: Color(Constants.colorTheme),
                         padding: const EdgeInsets.all(6),
                         
                           child: RichText(
@@ -221,7 +222,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   child: SvgPicture.asset(
                                     'images/search.svg',
                                     width: ScreenUtil().setWidth(15),
-                                    color: Constants.colorWhite,
+                                    color: Color(Constants.colorLightGray),
                                     height: ScreenUtil().setHeight(15),
                                   ),
                                 ),
@@ -229,7 +230,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                               TextSpan(
                                 text: Languages.of(context)!.labelSearchLocation,
                                 style: TextStyle(
-                                    color: Constants.colorWhite,
+                                    color: Color(Constants.colorLightGray),
                                     fontFamily: Constants.appFontBold,
                                     fontWeight: FontWeight.bold,
                                     fontSize: 16),
@@ -245,7 +246,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                         child: Text(
                           strSearchedAddress,
                           style:
-                              TextStyle(color: Constants.colorGray, fontFamily: Constants.appFont),
+                              TextStyle(color: Color(Constants.colorGray), fontFamily: Constants.appFont),
                         ),
                       ),
                       Padding(
@@ -281,7 +282,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                 style: TextStyle(
                                   fontFamily: Constants.appFont,
                                   fontSize: 16,
-                                  color: Constants.colorGray,
+                                  color: Color(Constants.colorGray),
                                 ),
                               ),
                             ),
@@ -310,7 +311,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       //           style: TextStyle(
                       //             fontFamily: Constants.appFont,
                       //             fontSize: 16,
-                      //             color: Constants.colorGray,
+                      //             color: Color(Constants.colorGray),
                       //           ),
                       //         ),
                       //       ),
@@ -339,7 +340,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                       //           style: TextStyle(
                       //             fontFamily: Constants.appFont,
                       //             fontSize: 16,
-                      //             color: Constants.colorGray,
+                      //             color: Color(Constants.colorGray),
                       //           ),
                       //         ),
                       //       ),
@@ -373,7 +374,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   hintStyle: TextStyle(
                                     fontSize: 16,
                                     fontFamily: Constants.appFont,
-                                    color: Constants.colorGray,
+                                    color: Color(Constants.colorGray),
                                   ),
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide.none,
@@ -470,7 +471,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                     hintStyle: TextStyle(
                                       fontSize: 14,
                                       fontFamily: Constants.appFont,
-                                      color: Constants.colorGray,
+                                      color: Color(Constants.colorGray),
                                     ),
                                     border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
@@ -493,7 +494,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                               'images/ic_map.svg',
                               width: 18,
                               height: 18,
-                              color: Constants.colorTheme,
+                              color: Color(Constants.colorTheme),
                             ),
                             Expanded(
                               child: Padding(
@@ -504,7 +505,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                   style: TextStyle(
                                       fontSize: 13,
                                       fontFamily: Constants.appFont,
-                                      color: Constants.colorBlack),
+                                      color: Color(Constants.colorBlack),
+                                  )
                                 ),
                               ),
                             )
@@ -532,7 +534,7 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: Constants.appFontBold,
-                                      color: Constants.colorGray),
+                                      color: Color(Constants.colorGray)),
                                 ),
                               ),
                               Padding(
@@ -562,7 +564,8 @@ class _AddAddressScreenState extends State<AddAddressScreen> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                         fontFamily: Constants.appFontBold,
-                                        color: Constants.colorBlue),
+                                        color: Color(Constants.colorBlue),
+                                    )
                                   ),
                                 ),
                               ),

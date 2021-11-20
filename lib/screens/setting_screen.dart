@@ -1,18 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/about_app_screen.dart';
-import 'package:mealup/screens/about_company_screen.dart';
-import 'package:mealup/screens/auth/change_password_user.dart';
-import 'package:mealup/screens/feedback_and_support_screen.dart';
-import 'package:mealup/screens/languages_screen.dart';
-import 'package:mealup/screens/privacy_policy_screen.dart';
-import 'package:mealup/screens/terms_of_use_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/about_app_screen.dart';
+import 'package:homchf/screens/about_company_screen.dart';
+import 'package:homchf/screens/auth/change_password_user.dart';
+import 'package:homchf/screens/feedback_and_support_screen.dart';
+import 'package:homchf/screens/languages_screen.dart';
+import 'package:homchf/screens/privacy_policy_screen.dart';
+import 'package:homchf/screens/terms_of_use_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 import 'edit_personal_information.dart';
 import 'manage_your_location.dart';
 
@@ -198,7 +198,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                 SharedPreferenceUtil.getString(Constants
                                     .appSettingAndroidCustomerVersion),
                             style: TextStyle(
-                                color: Constants.colorGray,
+                                color: Color(Constants.colorGray),
                                 fontSize: ScreenUtil().setSp(12),
                                 fontFamily: Constants.appFont),
                             textAlign: TextAlign.center,

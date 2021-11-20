@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mealup/utils/constants.dart';
+import 'package:homchf/utils/constants.dart';
 
 class LoginScreen1 extends StatefulWidget {
   @override
@@ -62,7 +62,7 @@ class _LoginScreenState extends State<LoginScreen1> {
                               decoration: InputDecoration(
                                   hintText: 'Enter Your Email ID',
                                   hintStyle:
-                                  TextStyle(color: Constants.colorHint),
+                                  TextStyle(color: Color(Constants.colorHint)),
                                   border: InputBorder.none),
                             ),
                           ),
@@ -104,7 +104,7 @@ class _LoginScreenState extends State<LoginScreen1> {
                               obscureText: true,
                               decoration: InputDecoration(
                                   hintStyle:
-                                  TextStyle(color: Constants.colorHint),
+                                  TextStyle(color: Color(Constants.colorHint)),
                                   hintText: 'Enter Your Password',
                                   suffixIcon: IconButton(
                                       icon: Icon(
@@ -112,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen1> {
                                         _passwordVisible
                                             ? Icons.visibility
                                             : Icons.visibility_off,
-                                        color: Constants.colorTheme,
+                                        color: Color(Constants.colorTheme),
                                       ),
                                       onPressed: () {
                                         setState(() {
@@ -147,7 +147,7 @@ class _LoginScreenState extends State<LoginScreen1> {
                                           onChanged: (state) => setState(
                                                   () => isRememberMe = !isRememberMe),
                                           activeColor: Colors.transparent,
-                                          checkColor: Constants.colorTheme,
+                                          checkColor: Color(Constants.colorTheme),
                                           materialTapTargetSize:
                                           MaterialTapTargetSize.padded,
                                         ),
@@ -168,8 +168,8 @@ class _LoginScreenState extends State<LoginScreen1> {
                           padding: EdgeInsets.all(10.0),
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              primary: Constants.colorTheme,
-                              onPrimary: Constants.colorWhite,
+                              primary: Color(Constants.colorTheme),
+                              onPrimary: Colors.white,
                               shape:   RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0),),
                             ),
                             child: Padding(

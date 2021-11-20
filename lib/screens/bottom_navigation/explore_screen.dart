@@ -4,23 +4,23 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mealup/componants/custom_appbar.dart';
-import 'package:mealup/model/AllCuisinesModel.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/model/exploreRestaurantsListModel.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/offer_screen.dart';
-import 'package:mealup/screens/restaurants_details_screen.dart';
-import 'package:mealup/screens/search_screen.dart';
-import 'package:mealup/screens/set_location_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_toolbar_with_btn_clr.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/componants/custom_appbar.dart';
+import 'package:homchf/model/AllCuisinesModel.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/model/exploreRestaurantsListModel.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/offer_screen.dart';
+import 'package:homchf/screens/restaurants_details_screen.dart';
+import 'package:homchf/screens/search_screen.dart';
+import 'package:homchf/screens/set_location_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_toolbar_with_btn_clr.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -236,12 +236,12 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                     commaSeparated, sortBy, quickFilter);
                               },
                               child: Container(
-                                color: Constants.colorTheme,
+                                color: Color(Constants.colorTheme),
                                 child: Center(
                                   child: Text(
                                     Languages.of(context)!.labelApplyFilter,
                                     style: TextStyle(
-                                        color: Constants.colorWhite,
+                                        color: Colors.white,
                                         fontFamily: Constants.appFont,
                                         fontSize: ScreenUtil().setSp(16)),
                                   ),
@@ -255,7 +255,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     appBar: ApplicationToolbarWithClrBtn(
                       appbarTitle: Languages.of(context)!.labelFilter,
                       strButtonTitle: Languages.of(context)!.labelClear,
-                      btnColor: Constants.colorTheme,
+                      btnColor: Color(Constants.colorTheme),
                       onBtnPress: () {
                         Navigator.pop(context);
 
@@ -473,7 +473,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
           height: 15,
         ),
       ),
-      decoration: myBoxDecorationChecked(false, Constants.colorTheme),
+      decoration: myBoxDecorationChecked(false, Color(Constants.colorTheme)),
     );
   }
 
@@ -481,7 +481,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
     return Container(
       width: 25,
       height: 25,
-      decoration: myBoxDecorationChecked(true, Constants.colorWhite),
+      decoration: myBoxDecorationChecked(true, Colors.white),
     );
   }
 
@@ -559,7 +559,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       message: Languages.of(context).labelPleaseWait,
       borderRadius: 5.0,
       backgroundColor: Colors.white,
-      progressWidget: SpinKitFadingCircle(color: Constants.colorTheme),
+      progressWidget: SpinKitFadingCircle(color: Color(Constants.colorTheme)),
       elevation: 10.0,
       insetAnimCurve: Curves.easeInOut,
       progressTextStyle: TextStyle(
@@ -613,7 +613,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
         body: SmartRefresher(
           enablePullDown: true,
           header: MaterialClassicHeader(
-            backgroundColor: Constants.colorTheme,
+            backgroundColor: Color(Constants.colorTheme),
+            color: Colors.white,
           ),
           controller: _refreshController,
           onRefresh: _onRefresh,
@@ -675,7 +676,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                               fit: BoxFit.fill,
                                               placeholder: (context, url) =>
                                                   SpinKitFadingCircle(
-                                                      color: Constants.colorTheme),
+                                                      color: Color(Constants
+                                                          .colorTheme)),
                                               errorWidget:
                                                   (context, url, error) =>
                                                       Container(
@@ -747,7 +749,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                                       ? SvgPicture
                                                                           .asset(
                                                                           'images/ic_filled_heart.svg',
-                                                                          color: Constants.colorLike,
+                                                                          color: Color(Constants.colorLike),
                                                                           height: ScreenUtil().setHeight(20.0),
                                                                           width: ScreenUtil().setWidth(20.0),
                                                                         )
@@ -780,9 +782,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                                                   fontFamily:
                                                                       Constants
                                                                           .appFont,
-                                                                  color:
+                                                                  color: Color(
                                                                       Constants
-                                                                          .colorGray,
+                                                                          .colorGray),
                                                                   fontSize: ScreenUtil()
                                                                       .setSp(
                                                                           12.0)),
@@ -985,7 +987,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                     style: TextStyle(
                                       fontSize: ScreenUtil().setSp(18),
                                       fontFamily: Constants.appFontBold,
-                                      color: Constants.colorTheme,
+                                      color: Color(Constants.colorTheme),
                                     ),
                                   ),
                                 )

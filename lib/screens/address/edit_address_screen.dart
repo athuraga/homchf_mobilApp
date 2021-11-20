@@ -5,19 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:geocoder/geocoder.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:mealup/model/update_address_model.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/manage_your_location.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/rounded_corner_app_button.dart';
-import 'package:mealup/utils_google_map/address_search.dart';
-import 'package:mealup/utils_google_map/place_service.dart';
+import 'package:homchf/model/update_address_model.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/manage_your_location.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/rounded_corner_app_button.dart';
+import 'package:homchf/utils_google_map/address_search.dart';
+import 'package:homchf/utils_google_map/place_service.dart';
 
 import 'package:uuid/uuid.dart';
 
@@ -51,6 +52,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
 
 
   TextEditingController _textFullAddress = new TextEditingController();
+  TextEditingController _textFullAddress1 = new TextEditingController();
+
   //TextEditingController _textLandmark = new TextEditingController();
   TextEditingController _textAddressLable = new TextEditingController();
 
@@ -187,60 +190,92 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
+                      Padding(
+                        padding: const EdgeInsets.only(top: 5),
+                        child: Container(
+                          height: 100,
+                          child: Card(
+                            elevation: 3,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: TextField(
+                                controller: _textFullAddress,
+                                keyboardType: TextInputType.text,
+                                decoration: InputDecoration(
+                                    contentPadding: EdgeInsets.only(left: 10),
+                                    hintText: 'type full address and tap "search location"',
+                                    border: InputBorder.none),
+                                maxLines: 3,
+                                style: TextStyle(
+                                  fontFamily: Constants.appFont,
+                                  fontSize: 16,
+                                  color: Color(Constants.colorGray),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       GestureDetector(
                         onTap: () async {
-                          // generate a new token here
-                          //final sessionToken = Uuid().v4();
-                          final Suggestion1? result = await showSearch(
-                            context: context,
-                            delegate: AddressSearch(),
-                          );
-                          // This will change the text displayed in the TextField
-                          if (result != null) {
-                            final placeDetails =
-                                await PlaceApiProvider()
-                                    .getPlaceDetailFromId(result.placeId);
-                            setState(() {
-
-                              String address = '';
-                              address = result.description + '\n';
-                              if (placeDetails.street != null)
-                                address = address + placeDetails.street! + ' ';
-                              if(placeDetails.city != null)
-                                address = address + placeDetails.city!;
-                              _textFullAddress.text = address;
-                              strSearchedAddress = address;
-                              print(result.lat);
-                              print(result.longi);
-                              strLongitude = result.longi.toString();
-                              strLatitude = result.lat.toString();
-
-                              _controller.animateCamera(
+                          // final sessionToken = Uuid().v4();
+                          
+                          // strSearchedAddress = '';
+                          final query = _textFullAddress.text.toString();
+                          var addresses = await Geocoder.google('AIzaSyBlPBZZgOLEDGUSQ9U7xFMWymaFlf9uyvQ').findAddressesFromQuery(query);
+                          var first = addresses.first;
+                          strSearchedAddress = first.addressLine.toString();
+                          strLatitude = first.coordinates.latitude.toString();
+                          strLongitude = first.coordinates.longitude.toString();
+                          var strLatitude1 = first.coordinates.latitude.toString();
+                          var strLongitude1 = first.coordinates.longitude.toString();
+                          _controller.animateCamera(
                                 CameraUpdate.newCameraPosition(
                                   CameraPosition(
-                                      target: LatLng(double.parse(strLatitude!),
-                                          double.parse(strLongitude!)),
+                                      target: LatLng(
+                                          double.parse(strLatitude1), double.parse(strLongitude1)),
                                       zoom: 18),
                                 ),
                               );
-                              _initialCameraPosition = LatLng(
-                                  double.parse(strLatitude!),
-                                  double.parse(strLongitude!));
+                              _initialCameraPosition =
+                                  LatLng(double.parse(strLatitude1), double.parse(strLongitude1));
                               _createMarker();
-                            });
-                          }
+                          // if (result != null) {
+                          //   final placeDetails = await PlaceApiProvider()
+                          //       .getPlaceDetailFromId(result.placeId);
+                          //   setState(() async {
+                          //     String address = '';
+                          //     address = result.description + '\n';
+                          //     if (placeDetails.street != null)
+                          //       address = address + placeDetails.street! + ' ';
+                          //     if (placeDetails.city != null) address = address + placeDetails.city!;
+                          //     _textFullAddress.text = address;
+                          //     strSearchedAddress = address;
+                          //     print(result.lat);
+                          //     print(result.longi);
+                          //     strLongitude = result.longi.toString();
+                          //     strLatitude = result.lat.toString();
+                              
+                          //   });
+                          // }
                         },
-                        child: RichText(
+                        child: Container(
+                        color: Color(Constants.colorTheme),
+                        padding: const EdgeInsets.all(6),
+                        
+                          child: RichText(
                           text: TextSpan(
                             children: [
                               WidgetSpan(
                                 child: Padding(
-                                  padding: EdgeInsets.only(
-                                      right: ScreenUtil().setHeight(10)),
+                                  padding: EdgeInsets.only(right: ScreenUtil().setHeight(10)),
                                   child: SvgPicture.asset(
                                     'images/search.svg',
                                     width: ScreenUtil().setWidth(15),
-                                    color: Constants.colorBlack,
+                                    color: Color(Constants.colorLightGray),
                                     height: ScreenUtil().setHeight(15),
                                   ),
                                 ),
@@ -248,13 +283,15 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                               TextSpan(
                                 text: Languages.of(context)!.labelSearchLocation,
                                 style: TextStyle(
-                                    color: Constants.colorBlack,
+                                    color: Color(Constants.colorLightGray),
                                     fontFamily: Constants.appFontBold,
                                     fontWeight: FontWeight.bold,
-                                    fontSize: ScreenUtil().setSp(16)),
+                                    fontSize: 16),
                               ),
                             ],
                           ),
+                          textAlign: TextAlign.center,
+                        ),
                         ),
                       ),
                       Padding(
@@ -262,7 +299,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                         child: Text(
                           strSearchedAddress!,
                           style: TextStyle(
-                              color: Constants.colorGray,
+                              color: Color(Constants.colorGray),
                               fontFamily: Constants.appFont),
                         ),
                       ),
@@ -288,7 +325,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: TextField(
-                                controller: _textFullAddress,
+                                controller: _textFullAddress1,
                                 keyboardType: TextInputType.text,
                                 decoration: InputDecoration(
                                     contentPadding: EdgeInsets.only(left: 10),
@@ -299,8 +336,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                 style: TextStyle(
                                     fontFamily: Constants.appFont,
                                     fontSize: 16,
-                                    color:
-                                      Constants.colorGray,
+                                    color: Color(Constants.colorGray),
                                     ),
                               ),
                             ),
@@ -335,7 +371,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                   hintStyle: TextStyle(
                                     fontSize: 16,
                                     fontFamily: Constants.appFont,
-                                    color: Constants.colorGray,
+                                    color: Color(Constants.colorGray),
                                   ),
                                   border: OutlineInputBorder(
                                     borderSide: BorderSide.none,
@@ -431,7 +467,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                     hintStyle: TextStyle(
                                       fontSize: 14,
                                       fontFamily: Constants.appFont,
-                                      color: Constants.colorGray,
+                                      color: Color(Constants.colorGray),
                                     ),
                                     border: OutlineInputBorder(
                                       borderSide: BorderSide.none,
@@ -454,7 +490,7 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                               'images/ic_map.svg',
                               width: 18,
                               height: ScreenUtil().setHeight(18),
-                              color: Constants.colorTheme,
+                              color: Color(Constants.colorTheme),
                             ),
                             Expanded(
                               child: Padding(
@@ -466,7 +502,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                   style: TextStyle(
                                       fontSize: 13,
                                       fontFamily: Constants.appFont,
-                                      color: Constants.colorBlack),
+                                      color: Color(Constants.colorBlack),
+                                  )
                                 ),
                               ),
                             )
@@ -494,7 +531,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                       fontSize: 14,
                                       fontWeight: FontWeight.bold,
                                       fontFamily: Constants.appFontBold,
-                                      color: Constants.colorGray),
+                                      color: Color(Constants.colorGray),
+                                  )
                                 ),
                               ),
                               Padding(
@@ -520,7 +558,8 @@ class _EditAddressScreenState extends State<EditAddressScreen> {
                                         fontSize: 14,
                                         fontWeight: FontWeight.bold,
                                         fontFamily: Constants.appFontBold,
-                                        color: Constants.colorBlue),
+                                        color: Color(Constants.colorBlue),
+                                    )
                                   ),
                                 ),
                               ),

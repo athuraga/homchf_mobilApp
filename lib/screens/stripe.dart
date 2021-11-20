@@ -1,18 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:mealup/model/cartmodel.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/order_history_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/database_helper.dart';
-import 'package:mealup/utils/rounded_corner_app_button.dart';
+import 'package:homchf/model/cartmodel.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/order_history_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/database_helper.dart';
+import 'package:homchf/utils/rounded_corner_app_button.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:scoped_model/scoped_model.dart';
 
@@ -38,7 +38,7 @@ class PaymentStripe extends StatefulWidget {
   // final double orderItem;
   final List<Map<String, dynamic>>? orderItem;
   final List<Map<String, dynamic>>? allTax;
-
+  final String? strScheduleOrder;
   const PaymentStripe(
       {Key? key,
       this.venderId,
@@ -54,26 +54,26 @@ class PaymentStripe extends StatefulWidget {
       this.orderItem,
       this.vendorDiscountAmount,
       this.vendorDiscountId,
-      this.allTax})
+      this.allTax,
+      this.strScheduleOrder})
       : super(key: key);
   @override
   _PaymentStripeState createState() => _PaymentStripeState();
 }
 
 class _PaymentStripeState extends State<PaymentStripe> {
-
   final dbHelper = DatabaseHelper.instance;
 
   String? expDate;
   String? cvv;
 
- // String patmentType;
+  // String patmentType;
 
   Token? _paymentToken;
- // PaymentMethod _paymentMethod;
- // String _error;
+  // PaymentMethod _paymentMethod;
+  // String _error;
 //  String _currentSecret; //set this yourself, e.g using curl
- // PaymentIntentResult _paymentIntent;
+  // PaymentIntentResult _paymentIntent;
 //  Source _source;
   String? stripePublicKey;
   String? stripeSecretKey;
@@ -95,8 +95,10 @@ class _PaymentStripeState extends State<PaymentStripe> {
   initState() {
     super.initState();
     // getStripePublishKey();
-    stripeSecretKey = SharedPreferenceUtil.getString(Constants.appStripeSecretKey);
-    stripePublicKey = SharedPreferenceUtil.getString(Constants.appStripePublishKey);
+    stripeSecretKey =
+        SharedPreferenceUtil.getString(Constants.appStripeSecretKey);
+    stripePublicKey =
+        SharedPreferenceUtil.getString(Constants.appStripePublishKey);
     StripePayment.setOptions(StripeOptions(
         publishableKey: "$stripePublicKey",
         merchantId: "Test",
@@ -114,9 +116,10 @@ class _PaymentStripeState extends State<PaymentStripe> {
         androidPayMode: 'test'));
   }
 
-   setError(dynamic error) {
+  setError(dynamic error) {
     showSpinner = false;
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error.toString())));
+    ScaffoldMessenger.of(context)
+        .showSnackBar(SnackBar(content: Text(error.toString())));
     setState(() {
       //_error = error.toString();
     });
@@ -134,8 +137,7 @@ class _PaymentStripeState extends State<PaymentStripe> {
 
   @override
   Widget build(BuildContext context) {
-
-   /* progressDialog.style(
+    /* progressDialog.style(
       message: Languages.of(context).labelPleaseWait,
       borderRadius: 5.0,
       backgroundColor: Colors.white,
@@ -166,7 +168,7 @@ class _PaymentStripeState extends State<PaymentStripe> {
       body: ModalProgressHUD(
         inAsyncCall: showSpinner,
         child: Container(
-          color: Constants.colorWhite,
+          color: Colors.white,
           child: ListView(
             scrollDirection: Axis.vertical,
             controller: _controller,
@@ -180,9 +182,13 @@ class _PaymentStripeState extends State<PaymentStripe> {
               ),
               SingleChildScrollView(
                 child: CreditCardForm(
-                  cvvCode: cvvCode, cardHolderName:  cardHolderName, cardNumber: cardNumber,
-                  expiryDate: expiryDate, themeColor: Colors.grey,
-                  onCreditCardModelChange: onCreditCardModelChange,formKey: new GlobalKey<FormState>() ,
+                  cvvCode: cvvCode,
+                  cardHolderName: cardHolderName,
+                  cardNumber: cardNumber,
+                  expiryDate: expiryDate,
+                  themeColor: Colors.grey,
+                  onCreditCardModelChange: onCreditCardModelChange,
+                  formKey: new GlobalKey<FormState>(),
                 ),
               ),
               SizedBox(height: 20.0),
@@ -208,7 +214,8 @@ class _PaymentStripeState extends State<PaymentStripe> {
                             name: '$cardHolderName',
                           ),
                         ).then((token) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Payment Completed')));
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text('Payment Completed')));
                           setState(() {
                             showSpinner = false;
                             _paymentToken = token;
@@ -234,7 +241,7 @@ class _PaymentStripeState extends State<PaymentStripe> {
 
   Future<BaseModel<CommenRes>> placeOrder() async {
     CommenRes response;
-    try{
+    try {
       Constants.onLoading(context);
 
       print('without ${json.encode(widget.orderItem.toString())}');
@@ -265,8 +272,9 @@ class _PaymentStripeState extends State<PaymentStripe> {
         // 'item': '[{\'id\':\'11\',\'price\':\'200\',\'qty\':\'1\'},{\'id\':\'10\',\'price\':\'195\',\'qty\':\'3\'}]',
         'amount': widget.orderAmount.toString(),
         'delivery_type': widget.orderDeliveryType,
-        'address_id':
-        widget.orderDeliveryType == 'SHOP' ? '' : widget.addressId.toString(),
+        'address_id': widget.orderDeliveryType == 'SHOP'
+            ? ''
+            : widget.addressId.toString(),
         'delivery_charge': widget.orderDeliveryCharge,
         'payment_type': 'STRIPE',
         'payment_status': '1',
@@ -284,7 +292,7 @@ class _PaymentStripeState extends State<PaymentStripe> {
         'tax': json.encode(widget.allTax).toString(),
       };
 
-      response  = await RestClient(RetroApi().dioData()).bookOrder(body);
+      response = await RestClient(RetroApi().dioData()).bookOrder(body);
       Constants.hideDialog(context);
       print(response);
       print(response.success);
@@ -302,21 +310,15 @@ class _PaymentStripeState extends State<PaymentStripe> {
                 isFromProfile: false,
               ),
             ),
-                (Route<dynamic> route) => true);
+            (Route<dynamic> route) => true);
       } else {
-       if(response.data != null) {
-          Constants.toastMessage(response.data!);
-        }else{
-          Constants.toastMessage('Error while place order.');
-        }
+        Constants.toastMessage('Errow while place order.');
       }
-
-    }catch (error, stacktrace) {
-     Constants.hideDialog(context);
+    } catch (error, stacktrace) {
+      Constants.hideDialog(context);
       print("Exception occurred: $error stackTrace: $stacktrace");
       return BaseModel()..setException(ServerError.withError(error: error));
     }
     return BaseModel()..data = response;
   }
-
 }

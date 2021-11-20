@@ -4,22 +4,22 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mealup/model/check_opt_model.dart';
-import 'package:mealup/model/check_otp_model_for_forgot_password.dart';
-import 'package:mealup/model/send_otp_model.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/auth/login_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_lable_widget.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/hero_image_app_logo.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/rounded_corner_app_button.dart';
+import 'package:homchf/model/check_opt_model.dart';
+import 'package:homchf/model/check_otp_model_for_forgot_password.dart';
+import 'package:homchf/model/send_otp_model.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/auth/login_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_lable_widget.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/hero_image_app_logo.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/rounded_corner_app_button.dart';
 
 import 'auth/change_password_1.dart';
 
@@ -232,7 +232,7 @@ class _OTPScreenState extends State<OTPScreen> {
                         child: Text(
                           Languages.of(context)!.labelOTPBottomLine,
                           style: TextStyle(
-                            color: Constants.colorGray,
+                            color: Color(Constants.colorGray),
                             fontSize: ScreenUtil().setSp(10),
                           ),
                           textAlign: TextAlign.center,
@@ -402,10 +402,10 @@ class OTPTextField extends StatelessWidget {
               style: TextStyle(
                   fontFamily: Constants.appFont,
                   fontSize: ScreenUtil().setSp(25),
-                  color: Constants.colorGray),
+                  color: Color(Constants.colorGray)),
               decoration: InputDecoration(
                   hintStyle: TextStyle(
-                    color: Constants.colorHint,
+                    color: Color(Constants.colorHint),
                   ),
                   border: InputBorder.none),
             ),

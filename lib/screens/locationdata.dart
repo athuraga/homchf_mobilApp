@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mealup/utils/constants.dart';
 
 class LocationData extends StatelessWidget {
   final String? location;
@@ -23,7 +22,7 @@ class LocationData extends StatelessWidget {
     // ScreenUtil.init(context,designSize: Size(defaultScreenWidth, defaultScreenHeight) ,allowFontScaling: true);
 
     return new Container(
-        color: Constants.colorWhite,
+        color: Colors.white,
 
         child: Container(
           alignment: Alignment.topLeft,
@@ -58,7 +57,7 @@ class LocationData extends StatelessWidget {
                     child: Column(
                       children: [
                         Text(
-                          'Vishwashanti marg',
+                          'Hisings Backa',
                           style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.w600,
@@ -67,7 +66,7 @@ class LocationData extends StatelessWidget {
                         ),
 
                         Text(
-                          'Pune, Maharastra, india',
+                          'Gothenburg, Sweden',
                           style: TextStyle(
                               color: Colors.grey,
                               fontWeight: FontWeight.w600,

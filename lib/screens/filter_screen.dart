@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/model/AllCuisinesModel.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/utils/app_toolbar_with_btn_clr.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/model/AllCuisinesModel.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/utils/app_toolbar_with_btn_clr.dart';
 
 
 class FilterScreen extends StatefulWidget {
@@ -123,12 +123,12 @@ class _FilterScreenState extends State<FilterScreen> {
                     print('Selected cuisine Id : ---' + commaSeparated);
                   },
                   child: Container(
-                    color: Constants.colorTheme,
+                    color: Color(Constants.colorTheme),
                     child: Center(
                       child: Text(
                         'Apply Filter',
                         style: TextStyle(
-                            color: Constants.colorWhite,
+                            color: Colors.white,
                             fontFamily: Constants.appFont,
                             fontSize: ScreenUtil().setSp(16)),
                       ),
@@ -142,7 +142,7 @@ class _FilterScreenState extends State<FilterScreen> {
         appBar: ApplicationToolbarWithClrBtn(
           appbarTitle: 'Filter',
           strButtonTitle: 'Clear',
-          btnColor: Constants.colorTheme,
+          btnColor: Color(Constants.colorTheme),
           onBtnPress: () {
             selectedCuisineListId.clear();
             radioindex = null;
@@ -319,7 +319,7 @@ class _FilterScreenState extends State<FilterScreen> {
           height: ScreenUtil().setHeight(15),
         ),
       ),
-      decoration: myBoxDecorationChecked(false, Constants.colorTheme),
+      decoration: myBoxDecorationChecked(false, Color(Constants.colorTheme)),
     );
   }
 
@@ -327,7 +327,7 @@ class _FilterScreenState extends State<FilterScreen> {
     return Container(
       width: 25,
       height: ScreenUtil().setHeight(25),
-      decoration: myBoxDecorationChecked(true, Constants.colorWhite),
+      decoration: myBoxDecorationChecked(true, Colors.white),
     );
   }
 

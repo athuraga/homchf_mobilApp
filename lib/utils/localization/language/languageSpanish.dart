@@ -1,4 +1,4 @@
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 
 class LanguageSpanish extends Languages {
   @override
@@ -9,9 +9,6 @@ class LanguageSpanish extends Languages {
 
   @override
   String get labelEditPersonalInfo => 'Editar información personal';
-
-  @override
-  String get labelSavePersonalInfo => 'Guardar información personal';
 
   @override
   String get labelFAQs => 'preguntas frecuentes';
@@ -29,7 +26,7 @@ class LanguageSpanish extends Languages {
   String get labelManageYourLocation => 'Administra tu ubicación';
 
   @override
-  String get labelMealupAppVersion => 'Versión de la aplicación ';
+  String get labelMealupAppVersion => 'Versión de la aplicación Mealup ';
 
   @override
   String get labelPrivacyPolicy => 'Política de privacidad';
@@ -214,7 +211,8 @@ class LanguageSpanish extends Languages {
   String get labelTopRest => 'Mejores restaurantes';
 
   @override
-  String get labelSelectAddress => 'Seleccionar dirección';
+  // String get labelSelectAddress => 'Seleccionar dirección';
+  String get labelSelectAddress => 'Dirección de búsqueda';
 
   @override
   String get labelNoRestNear => 'No se ha encontrado ningún restaurante cerca de usted.';

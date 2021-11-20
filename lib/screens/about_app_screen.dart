@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 
 class AboutApp extends StatefulWidget {
   @override
@@ -47,16 +47,16 @@ class _AboutAppState extends State<AboutApp> {
                           SharedPreferenceUtil.getString(
                               Constants.appSettingAndroidCustomerVersion),
                       style: TextStyle(
-                        color: Constants.colorGray,
+                        color: Color(Constants.colorGray),
                         fontFamily: Constants.appFont,
                         fontSize: ScreenUtil().setSp(12.0),
                       ),
                     ),
                   ),
                   Text(
-                    '\u00a9 2020-2021 Mealup',
+                    '\u00a9 2021-2022 Coriandis',
                     style: TextStyle(
-                      color: Constants.colorGray,
+                      color: Color(Constants.colorGray),
                       fontFamily: Constants.appFont,
                       fontSize: ScreenUtil().setSp(16.0),
                     ),

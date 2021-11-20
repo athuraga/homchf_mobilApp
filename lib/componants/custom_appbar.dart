@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 
 // ignore: must_be_immutable
 class CustomAppbar extends StatelessWidget with PreferredSizeWidget {
@@ -29,7 +29,7 @@ class CustomAppbar extends StatelessWidget with PreferredSizeWidget {
                     'images/ic_map.svg',
                     width: 18,
                     height: 18,
-                    color: Constants.colorTheme,
+                    color: Color(Constants.colorTheme),
                   ),
                 ),
                   Text(

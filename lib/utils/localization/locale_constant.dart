@@ -1,7 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:mealup/main.dart';
+import 'package:homchf/main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 const String prefSelectedLanguageCode = "SelectedLanguageCode";

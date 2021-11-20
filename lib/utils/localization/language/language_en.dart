@@ -1,4 +1,4 @@
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 
 class LanguageEn extends Languages {
   @override
@@ -50,22 +50,22 @@ class LanguageEn extends Languages {
   String get labelMealupAppVersion => 'Application Version ';
 
   @override
-  String get labelScreenIntro1Line1 => 'Discover restaurant near by you';
+  String get labelScreenIntro1Line1 => 'Discover home chefs near by you';
 
   String get labelScreenIntro1Line2 =>
       'Make it simple to find food for you just enter your address and do the rest.';
 
   String get labelSkip => 'SKIP';
 
-  String get labelScreenIntro2Line1 => 'Restaurant to your home instant delivery';
+  String get labelScreenIntro2Line1 =>
+      'Take Away (or) Home Delivery (or) Pick-up Point';
 
   String get labelScreenIntro2Line2 =>
-      'Door to door service in your time with best quality of food.';
+      'Schedule how you want your food to be delivered directly with @home chef.';
 
-  String get labelScreenIntro3Line1 => 'Track your meal';
+  String get labelScreenIntro3Line1 => 'Why?';
 
-  String get labelScreenIntro3Line2 =>
-      'Order your favorite meal from a restaurant, and see how much far your meal from you with live tracking.';
+  String get labelScreenIntro3Line2 => 'Because nothing beats home taste!!!';
 
   @override
   String get labelEmail => 'Email';
@@ -163,10 +163,12 @@ class LanguageEn extends Languages {
   String get labelPasswordRequired => 'Password is Required';
 
   @override
-  String get labelPasswordConfPassNotMatch => 'Password and Confirm Password does not match.';
+  String get labelPasswordConfPassNotMatch =>
+      'Password and Confirm Password does not match.';
 
   @override
-  String get labelPasswordValidation => 'Password required: Alphabet, Number & 8 chars';
+  String get labelPasswordValidation =>
+      'Password required: Alphabet, Number & 8 chars';
 
   @override
   String get labelProfile => 'Profile';
@@ -190,28 +192,28 @@ class LanguageEn extends Languages {
   String get labelHome => 'Home';
 
   @override
-  String get labelExploreRest => 'Explore Restaurants';
+  String get labelExploreRest => 'Explore home chefs';
 
   @override
   String get labelExploreTheBestCuisines => 'Explore The Best Cuisines';
 
   @override
-  String get labelNonPureVegRest => 'Non Vegetarian Restaurants';
+  String get labelNonPureVegRest => 'Non Vegetarian home chefs';
 
   @override
-  String get labelPureVegRest => 'Pure Vegetarian Restaurants';
+  String get labelPureVegRest => 'Pure Vegetarian home chefs';
 
   @override
-  String get labelTopRestaurantsNear => 'Top Restaurants Near By You';
+  String get labelTopRestaurantsNear => 'Top home chefs Near By You';
 
   @override
-  String get labelTopRest => 'Top Restaurants';
+  String get labelTopRest => 'Top home chefs';
 
   @override
   String get labelSelectAddress => 'Select Address';
 
   @override
-  String get labelNoRestNear => 'No Restaurants found near by you.';
+  String get labelNoRestNear => 'No home chefs found near by you.';
 
   @override
   String get labelNoData => 'No Data Available.';
@@ -238,16 +240,17 @@ class LanguageEn extends Languages {
   String get labelCustomizable => 'Customizable';
 
   @override
-  String get labelAddRequestToRest => 'Any request for your delicious food?';
+  String get labelAddRequestToRest =>
+      'Please enter your delivery date time and any food allergies';
 
   @override
-  String get labelOptional => 'Optional';
+  String get labelOptional => 'Mandatory';
 
   @override
   String get labelFoodOfferCoupons => 'Food Offers Coupons';
 
   @override
-  String get labelSearchRestOrCoupon => 'Search restaurants or coupon code...';
+  String get labelSearchRestOrCoupon => 'Search home chefs or coupon code...';
 
   @override
   String get labelYouHaveCoupon => 'You Have a Coupon to Use';
@@ -355,7 +358,8 @@ class LanguageEn extends Languages {
   String get labelLandmark => 'Landmark';
 
   @override
-  String get labelAnyLandmarkNearYourLocation => 'Any Landmark Near Your Location';
+  String get labelAnyLandmarkNearYourLocation =>
+      'Any Landmark Near Your Location';
 
   @override
   String get labelAttachLabel => 'Attach Label';
@@ -553,13 +557,16 @@ class LanguageEn extends Languages {
   String get labelRemoveCartItem => 'Remove cart item?';
 
   @override
-  String get labelYourCartContainsDishesFrom => 'Your cart contains dishes from';
+  String get labelYourCartContainsDishesFrom =>
+      'Your cart contains dishes from';
 
   @override
-  String get labelYourCartContains1 => 'Do you want to discard the selection and add dishes from';
+  String get labelYourCartContains1 =>
+      'Do you want to discard the selection and add dishes from';
 
   @override
-  String get labelAreYouSureToRemove => 'Are you sure you want to remove this restaurant?';
+  String get labelAreYouSureToRemove =>
+      'Are you sure you want to remove this home chef?';
 
   @override
   String get labelRemoveFromTheList => 'Remove From The List';
@@ -574,10 +581,10 @@ class LanguageEn extends Languages {
   String get labelLowToHigh => 'Low To High';
 
   @override
-  String get labelVegRestaurant => 'Veg. Restaurant';
+  String get labelVegRestaurant => 'Veg. home chef';
 
   @override
-  String get labelNonVegRestaurant => 'Non Veg. Restaurant';
+  String get labelNonVegRestaurant => 'Non Veg. home chef';
 
   @override
   String get labelBothVegNonVeg => 'Both Veg. & Non Veg.';
@@ -589,16 +596,19 @@ class LanguageEn extends Languages {
   String get labelKmFarAway => 'km far away';
 
   @override
-  String get labelDeliveryUnavailable => 'Sorry, delivery is currently unavailable ..!';
+  String get labelDeliveryUnavailable =>
+      'Sorry, delivery is currently unavailable ..!';
 
   @override
-  String get labelTakeawayUnavailable => 'Sorry, Right now Takeaway not available..!';
+  String get labelTakeawayUnavailable =>
+      'Sorry, Right now Takeaway not available..!';
 
   @override
   String get labelNoOrderHistory => 'You haven\'t any order history available';
 
   @override
-  String get labelNoOffer => 'Discount offer currently not available for this restaurant.';
+  String get labelNoOffer =>
+      'Discount offer currently not available for this home chef.';
 
   @override
   String get labelAboutCompany => 'About Company';
@@ -619,22 +629,26 @@ class LanguageEn extends Languages {
   String get labelYesCancelIt => 'Yes, Cancel It';
 
   @override
-  String get labelPleaseEnterCancelReason => 'Please enter order cancel reason.';
+  String get labelPleaseEnterCancelReason =>
+      'Please enter order cancel reason.';
 
   @override
   String get labelRaiseRefundRequest => 'Raise Refund Request';
 
   @override
-  String get labelRaiseRefundRequestReason => 'Reason of Refund request';
+  String get labelRaiseRefundRequestReason =>
+      'Please contact respective home chef directly';
 
   @override
-  String get labelRaiseRefundRequestReason1 => 'Enter reason of Refund request';
+  String get labelRaiseRefundRequestReason1 =>
+      'we donot handle refunds at the moment';
 
   @override
   String get labelYesRaiseIt => 'Yes, Raise It';
 
   @override
-  String get labelPleaseEnterRaiseRefundReq => 'Please Enter reason of refund request';
+  String get labelPleaseEnterRaiseRefundReq =>
+      'Please Enter reason of refund request';
 
   @override
   String get iFSCCode => 'IFSC Code';
@@ -721,7 +735,8 @@ class LanguageEn extends Languages {
   String get mealUpWallet => 'MealUp Wallet';
 
   @override
-  String get moneyWillBeAddedToMealUpWallet => 'Money Will Be Added To MealUp Wallet';
+  String get moneyWillBeAddedToMealUpWallet =>
+      'Money Will Be Added To MealUp Wallet';
 
   @override
   String get labelAreYouSureLogout => 'Are you sure you want to logout ? ';

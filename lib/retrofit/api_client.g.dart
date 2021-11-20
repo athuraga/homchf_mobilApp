@@ -330,6 +330,22 @@ class _RestClient implements RestClient {
   }
 
   @override
+  Future<CommenRes> getOrderSchedule(map) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    _data.addAll(map);
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<CommenRes>(
+            Options(method: 'GET', headers: <String, dynamic>{}, extra: _extra)
+                .compose(_dio.options, 'get_order_schedule',
+                    queryParameters: queryParameters, data: _data)
+                .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CommenRes.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<String?> applyPromoCode(map) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -361,7 +377,7 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<CommenRes> addFeedback(map, image) async {
+  Future<CommenRes> addFeedback(map) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = map;
@@ -376,7 +392,7 @@ class _RestClient implements RestClient {
   }
 
   @override
-  Future<CommenRes> addReview(map, image) async {
+  Future<CommenRes> addReview(map) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _data = map;

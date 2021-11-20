@@ -6,22 +6,22 @@ import 'package:flutter_credit_card/credit_card_model.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mealup/model/common_res.dart';
-import 'package:mealup/model/payment_setting_model.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/wallet/WalletPaypalPayment.dart';
-import 'package:mealup/screens/wallet/wallet_screen.dart';
-import 'package:mealup/screens/wallet/wallet_stripe.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/database_helper.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/rounded_corner_app_button.dart';
+import 'package:homchf/model/common_res.dart';
+import 'package:homchf/model/payment_setting_model.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/wallet/WalletPaypalPayment.dart';
+import 'package:homchf/screens/wallet/wallet_screen.dart';
+import 'package:homchf/screens/wallet/wallet_stripe.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/database_helper.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/rounded_corner_app_button.dart';
 import 'package:razorpay_flutter/razorpay_flutter.dart';
 
 import 'package:stripe_payment/stripe_payment.dart';
@@ -293,7 +293,7 @@ class _WalletPaymentMethodScreenState extends State<WalletPaymentMethodScreen> {
       message: Languages.of(context).labelPleaseWait,
       borderRadius: 5.0,
       backgroundColor: Colors.white,
-      progressWidget: SpinKitFadingCircle(color: Constants.colorTheme),
+      progressWidget: SpinKitFadingCircle(color: Color(Constants.colorTheme)),
       elevation: 10.0,
       insetAnimCurve: Curves.easeInOut,
       progressTextStyle: TextStyle(
@@ -353,7 +353,7 @@ class _WalletPaymentMethodScreenState extends State<WalletPaymentMethodScreen> {
                                   style: TextStyle(
                                     fontSize: ScreenUtil().setSp(18),
                                     fontFamily: Constants.appFontBold,
-                                    color: Constants.colorTheme,
+                                    color: Color(Constants.colorTheme),
                                   ),
                                 ),
                               ),

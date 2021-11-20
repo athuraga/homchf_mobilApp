@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mealup/model/faq_list_model.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/model/faq_list_model.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
@@ -57,14 +57,14 @@ class _FAQsScreenState extends State<FAQsScreen> {
             child: SmartRefresher(
               enablePullDown: true,
               header: MaterialClassicHeader(
-                backgroundColor: Constants.colorTheme,
-                color: Constants.colorWhite,
+                backgroundColor: Color(Constants.colorTheme),
+                color: Colors.white,
               ),
               controller: _refreshController,
               onRefresh: _onRefresh,
               child: _faqListData.length == 0
                   ? Container(
-                      color: Constants.colorWhite,
+                      color: Colors.white,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -83,7 +83,7 @@ class _FAQsScreenState extends State<FAQsScreen> {
                               style: TextStyle(
                                 fontSize: ScreenUtil().setSp(18),
                                 fontFamily: Constants.appFontBold,
-                                color: Constants.colorTheme,
+                                color: Color(Constants.colorTheme),
                               ),
                             ),
                           )
@@ -167,7 +167,7 @@ _buildExpandableContent(FoodItem vehicle) {
           content!,
           style: new TextStyle(
               fontSize: 14.0,
-              color: Constants.colorGray,
+              color: Color(Constants.colorGray),
               fontFamily: Constants.appFont),
         ),
       ),

@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mealup/model/promoCode_model.dart';
-import 'package:mealup/retrofit/api_header.dart';
-import 'package:mealup/retrofit/api_client.dart';
-import 'package:mealup/retrofit/base_model.dart';
-import 'package:mealup/retrofit/server_error.dart';
-import 'package:mealup/utils/app_toolbar.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/model/promoCode_model.dart';
+import 'package:homchf/retrofit/api_header.dart';
+import 'package:homchf/retrofit/api_client.dart';
+import 'package:homchf/retrofit/base_model.dart';
+import 'package:homchf/retrofit/server_error.dart';
+import 'package:homchf/utils/app_toolbar.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 
 
 class OfferScreen extends StatefulWidget {
@@ -83,7 +83,7 @@ class _OfferScreenState extends State<OfferScreen> {
                               'images/search.svg',
                               width: ScreenUtil().setWidth(20),
                               height: ScreenUtil().setHeight(20),
-                              color: Constants.colorGray,
+                              color: Color(Constants.colorGray),
                             ),
                           ),
                           hintText:
@@ -91,7 +91,7 @@ class _OfferScreenState extends State<OfferScreen> {
                           hintStyle: TextStyle(
                             fontSize: ScreenUtil().setSp(14),
                             fontFamily: Constants.appFont,
-                            color: Constants.colorGray,
+                            color: Color(Constants.colorGray),
                           ),
                           border: OutlineInputBorder(
                             borderRadius: const BorderRadius.all(
@@ -143,7 +143,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                                   fit: BoxFit.cover,
                                                   placeholder: (context, url) =>
                                                       SpinKitFadingCircle(
-                                                          color: Constants.colorTheme),
+                                                          color: Color(Constants
+                                                              .colorTheme)),
                                                   errorWidget:
                                                       (context, url, error) =>
                                                           Container(
@@ -191,7 +192,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                                       Constants.appFont,
                                                   fontSize:
                                                       ScreenUtil().setSp(12),
-                                                  color: Constants.colorTheme),
+                                                  color: Color(
+                                                      Constants.colorTheme)),
                                             ),
                                             Padding(
                                               padding: EdgeInsets.only(
@@ -199,8 +201,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                               child: Text(
                                                 '${Languages.of(context)!.labelValidUpTo} ${_searchListPromoCode[index].startEndDate!.substring(_searchListPromoCode[index].startEndDate!.indexOf(" - ") + 1)}',
                                                 style: TextStyle(
-                                                    color:
-                                                        Constants.colorGray,
+                                                    color: Color(
+                                                        Constants.colorGray),
                                                     fontFamily:
                                                         Constants.appFont,
                                                     fontSize:
@@ -238,7 +240,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                                   fit: BoxFit.cover,
                                                   placeholder: (context, url) =>
                                                       SpinKitFadingCircle(
-                                                          color: Constants.colorTheme),
+                                                          color: Color(Constants
+                                                              .colorTheme)),
                                                   errorWidget:
                                                       (context, url, error) =>
                                                           Container(
@@ -281,7 +284,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                                       Constants.appFont,
                                                   fontSize:
                                                       ScreenUtil().setSp(12),
-                                                  color: Constants.colorTheme),
+                                                  color: Color(
+                                                      Constants.colorTheme)),
                                             ),
                                             Padding(
                                               padding: EdgeInsets.only(
@@ -289,8 +293,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                               child: Text(
                                                 '${Languages.of(context)!.labelValidUpTo} ${_listPromoCode[index].startEndDate!.substring(_listPromoCode[index].startEndDate!.indexOf(" - ") + 1)}',
                                                 style: TextStyle(
-                                                    color:
-                                                        Constants.colorGray,
+                                                    color: Color(
+                                                        Constants.colorGray),
                                                     fontFamily:
                                                         Constants.appFont,
                                                     fontSize:
@@ -324,7 +328,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                     style: TextStyle(
                                       fontSize: ScreenUtil().setSp(18),
                                       fontFamily: Constants.appFontBold,
-                                      color: Constants.colorTheme,
+                                      color: Color(Constants.colorTheme),
                                     ),
                                   ),
                                 )

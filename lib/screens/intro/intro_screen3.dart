@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/bottom_navigation/dashboard_screen.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/preference_utils.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/bottom_navigation/dashboard_screen.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/preference_utils.dart';
 
 import '../auth/login_screen.dart';
 
@@ -54,7 +54,7 @@ class IntroScreen3 extends StatelessWidget {
                     ),
                     Container(
                       height: ScreenUtil().setHeight(200.0),
-                      child: Image.asset('images/ic_intro3.png'),
+                      child: Image.asset('images/ic_intro3_1.png'),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(10.0),
@@ -67,7 +67,7 @@ class IntroScreen3 extends StatelessWidget {
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: Constants.appFont,
-                                color: Constants.colorBlack,
+                                color: Color(Constants.colorBlack),
                                 fontSize: 25.0,
                               ),
                             ),
@@ -77,7 +77,7 @@ class IntroScreen3 extends StatelessWidget {
                                 Languages.of(context)!.labelScreenIntro3Line2,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
-                                    color: Constants.colorGray,
+                                    color: Color(Constants.colorGray),
                                     fontFamily: Constants.appFont,
                                     fontSize: 16.0),
                               ),
@@ -92,7 +92,7 @@ class IntroScreen3 extends StatelessWidget {
                         IconButton(
                           icon: Icon(
                             Icons.arrow_upward,
-                            color: Constants.colorTheme,
+                            color: Color(Constants.colorTheme),
                           ),
                           onPressed: () {
                             Navigator.pop(context);
@@ -118,7 +118,7 @@ class IntroScreen3 extends StatelessWidget {
                               'SKIP',
                               style: TextStyle(
                                   letterSpacing: 3.0,
-                                  color: Constants.colorTheme,
+                                  color: Color(Constants.colorTheme),
                                   fontFamily: Constants.appFont,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 13.0),
@@ -128,7 +128,7 @@ class IntroScreen3 extends StatelessWidget {
                         IconButton(
                           icon: Icon(
                             Icons.arrow_downward,
-                            color: Constants.colorTheme,
+                            color: Color(Constants.colorTheme),
                           ),
                           onPressed: () {
                             PreferenceUtils.setisIntroDone("isIntroDone", true);

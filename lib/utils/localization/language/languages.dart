@@ -21,7 +21,6 @@ abstract class Languages {
   String get moneyWillBeAddedToMealUpWallet;
   String get labelSelectLanguage;
   String get labelEditPersonalInfo;
-  String get labelSavePersonalInfo;
   String get labelManageYourLocation;
   String get labelChangePassword;
   String get labelLanguage;

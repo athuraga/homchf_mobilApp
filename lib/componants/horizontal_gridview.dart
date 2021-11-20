@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:mealup/utils/constants.dart';
+import 'package:homchf/utils/constants.dart';
 
 class HorizontalGridview extends StatelessWidget {
   
@@ -97,7 +97,7 @@ class HorizontalGridview extends StatelessWidget {
                                           ),
                                           SvgPicture.asset(
                                             'images/ic_filled_heart.svg',
-                                            color: Constants.colorLike,
+                                            color: Color(Constants.colorLike),
                                             height: ScreenUtil().setHeight(20.0),
                                             width: ScreenUtil().setWidth(20.0),
                                           )
@@ -113,7 +113,7 @@ class HorizontalGridview extends StatelessWidget {
                                           strRestaurantsFood!,
                                           style: TextStyle(
                                               fontFamily: Constants.appFont,
-                                              color: Constants.colorGray,
+                                              color: Color(Constants.colorGray),
                                               fontSize: ScreenUtil().setSp(12.0)),
                                         ),
                                       ),
@@ -166,7 +166,7 @@ class HorizontalGridview extends StatelessWidget {
                                                   allowHalfRating: true,
                                                   itemBuilder: (context, _) => Icon(
                                                     Icons.star,
-                                                    color: Constants.colorTheme,
+                                                    color: Colors.amber,
                                                   ), onRatingUpdate: (double rating) {
                                                   print(rating);
                                                 },

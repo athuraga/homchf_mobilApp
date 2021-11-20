@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:mealup/screen_animation_utils/transitions.dart';
-import 'package:mealup/screens/bottom_navigation/dashboard_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
-import 'package:mealup/utils/preference_utils.dart';
+import 'package:homchf/screen_animation_utils/transitions.dart';
+import 'package:homchf/screens/bottom_navigation/dashboard_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
+import 'package:homchf/utils/preference_utils.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
 
 import 'intro_screen2.dart';
@@ -56,7 +56,7 @@ class IntroScreen1 extends StatelessWidget {
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontFamily: Constants.appFont,
-                              color: Constants.colorBlack,
+                              color: Color(Constants.colorBlack),
                               fontSize: 25.0,
                             ),
                           ),
@@ -66,7 +66,7 @@ class IntroScreen1 extends StatelessWidget {
                               Languages.of(context)!.labelScreenIntro1Line2,
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                  color: Constants.colorGray,
+                                  color: Color(Constants.colorGray),
                                   fontFamily: Constants.appFont,
                                   fontSize: 16.0),
                             ),
@@ -97,7 +97,7 @@ class IntroScreen1 extends StatelessWidget {
                             Languages.of(context)!.labelSkip,
                             style: TextStyle(
                                 letterSpacing: 3.0,
-                                color: Constants.colorTheme,
+                                color: Color(Constants.colorTheme),
                                 fontFamily: Constants.appFontBold,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 13.0),
@@ -107,7 +107,7 @@ class IntroScreen1 extends StatelessWidget {
                       IconButton(
                         icon: Icon(
                           Icons.arrow_downward,
-                          color: Constants.colorTheme,
+                          color: Color(Constants.colorTheme),
                         ),
                         onPressed: () {
                           Navigator.of(context).push(Transitions(

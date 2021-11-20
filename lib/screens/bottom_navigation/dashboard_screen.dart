@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:mealup/screens/bottom_navigation/explore_screen.dart';
-import 'package:mealup/screens/bottom_navigation/home_scree.dart';
-import 'package:mealup/screens/bottom_navigation/my_cart_screen.dart';
-import 'package:mealup/screens/bottom_navigation/profile_screen.dart';
-import 'package:mealup/utils/SharedPreferenceUtil.dart';
-import 'package:mealup/utils/constants.dart';
-import 'package:mealup/utils/localization/language/languages.dart';
+import 'package:homchf/screens/bottom_navigation/explore_screen.dart';
+import 'package:homchf/screens/bottom_navigation/home_scree.dart';
+import 'package:homchf/screens/bottom_navigation/my_cart_screen.dart';
+import 'package:homchf/screens/bottom_navigation/profile_screen.dart';
+import 'package:homchf/utils/SharedPreferenceUtil.dart';
+import 'package:homchf/utils/constants.dart';
+import 'package:homchf/utils/localization/language/languages.dart';
 
 // ignore: must_be_immutable
 class DashboardScreen extends StatefulWidget {
@@ -97,9 +97,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
         body: _children[widget._currentIndex!],
         bottomNavigationBar: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
-            backgroundColor: Constants.colorTheme,
+            backgroundColor: Color(Constants.colorTheme),
             selectedItemColor: Colors.black,
-            unselectedItemColor: Constants.colorWhite,
+            unselectedItemColor: Colors.white,
             selectedFontSize: 12,
             unselectedFontSize: 12,
             currentIndex: widget._currentIndex!,
@@ -116,7 +116,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   'images/ic_home.svg',
                   height: ScreenUtil().setHeight(25),
                   width: 25,
-                  color: Constants.colorWhite,
+                  color: Colors.white,
                 ),
                 activeIcon: SvgPicture.asset(
                   'images/ic_home.svg',
@@ -131,7 +131,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   'images/ic_explore.svg',
                   height: ScreenUtil().setHeight(25),
                   width: 25,
-                  color: Constants.colorWhite,
+                  color: Colors.white,
                 ),
                 activeIcon: SvgPicture.asset(
                   'images/ic_explore.svg',
@@ -145,7 +145,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                   'images/ic_cart.svg',
                   height: ScreenUtil().setHeight(25),
                   width: 25,
-                  color: Constants.colorWhite,
+                  color: Colors.white,
                 ),
                 activeIcon: SvgPicture.asset(
                   'images/ic_cart.svg',
@@ -167,7 +167,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     ),
                     borderRadius: new BorderRadius.all(new Radius.circular(50.0)),
                     border: new Border.all(
-                      color: Constants.colorWhite,
+                      color: Colors.white,
                       width: 2.0,
                     ),
                   ),
