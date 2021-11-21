@@ -1,0 +1,129 @@
+BCSymbolMap Version: 2.0
+Apple clang version 13.0.0 (clang-1300.0.29.3)
+/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS15.0.sdk
+iPhoneOS15.0.sdk
+/Users/wbr/Library/Developer/Xcode/DerivedData/Runner-bndbqvzooqdlzfgfmjafiydxocyy/Build/Intermediates.noindex/ArchiveIntermediates/Runner/IntermediateBuildFilesPath/Pods.build/Release-iphoneos/share.build/DerivedSources/share_vers.c
+/Volumes/USB/HomChf/git_repo/homchf_mobilApp/ios/Pods
+-[ShareData init]
+-[ShareData initWithSubject:text:]
+-[ShareData initWithFile:mimeType:]
+-[ShareData activityViewControllerPlaceholderItem:]
+-[ShareData activityViewController:itemForActivityType:]
+-[ShareData activityViewController:subjectForActivityType:]
+-[ShareData activityViewController:thumbnailImageForActivityType:suggestedSize:]
+-[ShareData imageWithImage:scaledToSize:]
+-[ShareData subject]
+-[ShareData text]
+-[ShareData path]
+-[ShareData mimeType]
+-[ShareData .cxx_destruct]
++[FLTSharePlugin registerWithRegistrar:]
+___40+[FLTSharePlugin registerWithRegistrar:]_block_invoke
+___copy_helper_block_e8_
+___destroy_helper_block_e8_
++[FLTSharePlugin share:withController:atSource:]
++[FLTSharePlugin shareText:subject:withController:atSource:]
++[FLTSharePlugin shareFiles:withMimeType:withSubject:withText:withController:atSource:]
+_OBJC_SELECTOR_REFERENCES_
+_OBJC_SELECTOR_REFERENCES_.2
+_OBJC_CLASSLIST_REFERENCES_$_
+_OBJC_SELECTOR_REFERENCES_.4
+_OBJC_SELECTOR_REFERENCES_.6
+_OBJC_SELECTOR_REFERENCES_.12
+_OBJC_CLASSLIST_REFERENCES_$_.13
+_OBJC_SELECTOR_REFERENCES_.15
+_OBJC_CLASSLIST_REFERENCES_$_.16
+_OBJC_SELECTOR_REFERENCES_.18
+_OBJC_SELECTOR_REFERENCES_.20
+_OBJC_SELECTOR_REFERENCES_.22
+__OBJC_$_PROTOCOL_INSTANCE_METHODS_NSObject
+__OBJC_$_PROTOCOL_INSTANCE_METHODS_OPT_NSObject
+__OBJC_$_PROP_LIST_NSObject
+__OBJC_$_PROTOCOL_METHOD_TYPES_NSObject
+__OBJC_PROTOCOL_$_NSObject
+__OBJC_LABEL_PROTOCOL_$_NSObject
+__OBJC_$_PROTOCOL_REFS_UIActivityItemSource
+__OBJC_$_PROTOCOL_INSTANCE_METHODS_UIActivityItemSource
+__OBJC_$_PROTOCOL_INSTANCE_METHODS_OPT_UIActivityItemSource
+__OBJC_$_PROTOCOL_METHOD_TYPES_UIActivityItemSource
+__OBJC_PROTOCOL_$_UIActivityItemSource
+__OBJC_LABEL_PROTOCOL_$_UIActivityItemSource
+__OBJC_CLASS_PROTOCOLS_$_ShareData
+__OBJC_METACLASS_RO_$_ShareData
+__OBJC_$_INSTANCE_METHODS_ShareData
+_OBJC_IVAR_$_ShareData._subject
+_OBJC_IVAR_$_ShareData._text
+_OBJC_IVAR_$_ShareData._path
+_OBJC_IVAR_$_ShareData._mimeType
+__OBJC_$_INSTANCE_VARIABLES_ShareData
+__OBJC_$_PROP_LIST_ShareData
+__OBJC_CLASS_RO_$_ShareData
+_OBJC_CLASSLIST_REFERENCES_$_.99
+_OBJC_SELECTOR_REFERENCES_.101
+_OBJC_SELECTOR_REFERENCES_.103
+_OBJC_SELECTOR_REFERENCES_.105
+_OBJC_SELECTOR_REFERENCES_.109
+_OBJC_SELECTOR_REFERENCES_.117
+_OBJC_SELECTOR_REFERENCES_.121
+_OBJC_SELECTOR_REFERENCES_.123
+_OBJC_SELECTOR_REFERENCES_.129
+_OBJC_CLASSLIST_REFERENCES_$_.130
+_OBJC_SELECTOR_REFERENCES_.136
+_OBJC_CLASSLIST_REFERENCES_$_.137
+_OBJC_SELECTOR_REFERENCES_.139
+_OBJC_SELECTOR_REFERENCES_.141
+_OBJC_SELECTOR_REFERENCES_.143
+_OBJC_SELECTOR_REFERENCES_.145
+_OBJC_SELECTOR_REFERENCES_.153
+_OBJC_SELECTOR_REFERENCES_.157
+_OBJC_SELECTOR_REFERENCES_.161
+___block_descriptor_40_e8__e37_v24?0"FlutterMethodCall"8?<v?>16l
+_OBJC_SELECTOR_REFERENCES_.165
+_OBJC_CLASSLIST_REFERENCES_$_.166
+_OBJC_SELECTOR_REFERENCES_.168
+_OBJC_SELECTOR_REFERENCES_.170
+_OBJC_SELECTOR_REFERENCES_.172
+_OBJC_SELECTOR_REFERENCES_.174
+_OBJC_SELECTOR_REFERENCES_.176
+_OBJC_SELECTOR_REFERENCES_.178
+_OBJC_CLASSLIST_REFERENCES_$_.179
+_OBJC_SELECTOR_REFERENCES_.180
+_OBJC_CLASSLIST_REFERENCES_$_.181
+_OBJC_SELECTOR_REFERENCES_.183
+_OBJC_SELECTOR_REFERENCES_.185
+_OBJC_CLASSLIST_REFERENCES_$_.186
+_OBJC_SELECTOR_REFERENCES_.188
+_OBJC_SELECTOR_REFERENCES_.190
+_OBJC_SELECTOR_REFERENCES_.192
+_OBJC_SELECTOR_REFERENCES_.194
+_OBJC_SELECTOR_REFERENCES_.207
+__OBJC_$_CLASS_METHODS_FLTSharePlugin
+__OBJC_$_PROTOCOL_REFS_UNUserNotificationCenterDelegate
+__OBJC_$_PROTOCOL_INSTANCE_METHODS_OPT_UNUserNotificationCenterDelegate
+__OBJC_$_PROTOCOL_METHOD_TYPES_UNUserNotificationCenterDelegate
+__OBJC_PROTOCOL_$_UNUserNotificationCenterDelegate
+__OBJC_LABEL_PROTOCOL_$_UNUserNotificationCenterDelegate
+__OBJC_$_PROTOCOL_REFS_FlutterApplicationLifeCycleDelegate
+__OBJC_$_PROTOCOL_INSTANCE_METHODS_OPT_FlutterApplicationLifeCycleDelegate
+__OBJC_$_PROTOCOL_METHOD_TYPES_FlutterApplicationLifeCycleDelegate
+__OBJC_PROTOCOL_$_FlutterApplicationLifeCycleDelegate
+__OBJC_LABEL_PROTOCOL_$_FlutterApplicationLifeCycleDelegate
+__OBJC_$_PROTOCOL_REFS_FlutterPlugin
+__OBJC_$_PROTOCOL_CLASS_METHODS_FlutterPlugin
+__OBJC_$_PROTOCOL_INSTANCE_METHODS_OPT_FlutterPlugin
+__OBJC_$_PROTOCOL_CLASS_METHODS_OPT_FlutterPlugin
+__OBJC_$_PROTOCOL_METHOD_TYPES_FlutterPlugin
+__OBJC_PROTOCOL_$_FlutterPlugin
+__OBJC_LABEL_PROTOCOL_$_FlutterPlugin
+__OBJC_CLASS_PROTOCOLS_$_FLTSharePlugin
+__OBJC_METACLASS_RO_$_FLTSharePlugin
+__OBJC_$_PROP_LIST_FLTSharePlugin
+__OBJC_CLASS_RO_$_FLTSharePlugin
+/Users/wbr/development/flutter/.pub-cache/hosted/pub.dartlang.org/share-2.0.4/ios/Classes/FLTSharePlugin.m
+llvm.loop.mustprogress
+__destroy_helper_block_e8_
+__copy_helper_block_e8_
+__40+[FLTSharePlugin registerWithRegistrar:]_block_invoke
+__OBJC_METACLASS_RO_$_PodsDummy_share
+__OBJC_CLASS_RO_$_PodsDummy_share
+/Volumes/USB/HomChf/git_repo/homchf_mobilApp/ios/Pods/Target Support Files/share/share-dummy.m
