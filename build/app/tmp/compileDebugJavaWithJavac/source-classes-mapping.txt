@@ -1,6 +1,0 @@
-io/flutter/plugins/GeneratedPluginRegistrant.java
- io.flutter.plugins.GeneratedPluginRegistrant
-app/homchf/homechef/MainActivity.java
- app.homchf.homechef.MainActivity
-app/homchf/homechef/BuildConfig.java
- app.homchf.homechef.BuildConfig
