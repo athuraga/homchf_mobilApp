@@ -119,6 +119,45 @@ class _MyCartScreenState extends State<MyCartScreen> {
   double vendorDiscountAmount = 0;
 
   TextEditingController _textDeliverDateTimeEtc = new TextEditingController();
+  TextEditingController _textPickupPoint = new TextEditingController();
+  DateTime selectedDate = DateTime.now();
+  TextEditingController _date = new TextEditingController();
+  TimeOfDay selectedTime = TimeOfDay(hour: 00, minute: 00);
+  TextEditingController _time = new TextEditingController();
+
+  Future<Null> _selectDate(BuildContext context) async {
+    final DateTime? picked = await showDatePicker(
+        context: context,
+        initialDate: selectedDate,
+        firstDate: DateTime(1901, 1),
+        lastDate: DateTime(2100));
+    if (picked != null && picked != selectedDate)
+      setState(() {
+        selectedDate = picked;
+        var _day = selectedDate.year.toString() +
+            '-' +
+            selectedDate.month.toString() +
+            '-' +
+            selectedDate.day.toString();
+        _date.value = TextEditingValue(text: _day.toString());
+      });
+  }
+
+  Future<Null> _selectTime(BuildContext context) async {
+    final TimeOfDay? picked = await showTimePicker(
+      context: context,
+      initialTime: selectedTime,
+    );
+
+    if (picked != null)
+      setState(() {
+        selectedTime = picked;
+        var _hour = selectedTime.hour.toString();
+        var _minute = selectedTime.minute.toString();
+        var _tim = _hour + ':' + _minute;
+        _time.value = TextEditingValue(text: _tim.toString());
+      });
+  }
 
   int itemLength = 0;
 
@@ -270,10 +309,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
       print('TempTotal2 $tempTotal2');
       totalPrice = tempTotal1 + tempTotal2;
       subTotal = totalPrice;
-      calculateTax(subTotal);
-      if (totalPrice > 0) {
-        calculateDeliveryCharge(totalPrice);
-      }
+      // calculateTax(subTotal);
+      // if (totalPrice > 0) {
+      //   calculateDeliveryCharge(totalPrice);
+      // }
     });
   }
 
@@ -451,11 +490,12 @@ class _MyCartScreenState extends State<MyCartScreen> {
 
           _listRestaurantsMenu.addAll(response.data!.menu!);
 
-          strTaxPercentage = response.data!.vendor!.tax;
+          strTaxPercentage = '0.0';
+          //response.data!.vendor!.tax;
           // print('main tax fun calling 2');
           // print('srtTaxPercentage amount $strTaxPercentage');
           double addToMap = 0.0;
-          addToMap = subTotal * double.parse(strTaxPercentage!) / 100;
+          addToMap = 0.0; // * double.parse(strTaxPercentage!) / 100;
           // print('this is the addition to send all tax $addToMap');
           sendAllTax.add({'tax': addToMap, 'name': 'other tax'});
           getTax();
@@ -677,21 +717,23 @@ class _MyCartScreenState extends State<MyCartScreen> {
         });
         print("amount tax$tempVar");
       }
-      tempOtherTaxTotal += tempVar;
+      tempOtherTaxTotal = 0.0; //+= tempVar;
       tempVar = 0.0;
       print('total tax $tempOtherTaxTotal');
     }
     print('srtTaxPercentage amount $strTaxPercentage');
     double addToMap = 0.0;
-    addToMap = getItemPriceFromDb * double.parse(strTaxPercentage!) / 100;
+    addToMap = 0.0;
+    //getItemPriceFromDb * double.parse(strTaxPercentage!) / 100;
     print("other tax $tempOtherTaxTotal");
     tempOtherTaxTotal += addToMap;
     double additionToTotal = 0.0;
     if (strTaxAmount != null && strTaxAmount != '') {
-      additionToTotal = double.parse(strTaxAmount!) + tempOtherTaxTotal;
+      additionToTotal = 0.0;
+      //double.parse(strTaxAmount!) + tempOtherTaxTotal;
       print("new additionToTotal==== $additionToTotal");
     } else {
-      additionToTotal = tempOtherTaxTotal;
+      additionToTotal = 0 * tempOtherTaxTotal;
       print("new additionToTotal $additionToTotal");
     }
     setState(() {
@@ -747,7 +789,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
         });
         print("amount tax$tempVar");
       }
-      tempOtherTaxTotal += tempVar;
+      tempOtherTaxTotal = 0.0; //+= tempVar;
       tempVar = 0.0;
       print('total tax $tempOtherTaxTotal');
     }
@@ -761,7 +803,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
     // if (strTaxAmount != null && strTaxAmount != '') {
     // additionToTotal = double.parse(strTaxAmount) + tempOtherTaxTotal;
     // } else {
-    additionToTotal = tempOtherTaxTotal + addToMap;
+    additionToTotal = 0.0; //tempOtherTaxTotal + addToMap;
     // additionToTotal = tempOtherTaxTotal + addToMap;
     // globalTaxDecTotal = additionToTotal;
     addGlobalTax = additionToTotal;
@@ -770,7 +812,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
       taxCalDecrementTotal = true;
       decTaxInKm = true;
       strTaxAmount = additionToTotal.toString();
-      totalPrice = totalPrice + additionToTotal;
+      totalPrice = totalPrice; // + additionToTotal;
     });
   }
 
@@ -835,16 +877,17 @@ class _MyCartScreenState extends State<MyCartScreen> {
     // additionToTotal = double.parse(strTaxAmount) + tempOtherTaxTotal;
     // } else {
     // additionToTotal = (tempOtherTaxTotal + addToMap);
-    additionToTotal = tempOtherTaxTotal + addToMap;
+    additionToTotal = 0.0;
+    //tempOtherTaxTotal + addToMap;
     // additionToTotal = (tempOtherTaxTotal + addToMap);
     // globalTaxIncTotal = additionToTotal;
-    addGlobalTax = additionToTotal;
+    addGlobalTax = 0 * additionToTotal;
     // }
     setState(() {
       taxCalIncrementTotal = true;
       incTaxInKm = true;
       strTaxAmount = additionToTotal.toString();
-      totalPrice = totalPrice + additionToTotal;
+      totalPrice = totalPrice; // + additionToTotal;
     });
   }
 
@@ -992,7 +1035,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   Constants.toastMessage(
                                       'Please select address for deliver order.');
                                 } else {
-                                  if (_textDeliverDateTimeEtc.text.length > 6) {
+                                  if (_textDeliverDateTimeEtc.text.length > 3 &&
+                                      _date.text.length > 3 &&
+                                      _time.text.length > 3 &&
+                                      _textPickupPoint.text.length > 2) {
                                     getAllData();
 
                                     Constants.toastMessage(
@@ -1003,7 +1049,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   }
                                 }
                               } else if (deliveryTypeIndex == 1) {
-                                if (_textDeliverDateTimeEtc.text.length > 6) {
+                                if (_textDeliverDateTimeEtc.text.length > 3 &&
+                                    _date.text.length > 3 &&
+                                    _time.text.length > 3 &&
+                                    _textPickupPoint.text.length > 2) {
                                   getAllData();
 
                                   Constants.toastMessage(
@@ -1019,7 +1068,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   Constants.toastMessage(
                                       'Please select address for deliver order.');
                                 } else {
-                                  if (_textDeliverDateTimeEtc.text.length > 6) {
+                                  if (_textDeliverDateTimeEtc.text.length > 3 &&
+                                      _date.text.length > 3 &&
+                                      _time.text.length > 3 &&
+                                      _textPickupPoint.text.length > 2) {
                                     getAllData();
 
                                     Constants.toastMessage(
@@ -1310,7 +1362,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                                   isTakeAway == true) {
                                                 if (tempOtherTaxTotal > 0.0) {
                                                   totalPrice +=
-                                                      tempOtherTaxTotal;
+                                                      (0 * tempOtherTaxTotal);
                                                 }
                                                 isDelivery = false;
                                                 isTakeAway = false;
@@ -2388,7 +2440,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                           left: ScreenUtil().setWidth(15),
                                           right: ScreenUtil().setWidth(15)),
                                       child: TextField(
-                                        maxLines: 5,
+                                        maxLines: 3,
                                         controller: _textDeliverDateTimeEtc,
                                         keyboardType: TextInputType.text,
                                         autofocus: true,
@@ -2414,6 +2466,157 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   ),
                                 ),
                               ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    right: ScreenUtil().setWidth(20)),
+                                child: Text(
+                                  '(${Languages.of(context)!.labelOptional})',
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                      fontFamily: Constants.appFont,
+                                      fontSize: ScreenUtil().setSp(12),
+                                      color: Color(Constants.colorGray)),
+                                ),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: ScreenUtil().setWidth(10),
+                                    right: ScreenUtil().setWidth(10)),
+                                child: SizedBox(
+                                  // width: 200.0,
+                                  // height: 100.0,
+                                  child: Card(
+                                      elevation: 4,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      // inside Widget build
+                                      child: GestureDetector(
+                                        onTap: () => _selectDate(context),
+                                        child: AbsorbPointer(
+                                          child: TextFormField(
+                                            controller: _date,
+                                            keyboardType:
+                                                TextInputType.datetime,
+                                            decoration: InputDecoration(
+                                              hintText: 'Select Delivery Date',
+                                              prefixIcon: Icon(
+                                                Icons.calendar_today_rounded,
+                                                color: Color(
+                                                    Constants.colorAppbar),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )),
+                                ),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    right: ScreenUtil().setWidth(20)),
+                                child: Text(
+                                  '(${Languages.of(context)!.labelOptional})',
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                      fontFamily: Constants.appFont,
+                                      fontSize: ScreenUtil().setSp(12),
+                                      color: Color(Constants.colorGray)),
+                                ),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: ScreenUtil().setWidth(10),
+                                    right: ScreenUtil().setWidth(10)),
+                                child: SizedBox(
+                                  // width: 200.0,
+                                  //height: 100.0,
+                                  child: Card(
+                                      elevation: 4,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
+                                      ),
+                                      // inside Widget build
+                                      child: GestureDetector(
+                                        onTap: () => _selectTime(context),
+                                        child: AbsorbPointer(
+                                          child: TextFormField(
+                                            controller: _time,
+                                            keyboardType:
+                                                TextInputType.datetime,
+                                            decoration: InputDecoration(
+                                              hintText: 'Select Delivery Time',
+                                              prefixIcon: Icon(
+                                                Icons.watch_later_rounded,
+                                                color: Color(
+                                                    Constants.colorAppbar),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    right: ScreenUtil().setWidth(20)),
+                                child: Text(
+                                  '(${Languages.of(context)!.labelOptional})',
+                                  textAlign: TextAlign.end,
+                                  style: TextStyle(
+                                      fontFamily: Constants.appFont,
+                                      fontSize: ScreenUtil().setSp(12),
+                                      color: Color(Constants.colorGray)),
+                                ),
+                              ),
+
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: ScreenUtil().setWidth(10),
+                                    right: ScreenUtil().setWidth(10)),
+                                child: SizedBox(
+                                  // width: 200.0,
+                                  //height: 100.0,
+                                  child: Card(
+                                    elevation: 4,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.only(
+                                          left: ScreenUtil().setWidth(15),
+                                          right: ScreenUtil().setWidth(15)),
+                                      child: TextField(
+                                        maxLines: 1,
+                                        controller: _textPickupPoint,
+                                        keyboardType: TextInputType.text,
+                                        autofocus: true,
+                                        decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.symmetric(
+                                              vertical:
+                                                  ScreenUtil().setWidth(10)),
+                                          hintText: 'enter pick-up-point',
+                                          hintStyle: TextStyle(
+                                            fontSize: ScreenUtil().setSp(16),
+                                            fontFamily: Constants.appFont,
+                                            color: Color(Constants.colorGray),
+                                          ),
+                                          border: OutlineInputBorder(
+                                            borderSide: BorderSide.none,
+                                          ),
+                                          filled: true,
+                                          fillColor: Color(0xFFFFFFFF),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+
                               Padding(
                                 padding: EdgeInsets.only(
                                     right: ScreenUtil().setWidth(20)),
@@ -3111,14 +3314,14 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                                         true) {
                                                       if (addGlobalTax == 0.0 &&
                                                           strTaxAmount != '') {
-                                                        totalPrice +=
+                                                        totalPrice += (0 *
                                                             double.parse(
-                                                                strTaxAmount!);
+                                                                strTaxAmount!));
                                                         print(
                                                             "new new total is $totalPrice & strtaxamount  $strTaxAmount");
                                                       } else {
                                                         totalPrice +=
-                                                            addGlobalTax;
+                                                            (0 * addGlobalTax);
                                                         print(
                                                             "new new total is $totalPrice & addglobaltax  $addGlobalTax");
                                                       }
@@ -4303,8 +4506,15 @@ class _MyCartScreenState extends State<MyCartScreen> {
               venderId: restId,
               vendorDiscountAmount: vendorDiscountAmount.toInt(),
               vendorDiscountId: vendorDiscountID,
-              strTaxAmount: strTaxAmount,
-              strScheduleOrder: _textDeliverDateTimeEtc.text,
+              strTaxAmount: '0.0', //strTaxAmount,
+              strScheduleOrder: 'Delivery Date ' +
+                  _date.value.text +
+                  '  Time ' +
+                  _time.value.text +
+                  '  pick-up @ ' +
+                  _textPickupPoint.text +
+                  '  food allergies: ' +
+                  _textDeliverDateTimeEtc.text,
               allTax: sendAllTax),
         ),
       );
@@ -4488,8 +4698,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
           setState(() {
             if (decTaxInKm == true) {
               subTotal = subtotal;
-              totalPrice = subtotal + double.parse(strFinalDeliveryCharge!);
-              tempTotalWithoutDeliveryCharge = subtotal;
+              totalPrice = subtotal; // + double.parse(strFinalDeliveryCharge!);
+              //tempTotalWithoutDeliveryCharge = subtotal;
               // calculateTax(subtotal);
               setState(() {});
               if (vendorDiscountAvailable != null) {
@@ -4498,8 +4708,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
               decTaxInKm = false;
             } else if (incTaxInKm == true) {
               subTotal = subtotal;
-              totalPrice = subtotal + double.parse(strFinalDeliveryCharge!);
-              tempTotalWithoutDeliveryCharge = subtotal;
+              totalPrice = subtotal; // + double.parse(strFinalDeliveryCharge!);
+              //tempTotalWithoutDeliveryCharge = subtotal;
               // calculateTax(subtotal);
               setState(() {});
               if (vendorDiscountAvailable != null) {
@@ -4508,8 +4718,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
               incTaxInKm = false;
             } else {
               subTotal = subtotal;
-              totalPrice = subtotal + double.parse(strFinalDeliveryCharge!);
-              tempTotalWithoutDeliveryCharge = subtotal;
+              totalPrice = subtotal; // + double.parse(strFinalDeliveryCharge!);
+              //tempTotalWithoutDeliveryCharge = subtotal;
               // calculateTax(subtotal);
               setState(() {});
               if (vendorDiscountAvailable != null) {
@@ -4572,8 +4782,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
           setState(() {
             if (decTaxInKm == true) {
               subTotal = subtotal;
-              totalPrice = subtotal + double.parse(strFinalDeliveryCharge!);
-              tempTotalWithoutDeliveryCharge = subtotal;
+              totalPrice = subtotal; // + double.parse(strFinalDeliveryCharge!);
+              //tempTotalWithoutDeliveryCharge = subtotal;
               // calculateTax(subtotal);
               setState(() {});
               if (vendorDiscountAvailable != null &&
@@ -4583,8 +4793,8 @@ class _MyCartScreenState extends State<MyCartScreen> {
               decTaxInKm = false;
             } else if (incTaxInKm == true) {
               subTotal = subtotal;
-              totalPrice = subtotal + double.parse(strFinalDeliveryCharge!);
-              tempTotalWithoutDeliveryCharge = subtotal;
+              totalPrice = subtotal; // + double.parse(strFinalDeliveryCharge!);
+              //tempTotalWithoutDeliveryCharge = subtotal;
               // calculateTax(subtotal);
               setState(() {});
               if (vendorDiscountAvailable != null &&
@@ -4594,10 +4804,10 @@ class _MyCartScreenState extends State<MyCartScreen> {
               incTaxInKm = false;
             } else {
               subTotal = subtotal;
-              totalPrice = subtotal + double.parse(strFinalDeliveryCharge!);
+              totalPrice = subtotal; // + double.parse(strFinalDeliveryCharge!);
               print(
                   "new new total is in delivery function $totalPrice new new subtotal is $subtotal");
-              tempTotalWithoutDeliveryCharge = subtotal;
+              //tempTotalWithoutDeliveryCharge = subtotal;
               // calculateTax(subtotal);
               setState(() {});
               if (vendorDiscountAvailable != null &&

@@ -240,8 +240,7 @@ class LanguageEn extends Languages {
   String get labelCustomizable => 'Customizable';
 
   @override
-  String get labelAddRequestToRest =>
-      'Please enter your delivery date time and any food allergies';
+  String get labelAddRequestToRest => 'Please specify any food allergies';
 
   @override
   String get labelOptional => 'Mandatory';
