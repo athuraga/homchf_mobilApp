@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ffi';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_line/dotted_line.dart';
@@ -24,7 +25,6 @@ import 'package:homchf/utils/rounded_corner_app_button.dart';
 class OrderDetailsScreen extends StatefulWidget {
   final int? orderId;
   final String? orderDate, orderTime, orderSchedule;
-
   const OrderDetailsScreen(
       {Key? key,
       this.orderId,
@@ -45,6 +45,10 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
       strUserName = '',
       strOrderStatus = 'PENDING',
       strOrderSchedule = '',
+      strOrderScheduleDate = 'NO DATA',
+      strOrderScheduleTime = 'NO DATA',
+      strOrderSchedulePickup = 'NO DATA',
+      strOrderScheduleAllergy = 'NO DATA',
       strOrderInvoiceId = '',
       strDeliveryPerson = '',
       strDeliveryPersonImage = '',
@@ -411,6 +415,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           btnColor: Color(Constants.colorLike),
           onBtnPress: () {
             showCancelOrderDialog();
+
             /*Constants.checkNetwork()
                 .whenComplete(() => callCancelOrder(widget.orderId));*/
           },
@@ -447,9 +452,33 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           Padding(
                             padding: const EdgeInsets.only(top: 20, left: 20),
                             child: Text(
-                              strOrderSchedule ?? '',
+                              'Delvery' + strOrderScheduleDate!,
                               style: TextStyle(
-                                  fontFamily: Constants.appFont, fontSize: 15),
+                                  fontFamily: Constants.appFont, fontSize: 18),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10, left: 20),
+                            child: Text(
+                              'Delvery Time: ' + strOrderScheduleTime!,
+                              style: TextStyle(
+                                  fontFamily: Constants.appFont, fontSize: 18),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10, left: 20),
+                            child: Text(
+                              'Pick-Up-Point: ' + strOrderSchedulePickup!,
+                              style: TextStyle(
+                                  fontFamily: Constants.appFont, fontSize: 18),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(top: 10, left: 20),
+                            child: Text(
+                              'Food Allergies: ' + strOrderScheduleAllergy!,
+                              style: TextStyle(
+                                  fontFamily: Constants.appFont, fontSize: 18),
                             ),
                           ),
                           Padding(
@@ -1515,6 +1544,57 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           strOrderSchedule = response.data!.orderSchedule;
         } else {
           strOrderSchedule = null;
+        }
+
+        var str = "";
+        if (strOrderSchedule!.length > 56) {
+          str = strOrderSchedule!;
+        } else {
+          str = "No Data";
+        }
+        const strDate = "Delivery";
+        const enDate = "Time";
+        final strDateIndex = str.indexOf(strDate);
+        final enDateIndex = str.indexOf(enDate);
+        if (str.length > 58) {
+          strOrderScheduleDate =
+              str.substring(strDateIndex + strDate.length, enDateIndex).trim();
+        } else {
+          strOrderScheduleDate = "No Data";
+        }
+        const strTimd = "Time";
+        const enTimd = "Pick";
+        final strTimdIndex = str.indexOf(strTimd);
+        final enTimdIndex = str.indexOf(enTimd);
+        if (str.length > 58) {
+          strOrderScheduleTime =
+              str.substring(strTimdIndex + strTimd.length, enTimdIndex).trim();
+        } else {
+          strOrderScheduleTime = "No Data";
+        }
+
+        const strPickUp = "Pick";
+        const enPickUp = "Food";
+        final strPickUpIndex = str.indexOf(strPickUp);
+        final enPickUpIndex = str.indexOf(enPickUp);
+        if (str.length > 58) {
+          strOrderSchedulePickup = str
+              .substring(strPickUpIndex + strPickUp.length, enPickUpIndex)
+              .trim();
+        } else {
+          strOrderSchedulePickup = "No Data";
+        }
+
+        const strFoodAllergy = "Food";
+        final strFoodAllergyIndex = str.indexOf(strFoodAllergy);
+        final enFoodAllergyIndex = str.length;
+        if (str.length > 58) {
+          strOrderScheduleAllergy = str
+              .substring(strFoodAllergyIndex + strFoodAllergy.length,
+                  enFoodAllergyIndex)
+              .trim();
+        } else {
+          strOrderScheduleAllergy = str;
         }
 
         strUserName = response.data!.user!.name;

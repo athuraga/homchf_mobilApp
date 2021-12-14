@@ -4511,9 +4511,9 @@ class _MyCartScreenState extends State<MyCartScreen> {
                   _date.value.text +
                   '  Time ' +
                   _time.value.text +
-                  '  pick-up @ ' +
+                  '  Pick @ ' +
                   _textPickupPoint.text +
-                  '  food allergies: ' +
+                  '  Food ' +
                   _textDeliverDateTimeEtc.text,
               allTax: sendAllTax),
         ),
