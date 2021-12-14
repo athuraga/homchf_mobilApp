@@ -20,10 +20,10 @@ PODS:
   - google_maps_flutter (0.0.1):
     - Flutter
     - GoogleMaps
-  - GoogleMaps (5.2.0):
-    - GoogleMaps/Maps (= 5.2.0)
-  - GoogleMaps/Base (5.2.0)
-  - GoogleMaps/Maps (5.2.0):
+  - GoogleMaps (6.0.1):
+    - GoogleMaps/Maps (= 6.0.1)
+  - GoogleMaps/Base (6.0.1)
+  - GoogleMaps/Maps (6.0.1):
     - GoogleMaps/Base
   - image_picker (0.0.1):
     - Flutter
@@ -39,7 +39,7 @@ PODS:
     - Flutter
   - path_provider (0.0.1):
     - Flutter
-  - razorpay-pod (1.1.16)
+  - razorpay-pod (1.1.17)
   - razorpay_flutter (1.1.10):
     - Flutter
     - razorpay-pod
@@ -158,7 +158,7 @@ SPEC CHECKSUMS:
   geocoding: 32cfcdb16d38d907caaba65e2e42ad10d38bee58
   geolocator: f5e3de65e241caba7ce3e8a618803387bda73384
   google_maps_flutter: 279865bd07e2d8751f43a3bc64bac7f6075d0c93
-  GoogleMaps: 025272d5876d3b32604e5c080dc25eaf68764693
+  GoogleMaps: c213fc2334b7374144cede914da779b99be0ab74
   image_picker: e06f7a68f000bd36f552c1847e33cda96ed31f1f
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
   modal_progress_hud_nsn: f6fb744cd060653d66ed8f325360ef3650eb2fde
@@ -166,7 +166,7 @@ SPEC CHECKSUMS:
   OneSignalXCFramework: 974dc438d68910cf04f3c8ab034e0131d41438c1
   package_info_plus: 6c92f08e1f853dc01228d6f553146438dafcd14e
   path_provider: abfe2b5c733d04e238b0d8691db0cfd63a27a93c
-  razorpay-pod: f1763f8ee8f83152837abe7de1cdfbcd4eb035b9
+  razorpay-pod: 570fa697c5c0d8e356f42d783bf37d9361334062
   razorpay_flutter: 84b3bfd206ae9c9c2a9ba585524a1b3d8102b6c1
   Reachability: 33e18b67625424e47b6cde6d202dce689ad7af96
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
