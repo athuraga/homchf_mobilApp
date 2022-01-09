@@ -240,7 +240,8 @@ class LanguageEn extends Languages {
   String get labelCustomizable => 'Customizable';
 
   @override
-  String get labelAddRequestToRest => 'Please specify any food allergies';
+  String get labelAddRequestToRest =>
+      'Please specify any food allergies (minimum character length is 3)';
 
   @override
   String get labelOptional => 'Mandatory';

@@ -28,7 +28,6 @@ class Data {
   int? deliveryPersonId;
   String? orderStatus;
   String? orderSchedule;
-
   int? deliveryCharge;
   int? addressId;
   int? promoCodeId;
@@ -71,7 +70,6 @@ class Data {
     deliveryPersonId = json['delivery_person_id'];
     orderStatus = json['order_status'];
     orderSchedule = json['order_schedule'];
-
     deliveryCharge = json['delivery_charge'];
     addressId = json['address_id'];
     promoCodeId = json['promocode_id'];
@@ -164,6 +162,7 @@ class Vendor {
   dynamic rate;
   String? tax;
   int? review;
+  String? contact;
 
   Vendor(
       {this.name,
@@ -173,6 +172,7 @@ class Vendor {
       this.lang,
       this.cuisine,
       this.rate,
+      this.contact,
       this.review});
 
   Vendor.fromJson(Map<String, dynamic> json) {
@@ -182,6 +182,7 @@ class Vendor {
     lat = json['lat'];
     tax = json['tax'];
     lang = json['lang'];
+    contact = json['contact'];
     if (json['cuisine'] != null) {
       cuisine = [];
       // json['cuisine'].forEach((v) { cuisine.add(new Null.fromJson(v)); });
@@ -198,6 +199,7 @@ class Vendor {
     data['tax'] = this.tax;
     data['lat'] = this.lat;
     data['lang'] = this.lang;
+    data['contact'] = this.contact;
     if (this.cuisine != null) {
       // data['cuisine'] = this.cuisine.map((v) => v.toJson()).toList();
     }

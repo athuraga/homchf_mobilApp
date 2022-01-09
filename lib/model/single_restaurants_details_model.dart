@@ -108,6 +108,7 @@ class Vendor {
   int? review;
   int? id;
   String? tax;
+  String? contact;
 
   Vendor(
       {this.image,
@@ -115,13 +116,14 @@ class Vendor {
       this.mapAddress,
       this.forTwoPerson,
       this.vendorType,
-        this.lat,
-        this.lang,
+      this.lat,
+      this.lang,
       this.cuisineId,
       this.cuisine,
       this.rate,
       this.id,
       this.tax,
+      this.contact,
       this.review});
 
   Vendor.fromJson(Map<String, dynamic> json) {
@@ -134,6 +136,7 @@ class Vendor {
     vendorType = json['vendor_type'];
     lat = json['lat'];
     lang = json['lang'];
+    contact = json['contact'];
     cuisineId = json['cuisine_id'];
     if (json['cuisine'] != null) {
       cuisine = [];
@@ -153,6 +156,7 @@ class Vendor {
     data['for_two_person'] = this.forTwoPerson;
     data['vendor_type'] = this.vendorType;
     data['cuisine_id'] = this.cuisineId;
+    data['contact'] = this.contact;
     if (this.cuisine != null) {
       data['cuisine'] = this.cuisine!.map((v) => v.toJson()).toList();
     }
@@ -229,24 +233,24 @@ class SubMenuListData {
   int itemQty = 0;
   bool? isRepeatCustomization = false;
   int? tempQty;
-  String?  qty_reset;
+  String? qty_reset;
   int? item_reset_value;
   int? availabel_item;
 
-  SubMenuListData(
-      {this.id,
-      this.name,
-      this.image,
-      this.price,
-      this.type,
-      this.custimization,
-      required this.count,
-      this.isAdded,
-      this.isRepeatCustomization,
-      this.qty_reset,
-      this.item_reset_value,
-      this.availabel_item,
-      });
+  SubMenuListData({
+    this.id,
+    this.name,
+    this.image,
+    this.price,
+    this.type,
+    this.custimization,
+    required this.count,
+    this.isAdded,
+    this.isRepeatCustomization,
+    this.qty_reset,
+    this.item_reset_value,
+    this.availabel_item,
+  });
 
   SubMenuListData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -254,9 +258,9 @@ class SubMenuListData {
     type = json['type'].toString();
     image = json['image'];
     price = json['price'];
-    qty_reset =  json['qty_reset'];
-    item_reset_value =  json['item_reset_value'];
-    availabel_item =  json['availabel_item'];
+    qty_reset = json['qty_reset'];
+    item_reset_value = json['item_reset_value'];
+    availabel_item = json['availabel_item'];
     if (json['custimization'] != null) {
       custimization = [];
       json['custimization'].forEach((v) {

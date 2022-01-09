@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_line/dotted_line.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -24,6 +23,7 @@ import 'package:homchf/utils/database_helper.dart';
 import 'package:homchf/utils/localization/language/languages.dart';
 import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:scoped_model/scoped_model.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 final dbHelper = DatabaseHelper.instance;
 List<Product> _listCart = [];
@@ -36,11 +36,13 @@ class RestaurantsDetailsScreen extends StatefulWidget {
   final int? restaurantId;
   final bool? isFav;
 
-  const RestaurantsDetailsScreen({Key? key, required this.restaurantId, this.isFav})
+  const RestaurantsDetailsScreen(
+      {Key? key, required this.restaurantId, this.isFav})
       : super(key: key);
 
   @override
-  _RestaurantsDetailsScreenState createState() => _RestaurantsDetailsScreenState();
+  _RestaurantsDetailsScreenState createState() =>
+      _RestaurantsDetailsScreenState();
 }
 
 class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
@@ -53,6 +55,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
   bool _isSyncing = false;
   String? strRestaurantsName = '',
       strRestaurantsAddress = '',
+      strRestaurantsMobile = '',
       strRestaurantsRate = '',
       strRestaurantsForTwoPerson = '',
       strRestaurantsType = '',
@@ -74,7 +77,8 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
   void initState() {
     super.initState();
 
-    Constants.checkNetwork().whenComplete(() => callGetRestaurantsDetails(widget.restaurantId));
+    Constants.checkNetwork()
+        .whenComplete(() => callGetRestaurantsDetails(widget.restaurantId));
     if (widget.isFav != null) {
       isfavorite = widget.isFav;
     }
@@ -87,14 +91,19 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
     dynamic screenWidth = MediaQuery.of(context).size.width;
     dynamic screenHeight = MediaQuery.of(context).size.height;
 
-    ScreenUtil.init(BoxConstraints(maxWidth: screenWidth, maxHeight: screenHeight),
-        designSize: Size(360, 690), orientation: Orientation.portrait);
+    ScreenUtil.init(
+        BoxConstraints(maxWidth: screenWidth, maxHeight: screenHeight),
+        designSize: Size(360, 690),
+        orientation: Orientation.portrait);
 
     return SafeArea(
       child: Scaffold(
         key: _scaffoldKey,
         bottomNavigationBar: Visibility(
-          visible: ScopedModel.of<CartModel>(context, rebuildOnChange: true).cart.length != 0
+          visible: ScopedModel.of<CartModel>(context, rebuildOnChange: true)
+                      .cart
+                      .length !=
+                  0
               ? true
               : false,
           child: GestureDetector(
@@ -141,7 +150,8 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                           ),
                           WidgetSpan(
                             child: Padding(
-                              padding: EdgeInsets.only(left: ScreenUtil().setHeight(10)),
+                              padding: EdgeInsets.only(
+                                  left: ScreenUtil().setHeight(10)),
                               child: SvgPicture.asset(
                                 'images/ic_green_arrow.svg',
                                 width: ScreenUtil().setWidth(18),
@@ -188,14 +198,16 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                       if (SharedPreferenceUtil.getBool(Constants.isLoggedIn)) {
                         callAddRemoveFavorite(widget.restaurantId);
                       } else {
-                        Constants.toastMessage(
-                            Languages.of(context)!.labelPleaseLoginToAddFavorite);
+                        Constants.toastMessage(Languages.of(context)!
+                            .labelPleaseLoginToAddFavorite);
                       }
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 20),
                       child: SvgPicture.asset(
-                        isfavorite! ? 'images/ic_filled_heart.svg' : 'images/ic_heart.svg',
+                        isfavorite!
+                            ? 'images/ic_filled_heart.svg'
+                            : 'images/ic_heart.svg',
                         height: ScreenUtil().setHeight(20),
                         width: ScreenUtil().setWidth(20),
                       ),
@@ -214,7 +226,8 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
             )),
             child: Padding(
               padding: EdgeInsets.only(
-                  left: ScreenUtil().setWidth(15), right: ScreenUtil().setWidth(15)),
+                  left: ScreenUtil().setWidth(15),
+                  right: ScreenUtil().setWidth(15)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -238,9 +251,13 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                   imageUrl: strRestaurantImage!,
                                   fit: BoxFit.cover,
                                   placeholder: (context, url) =>
-                                      SpinKitFadingCircle(color: Color(Constants.colorTheme)),
-                                  errorWidget: (context, url, error) => Container(
-                                    child: Center(child: Image.asset('images/noimage.png')),
+                                      SpinKitFadingCircle(
+                                          color: Color(Constants.colorTheme)),
+                                  errorWidget: (context, url, error) =>
+                                      Container(
+                                    child: Center(
+                                        child:
+                                            Image.asset('images/noimage.png')),
                                   ),
                                 ),
                               ),
@@ -248,7 +265,8 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Text(
@@ -262,20 +280,37 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                             top: ScreenUtil().setHeight(2),
                                             bottom: ScreenUtil().setHeight(2)),
                                         child: Text(
-                                          strRestaurantsAddress ?? 'Not available',
+                                          strRestaurantsAddress ??
+                                              'Not available',
                                           style: TextStyle(
                                               fontFamily: Constants.appFont,
-                                              color: Color(Constants.colorBlack),
+                                              color:
+                                                  Color(Constants.colorBlack),
                                               fontSize: ScreenUtil().setSp(12)),
                                         ),
                                       ),
                                       Text(
-                                        '',
+                                        strRestaurantsMobile ?? 'Not available',
                                         style: TextStyle(
                                             fontFamily: Constants.appFont,
-                                            color: Color(Constants.colorGray),
-                                            fontSize: ScreenUtil().setSp(12)),
+                                            color: Color(Constants.colorAppbar),
+                                            fontSize: ScreenUtil().setSp(14)),
                                       ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 0, 20, 0),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            launch(
+                                                "tel://${strRestaurantsMobile!.toString()}");
+                                          },
+                                          child: SvgPicture.asset(
+                                            'images/ic_call.svg',
+                                            width: ScreenUtil().setWidth(18),
+                                            height: ScreenUtil().setHeight(18),
+                                          ),
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -284,7 +319,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                           ),
                         ),
                         SizedBox(
-                          height: ScreenUtil().setHeight(15),
+                          height: ScreenUtil().setHeight(0.5),
                         ),
                         DottedLine(
                           dashColor: Color(0xffcccccc),
@@ -309,20 +344,26 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                             WidgetSpan(
                                               child: Padding(
                                                 padding: EdgeInsets.only(
-                                                    right: ScreenUtil().setWidth(5)),
+                                                    right: ScreenUtil()
+                                                        .setWidth(5)),
                                                 child: SvgPicture.asset(
                                                   'images/ic_star.svg',
-                                                  width: ScreenUtil().setWidth(15),
-                                                  height: ScreenUtil().setHeight(15),
+                                                  width:
+                                                      ScreenUtil().setWidth(15),
+                                                  height: ScreenUtil()
+                                                      .setHeight(15),
                                                 ),
                                               ),
                                             ),
                                             TextSpan(
                                                 text: strRestaurantsReview,
                                                 style: TextStyle(
-                                                    color: Color(Constants.colorBlack),
-                                                    fontFamily: Constants.appFontBold,
-                                                    fontSize: ScreenUtil().setSp(14))),
+                                                    color: Color(
+                                                        Constants.colorBlack),
+                                                    fontFamily:
+                                                        Constants.appFontBold,
+                                                    fontSize: ScreenUtil()
+                                                        .setSp(14))),
                                           ],
                                         ),
                                       ),
@@ -351,26 +392,33 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                           top: ScreenUtil().setHeight(5),
                                           bottom: ScreenUtil().setHeight(5)),
                                       child: Row(
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        crossAxisAlignment: CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
                                         children: [
                                           Text(
                                             SharedPreferenceUtil.getString(
-                                                Constants.appSettingCurrencySymbol),
+                                                Constants
+                                                    .appSettingCurrencySymbol),
                                             style: TextStyle(
                                                 fontFamily: Constants.appFont,
-                                                color: Color(Constants.colorTheme),
-                                                fontSize: ScreenUtil().setSp(18)),
+                                                color:
+                                                    Color(Constants.colorTheme),
+                                                fontSize:
+                                                    ScreenUtil().setSp(18)),
                                           ),
                                           Padding(
-                                            padding:
-                                                EdgeInsets.only(left: ScreenUtil().setWidth(5)),
+                                            padding: EdgeInsets.only(
+                                                left: ScreenUtil().setWidth(5)),
                                             child: Text(
                                               strRestaurantsForTwoPerson ?? '',
                                               style: TextStyle(
                                                   fontFamily: Constants.appFont,
-                                                  color: Color(Constants.colorBlack),
-                                                  fontSize: ScreenUtil().setSp(16)),
+                                                  color: Color(
+                                                      Constants.colorBlack),
+                                                  fontSize:
+                                                      ScreenUtil().setSp(16)),
                                             ),
                                           ),
                                         ],
@@ -395,19 +443,23 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                   return Expanded(
                                     flex: 1,
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Padding(
                                           padding: EdgeInsets.only(
                                               top: ScreenUtil().setHeight(10),
-                                              bottom: ScreenUtil().setHeight(5)),
+                                              bottom:
+                                                  ScreenUtil().setHeight(5)),
                                           child: Padding(
-                                            padding:
-                                                EdgeInsets.only(right: ScreenUtil().setWidth(5)),
+                                            padding: EdgeInsets.only(
+                                                right:
+                                                    ScreenUtil().setWidth(5)),
                                             child: SvgPicture.asset(
                                               'images/ic_veg.svg',
                                               width: ScreenUtil().setWidth(15),
-                                              height: ScreenUtil().setHeight(15),
+                                              height:
+                                                  ScreenUtil().setHeight(15),
                                             ),
                                           ),
                                         ),
@@ -425,19 +477,23 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                   return Expanded(
                                     flex: 1,
                                     child: Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
                                         Padding(
                                           padding: EdgeInsets.only(
                                               top: ScreenUtil().setHeight(10),
-                                              bottom: ScreenUtil().setHeight(5)),
+                                              bottom:
+                                                  ScreenUtil().setHeight(5)),
                                           child: Padding(
-                                            padding:
-                                                EdgeInsets.only(right: ScreenUtil().setWidth(5)),
+                                            padding: EdgeInsets.only(
+                                                right:
+                                                    ScreenUtil().setWidth(5)),
                                             child: SvgPicture.asset(
                                               'images/ic_non_veg.svg',
                                               width: ScreenUtil().setWidth(15),
-                                              height: ScreenUtil().setHeight(15),
+                                              height:
+                                                  ScreenUtil().setHeight(15),
                                             ),
                                           ),
                                         ),
@@ -455,28 +511,36 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                                   return Expanded(
                                     flex: 1,
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
                                       children: [
                                         Padding(
                                           padding: EdgeInsets.only(
                                               top: ScreenUtil().setHeight(10),
-                                              bottom: ScreenUtil().setHeight(5)),
+                                              bottom:
+                                                  ScreenUtil().setHeight(5)),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
                                               Padding(
                                                 padding: EdgeInsets.only(
-                                                    right: ScreenUtil().setWidth(5)),
+                                                    right: ScreenUtil()
+                                                        .setWidth(5)),
                                                 child: SvgPicture.asset(
                                                   'images/ic_veg.svg',
-                                                  width: ScreenUtil().setWidth(15),
-                                                  height: ScreenUtil().setHeight(15),
+                                                  width:
+                                                      ScreenUtil().setWidth(15),
+                                                  height: ScreenUtil()
+                                                      .setHeight(15),
                                                 ),
                                               ),
                                               SvgPicture.asset(
                                                 'images/ic_non_veg.svg',
-                                                width: ScreenUtil().setWidth(15),
-                                                height: ScreenUtil().setHeight(15),
+                                                width:
+                                                    ScreenUtil().setWidth(15),
+                                                height:
+                                                    ScreenUtil().setHeight(15),
                                               ),
                                             ],
                                           ),
@@ -504,145 +568,147 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
                       ],
                     ),
                   ),
-                  Container(
-                    height: ScreenUtil().setHeight(100),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Expanded(
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20.0),
-                            ),
-                            child: Container(
-                              child: Padding(
-                                padding: EdgeInsets.only(
-                                    left: ScreenUtil().setWidth(10),
-                                    right: ScreenUtil().setWidth(10),
-                                    top: ScreenUtil().setHeight(2),
-                                    bottom: ScreenUtil().setHeight(2)),
-                                child: Focus(
-                                  onFocusChange: (hasFocus) {
-                                    if (hasFocus) {
-                                      setState(() {
-                                        isNotSearch = false;
-                                      });
-                                    } else {
-                                      setState(() {
-                                        isNotSearch = true;
-                                      });
-                                    }
-                                  },
-                                  child: TextField(
-                                    controller: searchController,
-                                    onChanged: onSearchTextChanged,
-                                    decoration: InputDecoration(
-                                      contentPadding:
-                                          EdgeInsets.only(left: ScreenUtil().setWidth(10)),
-                                      suffixIcon: IconButton(
-                                        onPressed: () => {},
-                                        icon: SvgPicture.asset(
-                                          'images/search.svg',
-                                          width: ScreenUtil().setWidth(15),
-                                          height: ScreenUtil().setHeight(15),
-                                          color: Color(Constants.colorBlack),
-                                        ),
-                                      ),
-                                      hintText: Languages.of(context)!.labelSearchItems,
-                                      hintStyle: TextStyle(
-                                        fontSize: ScreenUtil().setSp(16),
-                                        fontFamily: Constants.appFont,
-                                        color: Color(Constants.colorGray),
-                                      ),
-                                      border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,
-                                      ),
-                                      filled: true,
-                                      fillColor: Color(0xFFFFFFFF),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        /*Container(
-                          width: ScreenUtil().setWidth(55),
-                          height: ScreenUtil().setHeight(55),
-                          child: Card(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(14.0),
-                              child: SvgPicture.asset(
-                                'images/ic_filter.svg',
-                                width: ScreenUtil().setWidth(18),
-                                height: ScreenUtil().setHeight(18),
-                              ),
-                            ),
-                          ),
-                        ),*/
-                      ],
-                    ),
-                  ),
+                  // Container(
+                  //   height: ScreenUtil().setHeight(100),
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.start,
+                  //     children: [
+                  //       Expanded(
+                  //         child: Card(
+                  //           shape: RoundedRectangleBorder(
+                  //             borderRadius: BorderRadius.circular(20.0),
+                  //           ),
+                  //           child: Container(
+                  //             child: Padding(
+                  //               padding: EdgeInsets.only(
+                  //                   left: ScreenUtil().setWidth(10),
+                  //                   right: ScreenUtil().setWidth(10),
+                  //                   top: ScreenUtil().setHeight(2),
+                  //                   bottom: ScreenUtil().setHeight(2)),
+                  //               child: Focus(
+                  //                 onFocusChange: (hasFocus) {
+                  //                   if (hasFocus) {
+                  //                     setState(() {
+                  //                       isNotSearch = false;
+                  //                     });
+                  //                   } else {
+                  //                     setState(() {
+                  //                       isNotSearch = true;
+                  //                     });
+                  //                   }
+                  //                 },
+                  //                 child: TextField(
+                  //                   controller: searchController,
+                  //                   onChanged: onSearchTextChanged,
+                  //                   decoration: InputDecoration(
+                  //                     contentPadding: EdgeInsets.only(
+                  //                         left: ScreenUtil().setWidth(10)),
+                  //                     suffixIcon: IconButton(
+                  //                       onPressed: () => {},
+                  //                       icon: SvgPicture.asset(
+                  //                         'images/search.svg',
+                  //                         width: ScreenUtil().setWidth(15),
+                  //                         height: ScreenUtil().setHeight(15),
+                  //                         color: Color(Constants.colorBlack),
+                  //                       ),
+                  //                     ),
+                  //                     hintText: Languages.of(context)!
+                  //                         .labelSearchItems,
+                  //                     hintStyle: TextStyle(
+                  //                       fontSize: ScreenUtil().setSp(16),
+                  //                       fontFamily: Constants.appFont,
+                  //                       color: Color(Constants.colorGray),
+                  //                     ),
+                  //                     border: OutlineInputBorder(
+                  //                       borderSide: BorderSide.none,
+                  //                     ),
+                  //                     filled: true,
+                  //                     fillColor: Color(0xFFFFFFFF),
+                  //                   ),
+                  //                 ),
+                  //               ),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       /*Container(
+                  //         width: ScreenUtil().setWidth(55),
+                  //         height: ScreenUtil().setHeight(55),
+                  //         child: Card(
+                  //           shape: RoundedRectangleBorder(
+                  //             borderRadius: BorderRadius.circular(10.0),
+                  //           ),
+                  //           child: Padding(
+                  //             padding: const EdgeInsets.all(14.0),
+                  //             child: SvgPicture.asset(
+                  //               'images/ic_filter.svg',
+                  //               width: ScreenUtil().setWidth(18),
+                  //               height: ScreenUtil().setHeight(18),
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),*/
+                  //     ],
+                  //   ),
+                  // ),
                   Expanded(
                     flex: 6,
                     child: Container(
-                      child:
-                          _searchlistRestaurantsMenu.length != 0 || searchController.text.isNotEmpty
-                              ? _searchlistRestaurantsMenu.length > 0
-                                  ? ListView.builder(
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: _searchlistRestaurantsMenu.length,
-                                      itemBuilder: (context, i) {
-                                        return ExpandedListItem(
-                                          restaurantsId: widget.restaurantId,
-                                          index: i,
-                                          listRestaurantsMenu: _searchlistRestaurantsMenu,
-                                          restaurantsName: strRestaurantsName,
-                                          onSetState: callSetState,
-                                          restaurantsImage: strRestaurantImage,
-                                        );
-                                      },
-                                    )
-                                  : Center(
-                                      child: Text(
-                                        '${Languages.of(context)!.labelNoData}',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: ScreenUtil().setSp(18),
-                                          fontFamily: Constants.appFontBold,
-                                          color: Colors.black,
-                                        ),
-                                      ),
-                                    )
-                              : _listRestaurantsMenu.length > 0
-                                  ? ListView.builder(
-                                      scrollDirection: Axis.vertical,
-                                      itemCount: _listRestaurantsMenu.length,
-                                      itemBuilder: (context, i) {
-                                        return ExpandedListItem(
-                                          restaurantsId: widget.restaurantId,
-                                          index: i,
-                                          listRestaurantsMenu: _listRestaurantsMenu,
-                                          restaurantsName: strRestaurantsName,
-                                          onSetState: callSetState,
-                                          restaurantsImage: strRestaurantImage,
-                                        );
-                                      },
-                                    )
-                                  : Center(
-                                      child: Text(
-                                        '${Languages.of(context)!.labelNoData}',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: ScreenUtil().setSp(18),
-                                          fontFamily: Constants.appFontBold,
-                                          color: Colors.black,
-                                        ),
-                                      ),
+                      child: _searchlistRestaurantsMenu.length != 0 ||
+                              searchController.text.isNotEmpty
+                          ? _searchlistRestaurantsMenu.length > 0
+                              ? ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: _searchlistRestaurantsMenu.length,
+                                  itemBuilder: (context, i) {
+                                    return ExpandedListItem(
+                                      restaurantsId: widget.restaurantId,
+                                      index: i,
+                                      listRestaurantsMenu:
+                                          _searchlistRestaurantsMenu,
+                                      restaurantsName: strRestaurantsName,
+                                      onSetState: callSetState,
+                                      restaurantsImage: strRestaurantImage,
+                                    );
+                                  },
+                                )
+                              : Center(
+                                  child: Text(
+                                    '${Languages.of(context)!.labelNoData}',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(18),
+                                      fontFamily: Constants.appFontBold,
+                                      color: Colors.black,
                                     ),
+                                  ),
+                                )
+                          : _listRestaurantsMenu.length > 0
+                              ? ListView.builder(
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: _listRestaurantsMenu.length,
+                                  itemBuilder: (context, i) {
+                                    return ExpandedListItem(
+                                      restaurantsId: widget.restaurantId,
+                                      index: i,
+                                      listRestaurantsMenu: _listRestaurantsMenu,
+                                      restaurantsName: strRestaurantsName,
+                                      onSetState: callSetState,
+                                      restaurantsImage: strRestaurantImage,
+                                    );
+                                  },
+                                )
+                              : Center(
+                                  child: Text(
+                                    '${Languages.of(context)!.labelNoData}',
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                      fontSize: ScreenUtil().setSp(18),
+                                      fontFamily: Constants.appFontBold,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
                     ),
                   )
                 ],
@@ -692,6 +758,7 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
           _isSyncing = false;
           strRestaurantsType = response.data!.vendor!.vendorType;
           strRestaurantsName = response.data!.vendor!.name;
+          strRestaurantsMobile = response.data!.vendor!.contact;
           strRestaurantsForTwoPerson = response.data!.vendor!.forTwoPerson;
           strRestaurantsRate = response.data!.vendor!.rate.toString();
           strRestaurantsReview = response.data!.vendor!.review.toString();
@@ -700,25 +767,32 @@ class _RestaurantsDetailsScreenState extends State<RestaurantsDetailsScreen> {
 
           strRestaurantImage = response.data!.vendor!.image;
 
-          _listCart.addAll(ScopedModel.of<CartModel>(context, rebuildOnChange: true).cart);
+          _listCart.addAll(
+              ScopedModel.of<CartModel>(context, rebuildOnChange: true).cart);
 
           if (_listCart.length != 0) {
             for (int i = 0; i < _listCart.length; i++) {
               if (_listRestaurantsMenu.length != 0) {
                 for (int j = 0; j < _listRestaurantsMenu.length; j++) {
-                  for (int k = 0; k < _listRestaurantsMenu[j].submenu!.length; k++) {
+                  for (int k = 0;
+                      k < _listRestaurantsMenu[j].submenu!.length;
+                      k++) {
                     bool isRepeatCustomization;
-                    int? repeatcustomization = _listCart[i].isRepeatCustomization;
+                    int? repeatcustomization =
+                        _listCart[i].isRepeatCustomization;
                     if (repeatcustomization == 1) {
                       isRepeatCustomization = true;
                     } else {
                       isRepeatCustomization = false;
                     }
-                    if (_listRestaurantsMenu[j].submenu![k].id == _listCart[i].id) {
+                    if (_listRestaurantsMenu[j].submenu![k].id ==
+                        _listCart[i].id) {
                       _listRestaurantsMenu[j].submenu![k].isAdded = true;
-                      _listRestaurantsMenu[j].submenu![k].count = _listCart[i].qty!;
-                      _listRestaurantsMenu[j].submenu![k].isRepeatCustomization =
-                          isRepeatCustomization;
+                      _listRestaurantsMenu[j].submenu![k].count =
+                          _listCart[i].qty!;
+                      _listRestaurantsMenu[j]
+                          .submenu![k]
+                          .isRepeatCustomization = isRepeatCustomization;
                     }
                   }
                 }
@@ -803,17 +877,22 @@ void _queryFirst(BuildContext context) async {
       isRepeatCustomization: allRows[i]['isRepeatCustomization'],
     ));
     if (allRows[i]['pro_customization'] == '') {
-      totalCartAmount += double.parse(allRows[i]['pro_price']) * allRows[i]['pro_qty'];
-      tempTotal1 += double.parse(allRows[i]['pro_price']) * allRows[i]['pro_qty'];
+      totalCartAmount +=
+          double.parse(allRows[i]['pro_price']) * allRows[i]['pro_qty'];
+      tempTotal1 +=
+          double.parse(allRows[i]['pro_price']) * allRows[i]['pro_qty'];
     } else {
-      totalCartAmount += double.parse(allRows[i]['pro_price']) + totalCartAmount;
+      totalCartAmount +=
+          double.parse(allRows[i]['pro_price']) + totalCartAmount;
       tempTotal2 += double.parse(allRows[i]['pro_price']);
     }
 
     print(totalCartAmount);
 
     print('First cart model cart data' +
-        ScopedModel.of<CartModel>(context, rebuildOnChange: true).cart.toString());
+        ScopedModel.of<CartModel>(context, rebuildOnChange: true)
+            .cart
+            .toString());
     print('First cart Listcart array' + _listCart.length.toString());
     print('First cart listcart string' + _listCart.toString());
 
@@ -860,9 +939,11 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
   Widget build(BuildContext context) {
     int? selected = 0; //attention
 
-    List<SubMenuListData>? listItem = widget.listRestaurantsMenu![this.widget.index!].submenu;
+    List<SubMenuListData>? listItem =
+        widget.listRestaurantsMenu![this.widget.index!].submenu;
 
-    final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent); //new
+    final theme =
+        Theme.of(context).copyWith(dividerColor: Colors.transparent); //new
 
     return ScopedModelDescendant<CartModel>(builder: (context, child, model) {
       return Container(
@@ -939,7 +1020,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 child: Padding(
-                  padding: const EdgeInsets.only(right: 10, top: 5, bottom: 5, left: 5),
+                  padding: const EdgeInsets.only(
+                      right: 10, top: 5, bottom: 5, left: 5),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     mainAxisSize: MainAxisSize.max,
@@ -951,10 +1033,11 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                           width: ScreenUtil().setWidth(70),
                           imageUrl: item.image!,
                           fit: BoxFit.cover,
-                          placeholder: (context, url) =>
-                              SpinKitFadingCircle(color: Color(Constants.colorTheme)),
+                          placeholder: (context, url) => SpinKitFadingCircle(
+                              color: Color(Constants.colorTheme)),
                           errorWidget: (context, url, error) => Container(
-                            child: Center(child: Image.asset('images/noimage.png')),
+                            child: Center(
+                                child: Image.asset('images/noimage.png')),
                           ),
                         ),
                       ),
@@ -976,22 +1059,31 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                           ? SvgPicture.asset(
                                               'images/ic_veg.svg',
                                               width: ScreenUtil().setWidth(15),
-                                              height: ScreenUtil().setHeight(15),
+                                              height:
+                                                  ScreenUtil().setHeight(15),
                                             )
                                           : SvgPicture.asset(
                                               'images/ic_non_veg.svg',
                                               width: ScreenUtil().setWidth(15),
-                                              height: ScreenUtil().setHeight(15),
+                                              height:
+                                                  ScreenUtil().setHeight(15),
                                             ),
                                       Padding(
                                         padding: EdgeInsets.only(
                                           left: ScreenUtil().setWidth(6),
                                         ),
-                                        child: Text(
-                                          item.name!,
-                                          style: TextStyle(
-                                              fontFamily: Constants.appFontBold,
-                                              fontSize: ScreenUtil().setSp(12)),
+                                        child: SizedBox(
+                                          width: 95,
+                                          child: Text(
+                                            item.name!,
+                                            textAlign: TextAlign.left,
+                                            maxLines: 5,
+                                            style: TextStyle(
+                                                fontFamily:
+                                                    Constants.appFontBold,
+                                                fontSize:
+                                                    ScreenUtil().setSp(12)),
+                                          ),
                                         ),
                                       ),
                                     ],
@@ -1017,8 +1109,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                       left: ScreenUtil().setWidth(10),
                                       top: ScreenUtil().setHeight(10)),
                                   child: Text(
-                                    SharedPreferenceUtil.getString(
-                                            Constants.appSettingCurrencySymbol) +
+                                    SharedPreferenceUtil.getString(Constants
+                                            .appSettingCurrencySymbol) +
                                         item.price.toString(),
                                     style: TextStyle(
                                         fontFamily: Constants.appFont,
@@ -1028,14 +1120,17 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                 ),
                                 item.custimization!.length > 0
                                     ? Padding(
-                                        padding: EdgeInsets.only(left: ScreenUtil().setWidth(10)),
+                                        padding: EdgeInsets.only(
+                                            left: ScreenUtil().setWidth(10)),
                                         child: Container(
                                           alignment: Alignment.bottomCenter,
                                           child: Text(
-                                            Languages.of(context)!.labelCustomizable,
+                                            Languages.of(context)!
+                                                .labelCustomizable,
                                             style: TextStyle(
                                                 fontFamily: Constants.appFont,
-                                                fontSize: ScreenUtil().setSp(12)),
+                                                fontSize:
+                                                    ScreenUtil().setSp(12)),
                                           ),
                                         ),
                                       )
@@ -1074,7 +1169,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                                   .toString() +
                                               "");
                                       print("Cart List" +
-                                          ScopedModel.of<CartModel>(context, rebuildOnChange: true)
+                                          ScopedModel.of<CartModel>(context,
+                                                  rebuildOnChange: true)
                                               .cart
                                               .toString() +
                                           "");
@@ -1083,10 +1179,14 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                       //String title;
                                       double? price, tempPrice;
                                       int? qty;
-                                      for (int z = 0; z < model.cart.length; z++) {
+                                      for (int z = 0;
+                                          z < model.cart.length;
+                                          z++) {
                                         if (item.id == model.cart[z].id) {
-                                          json.decode(model.cart[z].foodCustomization!);
-                                          finalFoodCustomization = model.cart[z].foodCustomization;
+                                          json.decode(
+                                              model.cart[z].foodCustomization!);
+                                          finalFoodCustomization =
+                                              model.cart[z].foodCustomization;
                                           price = model.cart[z].price;
                                           // title = model.cart[z].title;
                                           qty = model.cart[z].qty;
@@ -1131,7 +1231,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                                   .toString() +
                                               "");
                                       print("Cart List" +
-                                          ScopedModel.of<CartModel>(context, rebuildOnChange: true)
+                                          ScopedModel.of<CartModel>(context,
+                                                  rebuildOnChange: true)
                                               .cart
                                               .toString() +
                                           "");
@@ -1155,8 +1256,10 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                     width: ScreenUtil().setWidth(36),
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(ScreenUtil().setWidth(10)),
-                                          topRight: Radius.circular(ScreenUtil().setWidth(10))),
+                                          topLeft: Radius.circular(
+                                              ScreenUtil().setWidth(10)),
+                                          topRight: Radius.circular(
+                                              ScreenUtil().setWidth(10))),
                                       color: Color(0xfff1f1f1),
                                     ),
                                     child: Center(
@@ -1181,7 +1284,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                     width: ScreenUtil().setWidth(36),
                                     child: Text(
                                       '${item.count}',
-                                      style: TextStyle(fontFamily: Constants.appFont),
+                                      style: TextStyle(
+                                          fontFamily: Constants.appFont),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
@@ -1190,7 +1294,9 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                   onTap: () {
                                     if (item.qty_reset == 'daily' &&
                                         item.count >= item.availabel_item!) {
-                                      Constants.toastMessage(Languages.of(context)!.outOfStock,);
+                                      Constants.toastMessage(
+                                        Languages.of(context)!.outOfStock,
+                                      );
                                     } else {
                                       if (item.custimization!.length > 0) {
                                         var ab;
@@ -1199,9 +1305,12 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                         double price = 0;
                                         int qty = 0;
 
-                                        for (int z = 0; z < model.cart.length; z++) {
+                                        for (int z = 0;
+                                            z < model.cart.length;
+                                            z++) {
                                           if (item.id == model.cart[z].id) {
-                                            ab = json.decode(model.cart[z].foodCustomization!);
+                                            ab = json.decode(model
+                                                .cart[z].foodCustomization!);
                                             finalFoodCustomization =
                                                 model.cart[z].foodCustomization;
                                             price = model.cart[z].price!;
@@ -1212,7 +1321,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                         }
                                         List<String?> nameOfcustomization = [];
                                         for (int i = 0; i < ab.length; i++) {
-                                          nameOfcustomization.add(ab[i]['data']['name']);
+                                          nameOfcustomization
+                                              .add(ab[i]['data']['name']);
                                         }
                                         //  print('before starting ${price.toString()}');
                                         //  print('before starting tempPrice $tempPrice');
@@ -1228,10 +1338,12 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                         setState(() {
                                           item.count++;
                                         });
-                                        model.updateProduct(item.id, item.count);
+                                        model.updateProduct(
+                                            item.id, item.count);
                                         print(
                                             "Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
-                                                ScopedModel.of<CartModel>(context,
+                                                ScopedModel.of<CartModel>(
+                                                        context,
                                                         rebuildOnChange: true)
                                                     .totalCartValue
                                                     .toString() +
@@ -1289,7 +1401,9 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                   onTap: () {
                                     if (item.qty_reset == 'daily' &&
                                         item.count >= item.availabel_item!) {
-                                      Constants.toastMessage(Languages.of(context)!.outOfStock,);
+                                      Constants.toastMessage(
+                                        Languages.of(context)!.outOfStock,
+                                      );
                                     } else {
                                       if (item.custimization!.length > 0) {
                                         openFoodCustomizationBottomSheet(
@@ -1312,12 +1426,16 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                           widget._products.add(Product(
                                               id: item.id,
                                               qty: item.count,
-                                              price: double.parse(item.price.toString()),
+                                              price: double.parse(
+                                                  item.price.toString()),
                                               imgUrl: item.image,
                                               title: item.name,
-                                              restaurantsId: widget.restaurantsId,
-                                              restaurantsName: widget.restaurantsName,
-                                              restaurantImage: widget.restaurantsImage,
+                                              restaurantsId:
+                                                  widget.restaurantsId,
+                                              restaurantsName:
+                                                  widget.restaurantsName,
+                                              restaurantImage:
+                                                  widget.restaurantsImage,
                                               foodCustomization: '',
                                               isRepeatCustomization: 0,
                                               isCustomization: 0,
@@ -1326,12 +1444,16 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                           model.addProduct(Product(
                                               id: item.id,
                                               qty: item.count,
-                                              price: double.parse(item.price.toString()),
+                                              price: double.parse(
+                                                  item.price.toString()),
                                               imgUrl: item.image,
                                               title: item.name,
-                                              restaurantsId: widget.restaurantsId,
-                                              restaurantsName: widget.restaurantsName,
-                                              restaurantImage: widget.restaurantsImage,
+                                              restaurantsId:
+                                                  widget.restaurantsId,
+                                              restaurantsName:
+                                                  widget.restaurantsName,
+                                              restaurantImage:
+                                                  widget.restaurantsImage,
                                               foodCustomization: '',
                                               isRepeatCustomization: 0,
                                               isCustomization: 0,
@@ -1339,7 +1461,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                               tempPrice: 0));
                                           print(
                                               "Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
-                                                  ScopedModel.of<CartModel>(context,
+                                                  ScopedModel.of<CartModel>(
+                                                          context,
                                                           rebuildOnChange: true)
                                                       .totalCartValue
                                                       .toString() +
@@ -1365,7 +1488,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                               0);
                                         } else {
                                           print(widget.restaurantsId);
-                                          print(ScopedModel.of<CartModel>(context,
+                                          print(ScopedModel.of<CartModel>(
+                                                  context,
                                                   rebuildOnChange: true)
                                               .getRestId());
                                           if (widget.restaurantsId !=
@@ -1373,7 +1497,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                                       rebuildOnChange: true)
                                                   .getRestId()) {
                                             showdialogRemoveCart(
-                                                ScopedModel.of<CartModel>(context,
+                                                ScopedModel.of<CartModel>(
+                                                        context,
                                                         rebuildOnChange: true)
                                                     .getRestName(),
                                                 widget.restaurantsName);
@@ -1385,12 +1510,16 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                             widget._products.add(Product(
                                                 id: item.id,
                                                 qty: item.count,
-                                                price: double.parse(item.price.toString()),
+                                                price: double.parse(
+                                                    item.price.toString()),
                                                 imgUrl: item.image,
                                                 title: item.name,
-                                                restaurantsId: widget.restaurantsId,
-                                                restaurantsName: widget.restaurantsName,
-                                                restaurantImage: widget.restaurantsImage,
+                                                restaurantsId:
+                                                    widget.restaurantsId,
+                                                restaurantsName:
+                                                    widget.restaurantsName,
+                                                restaurantImage:
+                                                    widget.restaurantsImage,
                                                 foodCustomization: '',
                                                 isCustomization: 0,
                                                 isRepeatCustomization: 0,
@@ -1399,12 +1528,16 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                             model.addProduct(Product(
                                                 id: item.id,
                                                 qty: item.count,
-                                                price: double.parse(item.price.toString()),
+                                                price: double.parse(
+                                                    item.price.toString()),
                                                 imgUrl: item.image,
                                                 title: item.name,
-                                                restaurantsId: widget.restaurantsId,
-                                                restaurantsName: widget.restaurantsName,
-                                                restaurantImage: widget.restaurantsImage,
+                                                restaurantsId:
+                                                    widget.restaurantsId,
+                                                restaurantsName:
+                                                    widget.restaurantsName,
+                                                restaurantImage:
+                                                    widget.restaurantsImage,
                                                 foodCustomization: '',
                                                 isRepeatCustomization: 0,
                                                 isCustomization: 0,
@@ -1412,8 +1545,10 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                                 tempPrice: 0));
                                             print(
                                                 "Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
-                                                    ScopedModel.of<CartModel>(context,
-                                                            rebuildOnChange: true)
+                                                    ScopedModel.of<CartModel>(
+                                                            context,
+                                                            rebuildOnChange:
+                                                                true)
                                                         .totalCartValue
                                                         .toString() +
                                                     "");
@@ -1486,7 +1621,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
         builder: (BuildContext context) {
           return Dialog(
             child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, bottom: 0, top: 10),
+              padding: const EdgeInsets.only(
+                  left: 10, right: 10, bottom: 0, top: 10),
               child: Container(
                 height: ScreenUtil().setHeight(170),
                 child: Column(
@@ -1567,7 +1703,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                 child: GestureDetector(
                                   onTap: () {
                                     Navigator.pop(context);
-                                    ScopedModel.of<CartModel>(context, rebuildOnChange: true)
+                                    ScopedModel.of<CartModel>(context,
+                                            rebuildOnChange: true)
                                         .clearCart();
                                     _deleteTable();
                                     setState(() {
@@ -1632,7 +1769,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
       DatabaseHelper.columnIsCustomization: isCustomization,
       DatabaseHelper.columnItemQty: itemQty,
       DatabaseHelper.columnItemTempPrice: tempPrice,
-      DatabaseHelper.columnCurrentPriceWithoutCustomization: currentPriceWithoutCustomization,
+      DatabaseHelper.columnCurrentPriceWithoutCustomization:
+          currentPriceWithoutCustomization,
       DatabaseHelper.columnQTYReset: qty_reset,
       DatabaseHelper.columnAvailableItem: availabel_item,
       DatabaseHelper.columnItemResetValue: item_reset_value,
@@ -1667,7 +1805,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
       DatabaseHelper.columnProCustomization: customization,
       DatabaseHelper.columnIsRepeatCustomization: isRepeatCustomization,
       DatabaseHelper.columnIsCustomization: isRepeatCustomization,
-      DatabaseHelper.columnCurrentPriceWithoutCustomization: currentPriceWithoutCustomization,
+      DatabaseHelper.columnCurrentPriceWithoutCustomization:
+          currentPriceWithoutCustomization,
     };
     final rowsAffected = await dbHelper.update(row);
     print('updated $rowsAffected row(s)');
@@ -1733,10 +1872,13 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
         tempPrice: double.parse(allRows[i]['itemTempPrice'].toString()),
       ));
       if (allRows[i]['pro_customization'] == '') {
-        totalCartAmount += double.parse(allRows[i]['pro_price']) * allRows[i]['pro_qty'];
-        tempTotal1 += double.parse(allRows[i]['pro_price']) * allRows[i]['pro_qty'];
+        totalCartAmount +=
+            double.parse(allRows[i]['pro_price']) * allRows[i]['pro_qty'];
+        tempTotal1 +=
+            double.parse(allRows[i]['pro_price']) * allRows[i]['pro_qty'];
       } else {
-        totalCartAmount += double.parse(allRows[i]['pro_price']) + totalCartAmount;
+        totalCartAmount +=
+            double.parse(allRows[i]['pro_price']) + totalCartAmount;
         tempTotal2 += double.parse(allRows[i]['pro_price']);
       }
 
@@ -1784,13 +1926,15 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
       if (custimization[i].custimazationItem != null) {
         var json = jsonDecode(myJSON!);
 
-        _listCustomizationItem =
-            (json as List).map((i) => CustomizationItemModel.fromJson(i)).toList();
+        _listCustomizationItem = (json as List)
+            .map((i) => CustomizationItemModel.fromJson(i))
+            .toList();
 
         for (int j = 0; j < _listCustomizationItem.length; j++) {
           print(_listCustomizationItem[j].name);
         }
-        _listFinalCustomization.add(CustomModel(custimization[i].name, _listCustomizationItem));
+        _listFinalCustomization
+            .add(CustomModel(custimization[i].name, _listCustomizationItem));
 
         for (int k = 0; k < _listFinalCustomization[i].list.length; k++) {
           if (_listFinalCustomization[i].list[k].isDefault == 1) {
@@ -1799,7 +1943,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
             /*       currentFoodItemPrice +=
                 double.parse(_listFinalCustomization[i].list[k].price);*/
 
-            tempPrice += double.parse(_listFinalCustomization[i].list[k].price!);
+            tempPrice +=
+                double.parse(_listFinalCustomization[i].list[k].price!);
             _listForAPI.add(
                 '{"main_menu":"${_listFinalCustomization[i].title}","data":{"name":"${_listFinalCustomization[i].list[k].name}","price":"${_listFinalCustomization[i].list[k].price}"}}');
           } else {
@@ -1809,7 +1954,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
         print(_listFinalCustomization.length);
         print('temp ' + tempPrice.toString());
       } else {
-        _listFinalCustomization.add(CustomModel(custimization[i].name, _listCustomizationItem));
+        _listFinalCustomization
+            .add(CustomModel(custimization[i].name, _listCustomizationItem));
         continue;
       }
 
@@ -1878,7 +2024,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                     text: TextSpan(
                                       children: [
                                         TextSpan(
-                                          text: Languages.of(context)!.labelContinue,
+                                          text: Languages.of(context)!
+                                              .labelContinue,
                                           style: TextStyle(
                                               fontFamily: Constants.appFont,
                                               color: Colors.white,
@@ -1886,11 +2033,13 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                         ),
                                         WidgetSpan(
                                           child: Padding(
-                                            padding: const EdgeInsets.only(left: 10),
+                                            padding:
+                                                const EdgeInsets.only(left: 10),
                                             child: SvgPicture.asset(
                                               'images/ic_green_arrow.svg',
                                               width: 15,
-                                              height: ScreenUtil().setHeight(15),
+                                              height:
+                                                  ScreenUtil().setHeight(15),
                                             ),
                                           ),
                                         ),
@@ -1912,79 +2061,110 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
-                                  top: ScreenUtil().setHeight(20), left: ScreenUtil().setWidth(10)),
+                                  top: ScreenUtil().setHeight(20),
+                                  left: ScreenUtil().setWidth(10)),
                               child: Text(
                                 _listFinalCustomization[outerIndex].title!,
-                                style: TextStyle(fontSize: 20, fontFamily: Constants.appFontBold),
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: Constants.appFontBold),
                               ),
                             ),
                             _listFinalCustomization[outerIndex].list.length > 0
-                                ? _listFinalCustomizationCheck[outerIndex] == true
+                                ? _listFinalCustomizationCheck[outerIndex] ==
+                                        true
                                     ? ListView.builder(
                                         itemBuilder: (context, innerIndex) {
                                           print(
                                               "print the index of inner loop $innerIndex outter index is $outerIndex");
                                           return Padding(
                                               padding: EdgeInsets.only(
-                                                  top: ScreenUtil().setHeight(10),
-                                                  left: ScreenUtil().setWidth(20)),
+                                                  top: ScreenUtil()
+                                                      .setHeight(10),
+                                                  left: ScreenUtil()
+                                                      .setWidth(20)),
                                               child: InkWell(
                                                 onTap: () {
                                                   // changeIndex(index);
                                                   print({
-                                                    'On Tap tempPrice : ' + tempPrice.toString()
+                                                    'On Tap tempPrice : ' +
+                                                        tempPrice.toString()
                                                   });
 
-                                                  if (!_listFinalCustomization[outerIndex]
+                                                  if (!_listFinalCustomization[
+                                                          outerIndex]
                                                       .list[innerIndex]
                                                       .isSelected!) {
                                                     tempPrice = 0;
                                                     _listForAPI.clear();
                                                     setState(() {
-                                                      _radioButtonFlagList[outerIndex] = innerIndex;
+                                                      _radioButtonFlagList[
+                                                              outerIndex] =
+                                                          innerIndex;
 
-                                                      _listFinalCustomization[outerIndex]
+                                                      _listFinalCustomization[
+                                                              outerIndex]
                                                           .list
                                                           .forEach((element) =>
-                                                              element.isSelected = false);
-                                                      _listFinalCustomization[outerIndex]
+                                                              element.isSelected =
+                                                                  false);
+                                                      _listFinalCustomization[
+                                                              outerIndex]
                                                           .list[innerIndex]
                                                           .isSelected = true;
 
                                                       for (int i = 0;
-                                                          i < _listFinalCustomization.length;
+                                                          i <
+                                                              _listFinalCustomization
+                                                                  .length;
                                                           i++) {
                                                         for (int j = 0;
                                                             j <
-                                                                _listFinalCustomization[i]
+                                                                _listFinalCustomization[
+                                                                        i]
                                                                     .list
                                                                     .length;
                                                             j++) {
-                                                          if (_listFinalCustomization[i]
+                                                          if (_listFinalCustomization[
+                                                                  i]
                                                               .list[j]
                                                               .isSelected!) {
-                                                            tempPrice += double.parse(
-                                                                _listFinalCustomization[i]
-                                                                    .list[j]
-                                                                    .price!);
+                                                            tempPrice +=
+                                                                double.parse(
+                                                                    _listFinalCustomization[
+                                                                            i]
+                                                                        .list[j]
+                                                                        .price!);
 
-                                                            print(_listFinalCustomization[i].title);
-                                                            print(_listFinalCustomization[i]
-                                                                .list[j]
-                                                                .name);
-                                                            print(_listFinalCustomization[i]
-                                                                .list[j]
-                                                                .isDefault);
-                                                            print(_listFinalCustomization[i]
-                                                                .list[j]
-                                                                .isSelected);
-                                                            print(_listFinalCustomization[i]
-                                                                .list[j]
-                                                                .price);
+                                                            print(
+                                                                _listFinalCustomization[
+                                                                        i]
+                                                                    .title);
+                                                            print(
+                                                                _listFinalCustomization[
+                                                                        i]
+                                                                    .list[j]
+                                                                    .name);
+                                                            print(
+                                                                _listFinalCustomization[
+                                                                        i]
+                                                                    .list[j]
+                                                                    .isDefault);
+                                                            print(
+                                                                _listFinalCustomization[
+                                                                        i]
+                                                                    .list[j]
+                                                                    .isSelected);
+                                                            print(
+                                                                _listFinalCustomization[
+                                                                        i]
+                                                                    .list[j]
+                                                                    .price);
 
                                                             _listForAPI.add(
                                                                 '{"main_menu":"${_listFinalCustomization[i].title}","data":{"name":"${_listFinalCustomization[i].list[j].name}","price":"${_listFinalCustomization[i].list[j].price}"}}');
-                                                            print(_listForAPI.toString());
+                                                            print(_listForAPI
+                                                                .toString());
                                                           }
                                                         }
                                                       }
@@ -1992,37 +2172,60 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                                   }
                                                 },
                                                 child: Row(
-                                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   children: [
                                                     Column(
-                                                      mainAxisAlignment: MainAxisAlignment.start,
-                                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                                      mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .start,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
                                                         Text(
-                                                          _listFinalCustomization[outerIndex]
+                                                          _listFinalCustomization[
+                                                                  outerIndex]
                                                               .list[innerIndex]
                                                               .name,
                                                           style: TextStyle(
-                                                              fontFamily: Constants.appFont,
-                                                              fontSize: ScreenUtil().setSp(14)),
+                                                              fontFamily:
+                                                                  Constants
+                                                                      .appFont,
+                                                              fontSize:
+                                                                  ScreenUtil()
+                                                                      .setSp(
+                                                                          14)),
                                                         ),
                                                         Text(
-                                                          SharedPreferenceUtil.getString(Constants
-                                                                  .appSettingCurrencySymbol) +
+                                                          SharedPreferenceUtil
+                                                                  .getString(
+                                                                      Constants
+                                                                          .appSettingCurrencySymbol) +
                                                               ' ' +
-                                                              _listFinalCustomization[outerIndex]
-                                                                  .list[innerIndex]
+                                                              _listFinalCustomization[
+                                                                      outerIndex]
+                                                                  .list[
+                                                                      innerIndex]
                                                                   .price!,
                                                           style: TextStyle(
-                                                              fontFamily: Constants.appFont,
-                                                              fontSize: ScreenUtil().setSp(14)),
+                                                              fontFamily:
+                                                                  Constants
+                                                                      .appFont,
+                                                              fontSize:
+                                                                  ScreenUtil()
+                                                                      .setSp(
+                                                                          14)),
                                                         ),
                                                       ],
                                                     ),
                                                     Padding(
                                                       padding: EdgeInsets.only(
-                                                          right: ScreenUtil().setWidth(20)),
-                                                      child: _radioButtonFlagList[outerIndex] ==
+                                                          right: ScreenUtil()
+                                                              .setWidth(20)),
+                                                      child: _radioButtonFlagList[
+                                                                  outerIndex] ==
                                                               innerIndex
                                                           ? getChecked()
                                                           : getunChecked(),
@@ -2031,7 +2234,10 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                                 ),
                                               ));
                                         },
-                                        itemCount: _listFinalCustomization[outerIndex].list.length,
+                                        itemCount:
+                                            _listFinalCustomization[outerIndex]
+                                                .list
+                                                .length,
                                         shrinkWrap: true,
                                         physics: ClampingScrollPhysics(),
                                       )
@@ -2039,10 +2245,13 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                         height: ScreenUtil().setHeight(100),
                                         child: Center(
                                           child: Text(
-                                            Languages.of(context)!.noCustomizationAvailable,
+                                            Languages.of(context)!
+                                                .noCustomizationAvailable,
                                             style: TextStyle(
-                                                fontFamily: Constants.appFontBold,
-                                                fontSize: ScreenUtil().setSp(18)),
+                                                fontFamily:
+                                                    Constants.appFontBold,
+                                                fontSize:
+                                                    ScreenUtil().setSp(18)),
                                           ),
                                         ),
                                       )
@@ -2050,7 +2259,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                     height: ScreenUtil().setHeight(100),
                                     child: Center(
                                       child: Text(
-                                        Languages.of(context)!.noCustomizationAvailable,
+                                        Languages.of(context)!
+                                            .noCustomizationAvailable,
                                         style: TextStyle(
                                             fontFamily: Constants.appFontBold,
                                             fontSize: ScreenUtil().setSp(18)),
@@ -2091,13 +2301,15 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
       if (custimization[i].custimazationItem != null) {
         var json = jsonDecode(myJSON!);
 
-        _listCustomizationItem =
-            (json as List).map((i) => CustomizationItemModel.fromJson(i)).toList();
+        _listCustomizationItem = (json as List)
+            .map((i) => CustomizationItemModel.fromJson(i))
+            .toList();
 
         for (int j = 0; j < _listCustomizationItem.length; j++) {
           print(_listCustomizationItem[j].name);
         }
-        _listFinalCustomization.add(CustomModel(custimization[i].name, _listCustomizationItem));
+        _listFinalCustomization
+            .add(CustomModel(custimization[i].name, _listCustomizationItem));
 
         for (int k = 0; k < _listFinalCustomization[i].list.length; k++) {
           if (_listFinalCustomization[i].list[k].isDefault == 1) {
@@ -2106,7 +2318,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
             /*       currentFoodItemPrice +=
                 double.parse(_listFinalCustomization[i].list[k].price);*/
 
-            tempPrice += double.parse(_listFinalCustomization[i].list[k].price!);
+            tempPrice +=
+                double.parse(_listFinalCustomization[i].list[k].price!);
             _listForAPI.add(
                 '{"main_menu":"${_listFinalCustomization[i].title}","data":{"name":"${_listFinalCustomization[i].list[k].name}","price":"${_listFinalCustomization[i].list[k].price}"}}');
           } else {
@@ -2116,7 +2329,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
         print(_listFinalCustomization.length);
         print('temp ' + tempPrice.toString());
       } else {
-        _listFinalCustomization.add(CustomModel(custimization[i].name, _listCustomizationItem));
+        _listFinalCustomization
+            .add(CustomModel(custimization[i].name, _listCustomizationItem));
         continue;
       }
 
@@ -2194,11 +2408,13 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                         ),
                                         WidgetSpan(
                                           child: Padding(
-                                            padding: const EdgeInsets.only(left: 10),
+                                            padding:
+                                                const EdgeInsets.only(left: 10),
                                             child: SvgPicture.asset(
                                               'images/ic_green_arrow.svg',
                                               width: 15,
-                                              height: ScreenUtil().setHeight(15),
+                                              height:
+                                                  ScreenUtil().setHeight(15),
                                             ),
                                           ),
                                         ),
@@ -2220,10 +2436,13 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
-                                  top: ScreenUtil().setHeight(20), left: ScreenUtil().setWidth(10)),
+                                  top: ScreenUtil().setHeight(20),
+                                  left: ScreenUtil().setWidth(10)),
                               child: Text(
                                 _listFinalCustomization[outerIndex].title!,
-                                style: TextStyle(fontSize: 20, fontFamily: Constants.appFontBold),
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontFamily: Constants.appFontBold),
                               ),
                             ),
                             _listFinalCustomization[outerIndex].list.length != 0
@@ -2236,53 +2455,83 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                           child: InkWell(
                                             onTap: () {
                                               // changeIndex(index);
-                                              print({'On Tap tempPrice : ' + tempPrice.toString()});
+                                              print({
+                                                'On Tap tempPrice : ' +
+                                                    tempPrice.toString()
+                                              });
 
-                                              if (!_listFinalCustomization[outerIndex]
+                                              if (!_listFinalCustomization[
+                                                      outerIndex]
                                                   .list[innerIndex]
                                                   .isSelected!) {
                                                 tempPrice = 0;
                                                 _listForAPI.clear();
                                                 setState(() {
-                                                  _radioButtonFlagList[outerIndex] = innerIndex;
+                                                  _radioButtonFlagList[
+                                                      outerIndex] = innerIndex;
 
-                                                  _listFinalCustomization[outerIndex].list.forEach(
-                                                      (element) => element.isSelected = false);
-                                                  _listFinalCustomization[outerIndex]
+                                                  _listFinalCustomization[
+                                                          outerIndex]
+                                                      .list
+                                                      .forEach((element) =>
+                                                          element.isSelected =
+                                                              false);
+                                                  _listFinalCustomization[
+                                                          outerIndex]
                                                       .list[innerIndex]
                                                       .isSelected = true;
 
                                                   for (int i = 0;
-                                                      i < _listFinalCustomization.length;
+                                                      i <
+                                                          _listFinalCustomization
+                                                              .length;
                                                       i++) {
                                                     for (int j = 0;
-                                                        j < _listFinalCustomization[i].list.length;
+                                                        j <
+                                                            _listFinalCustomization[
+                                                                    i]
+                                                                .list
+                                                                .length;
                                                         j++) {
-                                                      if (_listFinalCustomization[i]
+                                                      if (_listFinalCustomization[
+                                                              i]
                                                           .list[j]
                                                           .isSelected!) {
                                                         tempPrice += double.parse(
-                                                            _listFinalCustomization[i]
+                                                            _listFinalCustomization[
+                                                                    i]
                                                                 .list[j]
                                                                 .price!);
 
-                                                        print(_listFinalCustomization[i].title);
-                                                        print(_listFinalCustomization[i]
-                                                            .list[j]
-                                                            .name);
-                                                        print(_listFinalCustomization[i]
-                                                            .list[j]
-                                                            .isDefault);
-                                                        print(_listFinalCustomization[i]
-                                                            .list[j]
-                                                            .isSelected);
-                                                        print(_listFinalCustomization[i]
-                                                            .list[j]
-                                                            .price);
+                                                        print(
+                                                            _listFinalCustomization[
+                                                                    i]
+                                                                .title);
+                                                        print(
+                                                            _listFinalCustomization[
+                                                                    i]
+                                                                .list[j]
+                                                                .name);
+                                                        print(
+                                                            _listFinalCustomization[
+                                                                    i]
+                                                                .list[j]
+                                                                .isDefault);
+                                                        print(
+                                                            _listFinalCustomization[
+                                                                    i]
+                                                                .list[j]
+                                                                .isSelected);
+                                                        print(
+                                                            _listFinalCustomization[
+                                                                    i]
+                                                                .list[j]
+                                                                .price);
 
                                                         _listForAPI.add(
                                                             '{"main_menu":"${_listFinalCustomization[i].title}","data":{"name":"${_listFinalCustomization[i].list[j].name}","price":"${_listFinalCustomization[i].list[j].price}"}}');
-                                                        print(_listForAPI.toString());
+                                                        print(_listForAPI
+                                                            .toString());
                                                       }
                                                     }
                                                   }
@@ -2290,46 +2539,62 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                               }
                                             },
                                             child: Row(
-                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 Column(
-                                                  mainAxisAlignment: MainAxisAlignment.start,
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
-                                                      _listFinalCustomization[outerIndex]
+                                                      _listFinalCustomization[
+                                                              outerIndex]
                                                           .list[innerIndex]
                                                           .name,
                                                       style: TextStyle(
-                                                          fontFamily: Constants.appFont,
-                                                          fontSize: ScreenUtil().setSp(14)),
+                                                          fontFamily:
+                                                              Constants.appFont,
+                                                          fontSize: ScreenUtil()
+                                                              .setSp(14)),
                                                     ),
                                                     Text(
-                                                      SharedPreferenceUtil.getString(
-                                                              Constants.appSettingCurrencySymbol) +
+                                                      SharedPreferenceUtil
+                                                              .getString(Constants
+                                                                  .appSettingCurrencySymbol) +
                                                           ' ' +
-                                                          _listFinalCustomization[outerIndex]
+                                                          _listFinalCustomization[
+                                                                  outerIndex]
                                                               .list[innerIndex]
                                                               .price!,
                                                       style: TextStyle(
-                                                          fontFamily: Constants.appFont,
-                                                          fontSize: ScreenUtil().setSp(14)),
+                                                          fontFamily:
+                                                              Constants.appFont,
+                                                          fontSize: ScreenUtil()
+                                                              .setSp(14)),
                                                     ),
                                                   ],
                                                 ),
                                                 Padding(
                                                   padding: EdgeInsets.only(
-                                                      right: ScreenUtil().setWidth(20)),
-                                                  child:
-                                                      _radioButtonFlagList[outerIndex] == innerIndex
-                                                          ? getChecked()
-                                                          : getunChecked(),
+                                                      right: ScreenUtil()
+                                                          .setWidth(20)),
+                                                  child: _radioButtonFlagList[
+                                                              outerIndex] ==
+                                                          innerIndex
+                                                      ? getChecked()
+                                                      : getunChecked(),
                                                 ),
                                               ],
                                             ),
                                           ));
                                     },
-                                    itemCount: _listFinalCustomization[outerIndex].list.length,
+                                    itemCount:
+                                        _listFinalCustomization[outerIndex]
+                                            .list
+                                            .length,
                                     shrinkWrap: true,
                                     physics: ClampingScrollPhysics(),
                                   )
@@ -2337,7 +2602,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                     height: ScreenUtil().setHeight(100),
                                     child: Center(
                                       child: Text(
-                                        Languages.of(context)!.noCustomizationAvailable,
+                                        Languages.of(context)!
+                                            .noCustomizationAvailable,
                                         style: TextStyle(
                                             fontFamily: Constants.appFontBold,
                                             fontSize: ScreenUtil().setSp(18)),
@@ -2385,7 +2651,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
     return BoxDecoration(
       color: color,
       border: isBorder ? Border.all(width: 1.0) : null,
-      borderRadius: BorderRadius.all(Radius.circular(8.0) //                 <--- border radius here
+      borderRadius: BorderRadius.all(
+          Radius.circular(8.0) //                 <--- border radius here
           ),
     );
   }
@@ -2401,7 +2668,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
       int itemQty) {
     int isRepeat = iRepeat;
 
-    if (ScopedModel.of<CartModel>(context, rebuildOnChange: true).cart.length == 0) {
+    if (ScopedModel.of<CartModel>(context, rebuildOnChange: true).cart.length ==
+        0) {
       setState(() {
         if (!isFromAddRepeatCustomization) {
           item.isAdded = !item.isAdded!;
@@ -2436,9 +2704,12 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
           isRepeatCustomization: isRepeat,
           tempPrice: cartPrice,
           itemQty: item.itemQty));
-      print("Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
-          ScopedModel.of<CartModel>(context, rebuildOnChange: true).totalCartValue.toString() +
-          "");
+      print(
+          "Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
+              ScopedModel.of<CartModel>(context, rebuildOnChange: true)
+                  .totalCartValue
+                  .toString() +
+              "");
       _insert(
         item.id,
         item.count,
@@ -2461,11 +2732,14 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
       );
     } else {
       print(widget.restaurantsId);
-      print(ScopedModel.of<CartModel>(context, rebuildOnChange: true).getRestId());
+      print(ScopedModel.of<CartModel>(context, rebuildOnChange: true)
+          .getRestId());
       if (widget.restaurantsId !=
-          ScopedModel.of<CartModel>(context, rebuildOnChange: true).getRestId()) {
+          ScopedModel.of<CartModel>(context, rebuildOnChange: true)
+              .getRestId()) {
         showdialogRemoveCart(
-            ScopedModel.of<CartModel>(context, rebuildOnChange: true).getRestName(),
+            ScopedModel.of<CartModel>(context, rebuildOnChange: true)
+                .getRestName(),
             widget.restaurantsName);
       } else {
         setState(() {
@@ -2502,9 +2776,12 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
             isRepeatCustomization: isRepeat,
             tempPrice: cartPrice,
             itemQty: itemQty));
-        print("Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
-            ScopedModel.of<CartModel>(context, rebuildOnChange: true).totalCartValue.toString() +
-            "");
+        print(
+            "Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
+                ScopedModel.of<CartModel>(context, rebuildOnChange: true)
+                    .totalCartValue
+                    .toString() +
+                "");
         _insert(
           item.id,
           item.count,
@@ -2529,8 +2806,8 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
     }
   }
 
-  void updateCustomizationFoodDataToDB(
-      String? customization, SubMenuListData item, CartModel model, double cartPrice) {
+  void updateCustomizationFoodDataToDB(String? customization,
+      SubMenuListData item, CartModel model, double cartPrice) {
     setState(() {
       item.count++;
       // ConstantsUtils.addCartItem(widget.listRestaurantsMenu[widget.index].name, item,item.count,int.parse(item.price));
@@ -2538,11 +2815,16 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                       .add(Cart(widget.listRestaurantsMenu[widget.index].name, submenu));*/
     });
     model.updateProduct(item.id, item.count);
-    print("Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
-        ScopedModel.of<CartModel>(context, rebuildOnChange: true).totalCartValue.toString() +
-        "");
+    print(
+        "Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
+            ScopedModel.of<CartModel>(context, rebuildOnChange: true)
+                .totalCartValue
+                .toString() +
+            "");
     print("Cart List" +
-        ScopedModel.of<CartModel>(context, rebuildOnChange: true).cart.toString() +
+        ScopedModel.of<CartModel>(context, rebuildOnChange: true)
+            .cart
+            .toString() +
         "");
     int isRepeatCustomization = item.isRepeatCustomization! ? 1 : 0;
     _updateForCustomizedFood(

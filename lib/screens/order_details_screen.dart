@@ -3,7 +3,7 @@ import 'dart:ffi';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dotted_line/dotted_line.dart';
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -21,6 +21,7 @@ import 'package:homchf/utils/app_toolbar_with_btn_clr.dart';
 import 'package:homchf/utils/constants.dart';
 import 'package:homchf/utils/localization/language/languages.dart';
 import 'package:homchf/utils/rounded_corner_app_button.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrderDetailsScreen extends StatefulWidget {
   final int? orderId;
@@ -40,6 +41,7 @@ class OrderDetailsScreen extends StatefulWidget {
 class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
   String? strOrderDate = '',
       strVendorName = '',
+      strVendorContact = '',
       strVendorAddress = '',
       strUserAddress = '',
       strUserName = '',
@@ -452,35 +454,38 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                           Padding(
                             padding: const EdgeInsets.only(top: 20, left: 20),
                             child: Text(
-                              'Delvery' + strOrderScheduleDate!,
+                              strOrderSchedule ?? 'No Data',
+                              textAlign: TextAlign.left,
                               style: TextStyle(
-                                  fontFamily: Constants.appFont, fontSize: 18),
+                                  fontFamily: Constants.appFont,
+                                  fontSize: 18,
+                                  fontStyle: FontStyle.italic),
                             ),
                           ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, left: 20),
-                            child: Text(
-                              'Delvery Time: ' + strOrderScheduleTime!,
-                              style: TextStyle(
-                                  fontFamily: Constants.appFont, fontSize: 18),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, left: 20),
-                            child: Text(
-                              'Pick-Up-Point: ' + strOrderSchedulePickup!,
-                              style: TextStyle(
-                                  fontFamily: Constants.appFont, fontSize: 18),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 10, left: 20),
-                            child: Text(
-                              'Food Allergies: ' + strOrderScheduleAllergy!,
-                              style: TextStyle(
-                                  fontFamily: Constants.appFont, fontSize: 18),
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 10, left: 20),
+                          //   child: Text(
+                          //     'Delvery Time: ' + strOrderScheduleTime!,
+                          //     style: TextStyle(
+                          //         fontFamily: Constants.appFont, fontSize: 18),
+                          //   ),
+                          // ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 10, left: 20),
+                          //   child: Text(
+                          //     'Pick-Up-Point: ' + strOrderSchedulePickup!,
+                          //     style: TextStyle(
+                          //         fontFamily: Constants.appFont, fontSize: 18),
+                          //   ),
+                          // ),
+                          // Padding(
+                          //   padding: const EdgeInsets.only(top: 10, left: 20),
+                          //   child: Text(
+                          //     'Food Allergies: ' + strOrderScheduleAllergy!,
+                          //     style: TextStyle(
+                          //         fontFamily: Constants.appFont, fontSize: 18),
+                          //   ),
+                          // ),
                           Padding(
                             padding: const EdgeInsets.only(top: 10, right: 10),
                             child: Text(
@@ -566,7 +571,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                         const EdgeInsets.only(
                                                             left: 8),
                                                     child: Container(
-                                                      height: 60,
+                                                      height: 75,
                                                       child: DottedLine(
                                                         direction:
                                                             Axis.vertical,
@@ -590,11 +595,11 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                               child: Container(
                                                 margin:
                                                     EdgeInsets.only(top: 20),
-                                                height: 130,
+                                                height: 150,
                                                 child: Column(
                                                   children: [
                                                     Container(
-                                                      height: 65,
+                                                      height: 75,
                                                       child: Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -612,6 +617,48 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                                       Constants
                                                                           .appFontBold,
                                                                   fontSize: 16),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 10),
+                                                            child: Text(
+                                                              strVendorContact ??
+                                                                  'no data',
+                                                              style: TextStyle(
+                                                                  fontFamily:
+                                                                      Constants
+                                                                          .appFontBold,
+                                                                  fontSize: 12),
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .only(
+                                                                    left: 10),
+                                                            child:
+                                                                GestureDetector(
+                                                              onTap: () {
+                                                                launch(
+                                                                    "tel://${strVendorContact!.toString()}");
+                                                              },
+                                                              child: SvgPicture
+                                                                  .asset(
+                                                                'images/ic_call.svg',
+                                                                width:
+                                                                    ScreenUtil()
+                                                                        .setWidth(
+                                                                            18),
+                                                                height:
+                                                                    ScreenUtil()
+                                                                        .setHeight(
+                                                                            18),
+                                                                alignment: Alignment
+                                                                    .centerLeft,
+                                                              ),
                                                             ),
                                                           ),
                                                           Padding(
@@ -641,7 +688,7 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                       ),
                                                     ),
                                                     Container(
-                                                      height: 65,
+                                                      height: 75,
                                                       child: Column(
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
@@ -739,6 +786,36 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                                         color: Color(Constants
                                                             .colorGray),
                                                         fontSize: 13),
+                                                  ),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 10),
+                                                child: Text(
+                                                  strVendorContact ?? 'no data',
+                                                  style: TextStyle(
+                                                      fontFamily:
+                                                          Constants.appFontBold,
+                                                      fontSize: 12),
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    left: 2),
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    launch(
+                                                        "tel://${strVendorContact!.toString()}");
+                                                  },
+                                                  child: SvgPicture.asset(
+                                                    'images/ic_call.svg',
+                                                    width: ScreenUtil()
+                                                        .setWidth(18),
+                                                    height: ScreenUtil()
+                                                        .setHeight(18),
+                                                    alignment:
+                                                        Alignment.centerLeft,
                                                   ),
                                                 ),
                                               ),
@@ -1546,61 +1623,63 @@ class _OrderDetailsScreenState extends State<OrderDetailsScreen> {
           strOrderSchedule = null;
         }
 
-        var str = "";
-        if (strOrderSchedule!.length > 56) {
-          str = strOrderSchedule!;
-        } else {
-          str = "No Data";
-        }
-        const strDate = "Delivery";
-        const enDate = "Time";
-        final strDateIndex = str.indexOf(strDate);
-        final enDateIndex = str.indexOf(enDate);
-        if (str.length > 58) {
-          strOrderScheduleDate =
-              str.substring(strDateIndex + strDate.length, enDateIndex).trim();
-        } else {
-          strOrderScheduleDate = "No Data";
-        }
-        const strTimd = "Time";
-        const enTimd = "Pick";
-        final strTimdIndex = str.indexOf(strTimd);
-        final enTimdIndex = str.indexOf(enTimd);
-        if (str.length > 58) {
-          strOrderScheduleTime =
-              str.substring(strTimdIndex + strTimd.length, enTimdIndex).trim();
-        } else {
-          strOrderScheduleTime = "No Data";
-        }
+        // var str = "";
+        // if (strOrderSchedule!.length > 56) {
+        //   str = strOrderSchedule!;
+        // } else {
+        //   str = "No Data";
+        // }
+        // const strDate = "Delivery";
+        // const enDate = "Time";
+        // final strDateIndex = str.indexOf(strDate);
+        // final enDateIndex = str.indexOf(enDate);
+        // if (str.length > 58) {
+        //   strOrderScheduleDate =
+        //       str.substring(strDateIndex + strDate.length, enDateIndex).trim();
+        // } else {
+        //   strOrderScheduleDate = "No Data";
+        // }
+        // const strTimd = "Time";
+        // const enTimd = "Pick";
+        // final strTimdIndex = str.indexOf(strTimd);
+        // final enTimdIndex = str.indexOf(enTimd);
+        // if (str.length > 58) {
+        //   strOrderScheduleTime =
+        //       str.substring(strTimdIndex + strTimd.length, enTimdIndex).trim();
+        // } else {
+        //   strOrderScheduleTime = "No Data";
+        // }
 
-        const strPickUp = "Pick";
-        const enPickUp = "Food";
-        final strPickUpIndex = str.indexOf(strPickUp);
-        final enPickUpIndex = str.indexOf(enPickUp);
-        if (str.length > 58) {
-          strOrderSchedulePickup = str
-              .substring(strPickUpIndex + strPickUp.length, enPickUpIndex)
-              .trim();
-        } else {
-          strOrderSchedulePickup = "No Data";
-        }
+        // const strPickUp = "Pick";
+        // const enPickUp = "Food";
+        // final strPickUpIndex = str.indexOf(strPickUp);
+        // final enPickUpIndex = str.indexOf(enPickUp);
+        // if (str.length > 58) {
+        //   strOrderSchedulePickup = str
+        //       .substring(strPickUpIndex + strPickUp.length, enPickUpIndex)
+        //       .trim();
+        // } else {
+        //   strOrderSchedulePickup = "No Data";
+        // }
 
-        const strFoodAllergy = "Food";
-        final strFoodAllergyIndex = str.indexOf(strFoodAllergy);
-        final enFoodAllergyIndex = str.length;
-        if (str.length > 58) {
-          strOrderScheduleAllergy = str
-              .substring(strFoodAllergyIndex + strFoodAllergy.length,
-                  enFoodAllergyIndex)
-              .trim();
-        } else {
-          strOrderScheduleAllergy = str;
-        }
+        // const strFoodAllergy = "Food";
+        // final strFoodAllergyIndex = str.indexOf(strFoodAllergy);
+        // final enFoodAllergyIndex = str.length;
+        // if (str.length > 58) {
+        //   strOrderScheduleAllergy = str
+        //       .substring(strFoodAllergyIndex + strFoodAllergy.length,
+        //           enFoodAllergyIndex)
+        //       .trim();
+        // } else {
+        //   strOrderScheduleAllergy = str;
+        // }
 
         strUserName = response.data!.user!.name;
         strOrderInvoiceId = response.data!.orderId;
 
         strVendorName = response.data!.vendor!.name;
+        strVendorContact = response.data!.vendor!.contact;
+
         strVendorAddress = response.data!.vendor!.mapAddress ?? '';
         strOrderStatus = response.data!.orderStatus;
 

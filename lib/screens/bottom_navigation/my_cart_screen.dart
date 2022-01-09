@@ -1035,7 +1035,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   Constants.toastMessage(
                                       'Please select address for deliver order.');
                                 } else {
-                                  if (_textDeliverDateTimeEtc.text.length > 3 &&
+                                  if (_textDeliverDateTimeEtc.text.length > 2 &&
                                       _date.text.length > 3 &&
                                       _time.text.length > 3 &&
                                       _textPickupPoint.text.length > 2) {
@@ -1049,7 +1049,7 @@ class _MyCartScreenState extends State<MyCartScreen> {
                                   }
                                 }
                               } else if (deliveryTypeIndex == 1) {
-                                if (_textDeliverDateTimeEtc.text.length > 3 &&
+                                if (_textDeliverDateTimeEtc.text.length > 2 &&
                                     _date.text.length > 3 &&
                                     _time.text.length > 3 &&
                                     _textPickupPoint.text.length > 2) {
@@ -4507,13 +4507,13 @@ class _MyCartScreenState extends State<MyCartScreen> {
               vendorDiscountAmount: vendorDiscountAmount.toInt(),
               vendorDiscountId: vendorDiscountID,
               strTaxAmount: '0.0', //strTaxAmount,
-              strScheduleOrder: 'Delivery Date ' +
+              strScheduleOrder: 'Delivery Date: ' +
                   _date.value.text +
-                  '  Time ' +
+                  '; Delivery Time: ' +
                   _time.value.text +
-                  '  Pick @ ' +
+                  '; Pick-Up @ ' +
                   _textPickupPoint.text +
-                  '  Food ' +
+                  '; Food Allergies:' +
                   _textDeliverDateTimeEtc.text,
               allTax: sendAllTax),
         ),
