@@ -1017,448 +1017,160 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
               onTap: () {},
               child: Card(
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20.0),
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.only(
-                      right: 10, top: 5, bottom: 5, left: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(15.0),
-                        child: CachedNetworkImage(
-                          height: ScreenUtil().setHeight(70),
-                          width: ScreenUtil().setWidth(70),
-                          imageUrl: item.image!,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => SpinKitFadingCircle(
-                              color: Color(Constants.colorTheme)),
-                          errorWidget: (context, url, error) => Container(
-                            child: Center(
-                                child: Image.asset('images/noimage.png')),
-                          ),
-                        ),
-                      ),
-                      Column(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          right: 5, top: 5, bottom: 5, left: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
                         children: [
-                          Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    left: ScreenUtil().setWidth(10),
-                                    right: ScreenUtil().setWidth(10),
-                                    top: ScreenUtil().setWidth(10),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      item.type == 'veg'
-                                          ? SvgPicture.asset(
-                                              'images/ic_veg.svg',
-                                              width: ScreenUtil().setWidth(15),
-                                              height:
-                                                  ScreenUtil().setHeight(15),
-                                            )
-                                          : SvgPicture.asset(
-                                              'images/ic_non_veg.svg',
-                                              width: ScreenUtil().setWidth(15),
-                                              height:
-                                                  ScreenUtil().setHeight(15),
-                                            ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          left: ScreenUtil().setWidth(6),
-                                        ),
-                                        child: SizedBox(
-                                          width: 95,
-                                          child: Text(
-                                            item.name!,
-                                            textAlign: TextAlign.left,
-                                            maxLines: 5,
-                                            style: TextStyle(
-                                                fontFamily:
-                                                    Constants.appFontBold,
-                                                fontSize:
-                                                    ScreenUtil().setSp(12)),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  width: ScreenUtil().setWidth(170),
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: ScreenUtil().setWidth(10),
-                                        top: ScreenUtil().setWidth(2)),
-                                    child: Text(
-                                      '',
-                                      style: TextStyle(
-                                          fontFamily: Constants.appFont,
-                                          color: Color(Constants.colorGray),
-                                          fontSize: ScreenUtil().setSp(12)),
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      left: ScreenUtil().setWidth(10),
-                                      top: ScreenUtil().setHeight(10)),
-                                  child: Text(
-                                    SharedPreferenceUtil.getString(Constants
-                                            .appSettingCurrencySymbol) +
-                                        item.price.toString(),
-                                    style: TextStyle(
-                                        fontFamily: Constants.appFont,
-                                        color: Color(Constants.colorBlack),
-                                        fontSize: ScreenUtil().setSp(16)),
-                                  ),
-                                ),
-                                item.custimization!.length > 0
-                                    ? Padding(
-                                        padding: EdgeInsets.only(
-                                            left: ScreenUtil().setWidth(10)),
-                                        child: Container(
-                                          alignment: Alignment.bottomCenter,
-                                          child: Text(
-                                            Languages.of(context)!
-                                                .labelCustomizable,
-                                            style: TextStyle(
-                                                fontFamily: Constants.appFont,
-                                                fontSize:
-                                                    ScreenUtil().setSp(12)),
-                                          ),
-                                        ),
-                                      )
-                                    : Container(),
-                              ],
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: CachedNetworkImage(
+                              height: ScreenUtil().setHeight(90),
+                              width: ScreenUtil().setWidth(90),
+                              imageUrl: item.image!,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) =>
+                                  SpinKitFadingCircle(
+                                      color: Color(Constants.colorTheme)),
+                              errorWidget: (context, url, error) => Container(
+                                child: Center(
+                                    child: Image.asset('images/noimage.png')),
+                              ),
                             ),
                           ),
-                        ],
-                      ),
-                      item.isAdded!
-                          ? Expanded(
-                              child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                GestureDetector(
-                                  onTap: () async {
-                                    if (item.custimization!.length > 0 &&
-                                        item.isRepeatCustomization!) {
-                                      int isRepeatCustomization =
-                                          item.isRepeatCustomization! ? 1 : 0;
-
-                                      setState(() {
-                                        if (item.count != 1) {
-                                          item.count--;
-                                        } else {
-                                          item.isAdded = false;
-                                          item.count = 0;
-                                        }
-                                      });
-                                      model.updateProduct(item.id, item.count);
-                                      print(
-                                          "Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
-                                              ScopedModel.of<CartModel>(context,
-                                                      rebuildOnChange: true)
-                                                  .totalCartValue
-                                                  .toString() +
-                                              "");
-                                      print("Cart List" +
-                                          ScopedModel.of<CartModel>(context,
-                                                  rebuildOnChange: true)
-                                              .cart
-                                              .toString() +
-                                          "");
-
-                                      String? finalFoodCustomization;
-                                      //String title;
-                                      double? price, tempPrice;
-                                      int? qty;
-                                      for (int z = 0;
-                                          z < model.cart.length;
-                                          z++) {
-                                        if (item.id == model.cart[z].id) {
-                                          json.decode(
-                                              model.cart[z].foodCustomization!);
-                                          finalFoodCustomization =
-                                              model.cart[z].foodCustomization;
-                                          price = model.cart[z].price;
-                                          // title = model.cart[z].title;
-                                          qty = model.cart[z].qty;
-                                          tempPrice = model.cart[z].tempPrice;
-                                        }
-                                      }
-                                      if (qty != null && tempPrice != null) {
-                                        price = tempPrice * qty;
-                                      } else {
-                                        price = 0;
-                                      }
-
-                                      _updateForCustomizedFood(
-                                          item.id,
-                                          item.count,
-                                          price.toString(),
-                                          item.price,
-                                          item.image,
-                                          item.name,
-                                          widget.restaurantsId,
-                                          widget.restaurantsName,
-                                          finalFoodCustomization,
-                                          widget.onSetState!,
-                                          isRepeatCustomization,
-                                          1);
-                                    } else {
-                                      setState(() {
-                                        if (item.count != 1) {
-                                          item.count--;
-                                          // ConstantsUtils.removeItem(widget.listRestaurantsMenu[widget.index].name, item,item.id);
-                                        } else {
-                                          item.isAdded = false;
-                                          item.count = 0;
-                                        }
-                                      });
-                                      model.updateProduct(item.id, item.count);
-                                      print(
-                                          "Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
-                                              ScopedModel.of<CartModel>(context,
-                                                      rebuildOnChange: true)
-                                                  .totalCartValue
-                                                  .toString() +
-                                              "");
-                                      print("Cart List" +
-                                          ScopedModel.of<CartModel>(context,
-                                                  rebuildOnChange: true)
-                                              .cart
-                                              .toString() +
-                                          "");
-                                      _update(
-                                          item.id,
-                                          item.count,
-                                          item.price.toString(),
-                                          item.image,
-                                          item.name,
-                                          widget.restaurantsId,
-                                          widget.restaurantsName,
-                                          widget.onSetState!,
-                                          0,
-                                          0,
-                                          0,
-                                          '0');
-                                    }
-                                  },
-                                  child: Container(
-                                    height: ScreenUtil().setHeight(21),
-                                    width: ScreenUtil().setWidth(36),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                          topLeft: Radius.circular(
-                                              ScreenUtil().setWidth(10)),
-                                          topRight: Radius.circular(
-                                              ScreenUtil().setWidth(10))),
-                                      color: Color(0xfff1f1f1),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        '-',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w900,
-                                            fontSize: 18,
-                                            color: Color(Constants.colorTheme)),
-                                        textAlign: TextAlign.center,
+                          Column(
+                            children: [
+                              Container(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                        left: ScreenUtil().setWidth(10),
+                                        right: ScreenUtil().setWidth(10),
+                                        top: ScreenUtil().setWidth(10),
+                                      ),
+                                      child: Row(
+                                        children: [
+                                          item.type == 'veg'
+                                              ? SvgPicture.asset(
+                                                  'images/ic_veg.svg',
+                                                  width:
+                                                      ScreenUtil().setWidth(15),
+                                                  height: ScreenUtil()
+                                                      .setHeight(15),
+                                                )
+                                              : SvgPicture.asset(
+                                                  'images/ic_non_veg.svg',
+                                                  width:
+                                                      ScreenUtil().setWidth(15),
+                                                  height: ScreenUtil()
+                                                      .setHeight(15),
+                                                ),
+                                          Padding(
+                                            padding: EdgeInsets.only(
+                                              left: ScreenUtil().setWidth(6),
+                                            ),
+                                            child: SizedBox(
+                                              width: 95,
+                                              child: Text(
+                                                item.name!,
+                                                textAlign: TextAlign.left,
+                                                maxLines: 5,
+                                                style: TextStyle(
+                                                    fontFamily:
+                                                        Constants.appFontBold,
+                                                    fontSize:
+                                                        ScreenUtil().setSp(14)),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                     ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                      top: ScreenUtil().setHeight(5),
-                                      bottom: ScreenUtil().setHeight(5)),
-                                  child: Container(
-                                    alignment: Alignment.center,
-                                    height: ScreenUtil().setHeight(21),
-                                    width: ScreenUtil().setWidth(36),
-                                    child: Text(
-                                      '${item.count}',
-                                      style: TextStyle(
-                                          fontFamily: Constants.appFont),
-                                      textAlign: TextAlign.center,
+                                    Container(
+                                      width: ScreenUtil().setWidth(170),
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: ScreenUtil().setWidth(10),
+                                            top: ScreenUtil().setWidth(2)),
+                                        child: Text(
+                                          '',
+                                          style: TextStyle(
+                                              fontFamily: Constants.appFont,
+                                              color: Color(Constants.colorGray),
+                                              fontSize: ScreenUtil().setSp(12)),
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {
-                                    if (item.qty_reset == 'daily' &&
-                                        item.count >= item.availabel_item!) {
-                                      Constants.toastMessage(
-                                        Languages.of(context)!.outOfStock,
-                                      );
-                                    } else {
-                                      if (item.custimization!.length > 0) {
-                                        var ab;
-                                        String? finalFoodCustomization;
-                                        //String title;
-                                        double price = 0;
-                                        int qty = 0;
-
-                                        for (int z = 0;
-                                            z < model.cart.length;
-                                            z++) {
-                                          if (item.id == model.cart[z].id) {
-                                            ab = json.decode(model
-                                                .cart[z].foodCustomization!);
-                                            finalFoodCustomization =
-                                                model.cart[z].foodCustomization;
-                                            price = model.cart[z].price!;
-                                            //title = model.cart[z].title;
-                                            qty = model.cart[z].qty!;
-                                            // tempPrice = model.cart[z].tempPrice!;
-                                          }
-                                        }
-                                        List<String?> nameOfcustomization = [];
-                                        for (int i = 0; i < ab.length; i++) {
-                                          nameOfcustomization
-                                              .add(ab[i]['data']['name']);
-                                        }
-                                        //  print('before starting ${price.toString()}');
-                                        //  print('before starting tempPrice $tempPrice');
-                                        item.isRepeatCustomization = true;
-
-                                        updateCustomizationFoodDataToDB(
-                                          finalFoodCustomization,
-                                          item,
-                                          model,
-                                          price += price * qty,
-                                        );
-                                      } else {
-                                        setState(() {
-                                          item.count++;
-                                        });
-                                        model.updateProduct(
-                                            item.id, item.count);
-                                        print(
-                                            "Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
-                                                ScopedModel.of<CartModel>(
-                                                        context,
-                                                        rebuildOnChange: true)
-                                                    .totalCartValue
-                                                    .toString() +
-                                                "");
-                                        print("Cart List" +
-                                            ScopedModel.of<CartModel>(context,
-                                                    rebuildOnChange: true)
-                                                .cart
-                                                .toString() +
-                                            "");
-                                        _update(
-                                            item.id,
-                                            item.count,
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: ScreenUtil().setWidth(10),
+                                          top: ScreenUtil().setHeight(10)),
+                                      child: Text(
+                                        SharedPreferenceUtil.getString(Constants
+                                                .appSettingCurrencySymbol) +
                                             item.price.toString(),
-                                            item.image,
-                                            item.name,
-                                            widget.restaurantsId,
-                                            widget.restaurantsName,
-                                            widget.onSetState!,
-                                            0,
-                                            0,
-                                            0,
-                                            '0');
-                                      }
-                                    }
-                                  },
-                                  child: Container(
-                                    height: ScreenUtil().setHeight(21),
-                                    width: ScreenUtil().setWidth(36),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                          bottomLeft: Radius.circular(10),
-                                          bottomRight: Radius.circular(10)),
-                                      color: Color(0xfff1f1f1),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        '+',
                                         style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 14,
-                                            color: Color(Constants.colorTheme)),
-                                        textAlign: TextAlign.center,
+                                            fontFamily: Constants.appFont,
+                                            color: Color(Constants.colorBlack),
+                                            fontSize: ScreenUtil().setSp(16)),
                                       ),
                                     ),
-                                  ),
+                                    item.custimization!.length > 0
+                                        ? Padding(
+                                            padding: EdgeInsets.only(
+                                                left:
+                                                    ScreenUtil().setWidth(10)),
+                                            child: Container(
+                                              alignment: Alignment.bottomCenter,
+                                              child: Text(
+                                                Languages.of(context)!
+                                                    .labelCustomizable,
+                                                style: TextStyle(
+                                                    fontFamily:
+                                                        Constants.appFont,
+                                                    fontSize:
+                                                        ScreenUtil().setSp(12)),
+                                              ),
+                                            ),
+                                          )
+                                        : Container(),
+                                  ],
                                 ),
-                              ],
-                            ))
-                          : Expanded(
-                              child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                GestureDetector(
-                                  onTap: () {
-                                    if (item.qty_reset == 'daily' &&
-                                        item.count >= item.availabel_item!) {
-                                      Constants.toastMessage(
-                                        Languages.of(context)!.outOfStock,
-                                      );
-                                    } else {
-                                      if (item.custimization!.length > 0) {
-                                        openFoodCustomizationBottomSheet(
-                                            model,
-                                            item,
-                                            double.parse(item.price.toString()),
-                                            totalCartAmount,
-                                            totalQty,
-                                            item.custimization!);
-                                      } else {
-                                        if (ScopedModel.of<CartModel>(context,
-                                                    rebuildOnChange: true)
-                                                .cart
-                                                .length ==
-                                            0) {
+                              ),
+                            ],
+                          ),
+                          item.isAdded!
+                              ? Expanded(
+                                  child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () async {
+                                        if (item.custimization!.length > 0 &&
+                                            item.isRepeatCustomization!) {
+                                          int isRepeatCustomization =
+                                              item.isRepeatCustomization!
+                                                  ? 1
+                                                  : 0;
+
                                           setState(() {
-                                            item.isAdded = !item.isAdded!;
-                                            item.count++;
+                                            if (item.count != 1) {
+                                              item.count--;
+                                            } else {
+                                              item.isAdded = false;
+                                              item.count = 0;
+                                            }
                                           });
-                                          widget._products.add(Product(
-                                              id: item.id,
-                                              qty: item.count,
-                                              price: double.parse(
-                                                  item.price.toString()),
-                                              imgUrl: item.image,
-                                              title: item.name,
-                                              restaurantsId:
-                                                  widget.restaurantsId,
-                                              restaurantsName:
-                                                  widget.restaurantsName,
-                                              restaurantImage:
-                                                  widget.restaurantsImage,
-                                              foodCustomization: '',
-                                              isRepeatCustomization: 0,
-                                              isCustomization: 0,
-                                              itemQty: 0,
-                                              tempPrice: 0));
-                                          model.addProduct(Product(
-                                              id: item.id,
-                                              qty: item.count,
-                                              price: double.parse(
-                                                  item.price.toString()),
-                                              imgUrl: item.image,
-                                              title: item.name,
-                                              restaurantsId:
-                                                  widget.restaurantsId,
-                                              restaurantsName:
-                                                  widget.restaurantsName,
-                                              restaurantImage:
-                                                  widget.restaurantsImage,
-                                              foodCustomization: '',
-                                              isRepeatCustomization: 0,
-                                              isCustomization: 0,
-                                              itemQty: 0,
-                                              tempPrice: 0));
+                                          model.updateProduct(
+                                              item.id, item.count);
                                           print(
                                               "Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
                                                   ScopedModel.of<CartModel>(
@@ -1467,82 +1179,187 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                                       .totalCartValue
                                                       .toString() +
                                                   "");
-                                          _insert(
+                                          print("Cart List" +
+                                              ScopedModel.of<CartModel>(context,
+                                                      rebuildOnChange: true)
+                                                  .cart
+                                                  .toString() +
+                                              "");
+
+                                          String? finalFoodCustomization;
+                                          //String title;
+                                          double? price, tempPrice;
+                                          int? qty;
+                                          for (int z = 0;
+                                              z < model.cart.length;
+                                              z++) {
+                                            if (item.id == model.cart[z].id) {
+                                              json.decode(model
+                                                  .cart[z].foodCustomization!);
+                                              finalFoodCustomization = model
+                                                  .cart[z].foodCustomization;
+                                              price = model.cart[z].price;
+                                              // title = model.cart[z].title;
+                                              qty = model.cart[z].qty;
+                                              tempPrice =
+                                                  model.cart[z].tempPrice;
+                                            }
+                                          }
+                                          if (qty != null &&
+                                              tempPrice != null) {
+                                            price = tempPrice * qty;
+                                          } else {
+                                            price = 0;
+                                          }
+
+                                          _updateForCustomizedFood(
+                                              item.id,
+                                              item.count,
+                                              price.toString(),
+                                              item.price,
+                                              item.image,
+                                              item.name,
+                                              widget.restaurantsId,
+                                              widget.restaurantsName,
+                                              finalFoodCustomization,
+                                              widget.onSetState!,
+                                              isRepeatCustomization,
+                                              1);
+                                        } else {
+                                          setState(() {
+                                            if (item.count != 1) {
+                                              item.count--;
+                                              // ConstantsUtils.removeItem(widget.listRestaurantsMenu[widget.index].name, item,item.id);
+                                            } else {
+                                              item.isAdded = false;
+                                              item.count = 0;
+                                            }
+                                          });
+                                          model.updateProduct(
+                                              item.id, item.count);
+                                          print(
+                                              "Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
+                                                  ScopedModel.of<CartModel>(
+                                                          context,
+                                                          rebuildOnChange: true)
+                                                      .totalCartValue
+                                                      .toString() +
+                                                  "");
+                                          print("Cart List" +
+                                              ScopedModel.of<CartModel>(context,
+                                                      rebuildOnChange: true)
+                                                  .cart
+                                                  .toString() +
+                                              "");
+                                          _update(
                                               item.id,
                                               item.count,
                                               item.price.toString(),
-                                              '0',
                                               item.image,
                                               item.name,
-                                              item.qty_reset,
-                                              item.availabel_item,
-                                              item.item_reset_value,
                                               widget.restaurantsId,
                                               widget.restaurantsName,
-                                              widget.restaurantsImage,
-                                              '',
-                                              widget.onSetState,
+                                              widget.onSetState!,
                                               0,
                                               0,
                                               0,
-                                              0);
+                                              '0');
+                                        }
+                                      },
+                                      child: Container(
+                                        height: ScreenUtil().setHeight(21),
+                                        width: ScreenUtil().setWidth(36),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              topLeft: Radius.circular(
+                                                  ScreenUtil().setWidth(10)),
+                                              topRight: Radius.circular(
+                                                  ScreenUtil().setWidth(10))),
+                                          color: Color(0xfff1f1f1),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            '-',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w900,
+                                                fontSize: 18,
+                                                color: Color(
+                                                    Constants.colorTheme)),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: ScreenUtil().setHeight(5),
+                                          bottom: ScreenUtil().setHeight(5)),
+                                      child: Container(
+                                        alignment: Alignment.center,
+                                        height: ScreenUtil().setHeight(21),
+                                        width: ScreenUtil().setWidth(36),
+                                        child: Text(
+                                          '${item.count}',
+                                          style: TextStyle(
+                                              fontFamily: Constants.appFont),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                    ),
+                                    GestureDetector(
+                                      onTap: () {
+                                        if (item.qty_reset == 'daily' &&
+                                            item.count >=
+                                                item.availabel_item!) {
+                                          Constants.toastMessage(
+                                            Languages.of(context)!.outOfStock,
+                                          );
                                         } else {
-                                          print(widget.restaurantsId);
-                                          print(ScopedModel.of<CartModel>(
-                                                  context,
-                                                  rebuildOnChange: true)
-                                              .getRestId());
-                                          if (widget.restaurantsId !=
-                                              ScopedModel.of<CartModel>(context,
-                                                      rebuildOnChange: true)
-                                                  .getRestId()) {
-                                            showdialogRemoveCart(
-                                                ScopedModel.of<CartModel>(
-                                                        context,
-                                                        rebuildOnChange: true)
-                                                    .getRestName(),
-                                                widget.restaurantsName);
+                                          if (item.custimization!.length > 0) {
+                                            var ab;
+                                            String? finalFoodCustomization;
+                                            //String title;
+                                            double price = 0;
+                                            int qty = 0;
+
+                                            for (int z = 0;
+                                                z < model.cart.length;
+                                                z++) {
+                                              if (item.id == model.cart[z].id) {
+                                                ab = json.decode(model.cart[z]
+                                                    .foodCustomization!);
+                                                finalFoodCustomization = model
+                                                    .cart[z].foodCustomization;
+                                                price = model.cart[z].price!;
+                                                //title = model.cart[z].title;
+                                                qty = model.cart[z].qty!;
+                                                // tempPrice = model.cart[z].tempPrice!;
+                                              }
+                                            }
+                                            List<String?> nameOfcustomization =
+                                                [];
+                                            for (int i = 0;
+                                                i < ab.length;
+                                                i++) {
+                                              nameOfcustomization
+                                                  .add(ab[i]['data']['name']);
+                                            }
+                                            //  print('before starting ${price.toString()}');
+                                            //  print('before starting tempPrice $tempPrice');
+                                            item.isRepeatCustomization = true;
+
+                                            updateCustomizationFoodDataToDB(
+                                              finalFoodCustomization,
+                                              item,
+                                              model,
+                                              price += price * qty,
+                                            );
                                           } else {
                                             setState(() {
-                                              item.isAdded = !item.isAdded!;
                                               item.count++;
                                             });
-                                            widget._products.add(Product(
-                                                id: item.id,
-                                                qty: item.count,
-                                                price: double.parse(
-                                                    item.price.toString()),
-                                                imgUrl: item.image,
-                                                title: item.name,
-                                                restaurantsId:
-                                                    widget.restaurantsId,
-                                                restaurantsName:
-                                                    widget.restaurantsName,
-                                                restaurantImage:
-                                                    widget.restaurantsImage,
-                                                foodCustomization: '',
-                                                isCustomization: 0,
-                                                isRepeatCustomization: 0,
-                                                itemQty: 0,
-                                                tempPrice: 0));
-                                            model.addProduct(Product(
-                                                id: item.id,
-                                                qty: item.count,
-                                                price: double.parse(
-                                                    item.price.toString()),
-                                                imgUrl: item.image,
-                                                title: item.name,
-                                                restaurantsId:
-                                                    widget.restaurantsId,
-                                                restaurantsName:
-                                                    widget.restaurantsName,
-                                                restaurantImage:
-                                                    widget.restaurantsImage,
-                                                foodCustomization: '',
-                                                isRepeatCustomization: 0,
-                                                isCustomization: 0,
-                                                itemQty: 0,
-                                                tempPrice: 0));
+                                            model.updateProduct(
+                                                item.id, item.count);
                                             print(
                                                 "Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
                                                     ScopedModel.of<CartModel>(
@@ -1552,58 +1369,296 @@ class _ExpandedListItemState extends State<ExpandedListItem> {
                                                         .totalCartValue
                                                         .toString() +
                                                     "");
-                                            _insert(
+                                            print("Cart List" +
+                                                ScopedModel.of<CartModel>(
+                                                        context,
+                                                        rebuildOnChange: true)
+                                                    .cart
+                                                    .toString() +
+                                                "");
+                                            _update(
                                                 item.id,
                                                 item.count,
                                                 item.price.toString(),
-                                                '0',
                                                 item.image,
                                                 item.name,
-                                                item.qty_reset,
-                                                item.availabel_item,
-                                                item.item_reset_value,
                                                 widget.restaurantsId,
                                                 widget.restaurantsName,
-                                                widget.restaurantsImage,
-                                                '',
-                                                widget.onSetState,
+                                                widget.onSetState!,
                                                 0,
                                                 0,
                                                 0,
-                                                0);
+                                                '0');
                                           }
                                         }
-                                      }
-                                    }
-                                  },
-                                  child: Container(
-                                    width: ScreenUtil().setWidth(36),
-                                    height: ScreenUtil().setWidth(65),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10),
-                                        bottomRight: Radius.circular(10),
-                                        topLeft: Radius.circular(10),
-                                        topRight: Radius.circular(10),
-                                      ),
-                                      color: Color(0xfff1f1f1),
-                                    ),
-                                    child: Center(
-                                      child: Text(
-                                        '+',
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 18,
-                                            color: Color(Constants.colorTheme)),
-                                        textAlign: TextAlign.center,
+                                      },
+                                      child: Container(
+                                        height: ScreenUtil().setHeight(21),
+                                        width: ScreenUtil().setWidth(36),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(10),
+                                              bottomRight: Radius.circular(10)),
+                                          color: Color(0xfff1f1f1),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            '+',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 14,
+                                                color: Color(
+                                                    Constants.colorTheme)),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                )
-                              ],
-                            )),
-                    ],
-                  ),
+                                  ],
+                                ))
+                              : Expanded(
+                                  child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: () {
+                                        if (item.qty_reset == 'daily' &&
+                                            item.count >=
+                                                item.availabel_item!) {
+                                          Constants.toastMessage(
+                                            Languages.of(context)!.outOfStock,
+                                          );
+                                        } else {
+                                          if (item.custimization!.length > 0) {
+                                            openFoodCustomizationBottomSheet(
+                                                model,
+                                                item,
+                                                double.parse(
+                                                    item.price.toString()),
+                                                totalCartAmount,
+                                                totalQty,
+                                                item.custimization!);
+                                          } else {
+                                            if (ScopedModel.of<CartModel>(
+                                                        context,
+                                                        rebuildOnChange: true)
+                                                    .cart
+                                                    .length ==
+                                                0) {
+                                              setState(() {
+                                                item.isAdded = !item.isAdded!;
+                                                item.count++;
+                                              });
+                                              widget._products.add(Product(
+                                                  id: item.id,
+                                                  qty: item.count,
+                                                  price: double.parse(
+                                                      item.price.toString()),
+                                                  imgUrl: item.image,
+                                                  title: item.name,
+                                                  restaurantsId:
+                                                      widget.restaurantsId,
+                                                  restaurantsName:
+                                                      widget.restaurantsName,
+                                                  restaurantImage:
+                                                      widget.restaurantsImage,
+                                                  foodCustomization: '',
+                                                  isRepeatCustomization: 0,
+                                                  isCustomization: 0,
+                                                  itemQty: 0,
+                                                  tempPrice: 0));
+                                              model.addProduct(Product(
+                                                  id: item.id,
+                                                  qty: item.count,
+                                                  price: double.parse(
+                                                      item.price.toString()),
+                                                  imgUrl: item.image,
+                                                  title: item.name,
+                                                  restaurantsId:
+                                                      widget.restaurantsId,
+                                                  restaurantsName:
+                                                      widget.restaurantsName,
+                                                  restaurantImage:
+                                                      widget.restaurantsImage,
+                                                  foodCustomization: '',
+                                                  isRepeatCustomization: 0,
+                                                  isCustomization: 0,
+                                                  itemQty: 0,
+                                                  tempPrice: 0));
+                                              print(
+                                                  "Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
+                                                      ScopedModel.of<CartModel>(
+                                                              context,
+                                                              rebuildOnChange:
+                                                                  true)
+                                                          .totalCartValue
+                                                          .toString() +
+                                                      "");
+                                              _insert(
+                                                  item.id,
+                                                  item.count,
+                                                  item.price.toString(),
+                                                  '0',
+                                                  item.image,
+                                                  item.name,
+                                                  item.qty_reset,
+                                                  item.availabel_item,
+                                                  item.item_reset_value,
+                                                  widget.restaurantsId,
+                                                  widget.restaurantsName,
+                                                  widget.restaurantsImage,
+                                                  '',
+                                                  widget.onSetState,
+                                                  0,
+                                                  0,
+                                                  0,
+                                                  0);
+                                            } else {
+                                              print(widget.restaurantsId);
+                                              print(ScopedModel.of<CartModel>(
+                                                      context,
+                                                      rebuildOnChange: true)
+                                                  .getRestId());
+                                              if (widget.restaurantsId !=
+                                                  ScopedModel.of<CartModel>(
+                                                          context,
+                                                          rebuildOnChange: true)
+                                                      .getRestId()) {
+                                                showdialogRemoveCart(
+                                                    ScopedModel.of<CartModel>(
+                                                            context,
+                                                            rebuildOnChange:
+                                                                true)
+                                                        .getRestName(),
+                                                    widget.restaurantsName);
+                                              } else {
+                                                setState(() {
+                                                  item.isAdded = !item.isAdded!;
+                                                  item.count++;
+                                                });
+                                                widget._products.add(Product(
+                                                    id: item.id,
+                                                    qty: item.count,
+                                                    price: double.parse(
+                                                        item.price.toString()),
+                                                    imgUrl: item.image,
+                                                    title: item.name,
+                                                    restaurantsId:
+                                                        widget.restaurantsId,
+                                                    restaurantsName:
+                                                        widget.restaurantsName,
+                                                    restaurantImage:
+                                                        widget.restaurantsImage,
+                                                    foodCustomization: '',
+                                                    isCustomization: 0,
+                                                    isRepeatCustomization: 0,
+                                                    itemQty: 0,
+                                                    tempPrice: 0));
+                                                model.addProduct(Product(
+                                                    id: item.id,
+                                                    qty: item.count,
+                                                    price: double.parse(
+                                                        item.price.toString()),
+                                                    imgUrl: item.image,
+                                                    title: item.name,
+                                                    restaurantsId:
+                                                        widget.restaurantsId,
+                                                    restaurantsName:
+                                                        widget.restaurantsName,
+                                                    restaurantImage:
+                                                        widget.restaurantsImage,
+                                                    foodCustomization: '',
+                                                    isRepeatCustomization: 0,
+                                                    isCustomization: 0,
+                                                    itemQty: 0,
+                                                    tempPrice: 0));
+                                                print(
+                                                    "Total: ${SharedPreferenceUtil.getString(Constants.appSettingCurrencySymbol)} " +
+                                                        ScopedModel.of<
+                                                                    CartModel>(
+                                                                context,
+                                                                rebuildOnChange:
+                                                                    true)
+                                                            .totalCartValue
+                                                            .toString() +
+                                                        "");
+                                                _insert(
+                                                    item.id,
+                                                    item.count,
+                                                    item.price.toString(),
+                                                    '0',
+                                                    item.image,
+                                                    item.name,
+                                                    item.qty_reset,
+                                                    item.availabel_item,
+                                                    item.item_reset_value,
+                                                    widget.restaurantsId,
+                                                    widget.restaurantsName,
+                                                    widget.restaurantsImage,
+                                                    '',
+                                                    widget.onSetState,
+                                                    0,
+                                                    0,
+                                                    0,
+                                                    0);
+                                              }
+                                            }
+                                          }
+                                        }
+                                      },
+                                      child: Container(
+                                        width: ScreenUtil().setWidth(36),
+                                        height: ScreenUtil().setWidth(65),
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(10),
+                                            bottomRight: Radius.circular(10),
+                                            topLeft: Radius.circular(10),
+                                            topRight: Radius.circular(10),
+                                          ),
+                                          color: Color(0xfff1f1f1),
+                                        ),
+                                        child: Center(
+                                          child: Text(
+                                            '+',
+                                            style: TextStyle(
+                                                fontWeight: FontWeight.w500,
+                                                fontSize: 18,
+                                                color: Color(
+                                                    Constants.colorTheme)),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                )),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          right: 5, top: 5, bottom: 5, left: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          SizedBox(
+                            width: 240,
+                            child: Text(
+                              submenu[i].description.toString(),
+                              textAlign: TextAlign.left,
+                              maxLines: 5,
+                              style: TextStyle(
+                                fontWeight: FontWeight.w300, // light
+                                fontStyle: FontStyle.italic,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             );

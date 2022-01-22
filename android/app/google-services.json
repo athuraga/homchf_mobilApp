@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "826705359057",
+    "project_id": "ringed-tractor-329306",
+    "storage_bucket": "ringed-tractor-329306.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:826705359057:android:3c0bb1dcc64b29bb0855f0",
+        "android_client_info": {
+          "package_name": "app.homchf.homechef"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "826705359057-079gg8n0amn0lu2icijodpvvl83ci4oq.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.homchf.homechef",
+            "certificate_hash": "aeda7f74c8d8caa6458108936622ce3b9ba663cb"
+          }
+        },
+        {
+          "client_id": "826705359057-553m4q21kijnskl4qido5tpt586rn50k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDQ-ItXtXTIfb3MY2b32uDNd-luWz357bs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "826705359057-553m4q21kijnskl4qido5tpt586rn50k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

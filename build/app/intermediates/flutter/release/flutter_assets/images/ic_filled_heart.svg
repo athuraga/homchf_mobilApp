@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="448" height="406.902" viewBox="0 0 448 406.902">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#fff"/>
+      <stop offset="1" stop-color="gray"/>
+    </linearGradient>
+  </defs>
+  <path id="ic_filled_heart" d="M224,406.9c29.383-16.215,224-129.5,224-282.9C448,57.945,393.8,0,332,0A116.232,116.232,0,0,0,230.969,59.129a8.331,8.331,0,0,1-13.937,0A116.232,116.232,0,0,0,116,0C54.2,0,0,57.945,0,124,0,277.406,194.617,390.688,224,406.9Zm0,0" fill="url(#linear-gradient)"/>
+</svg>

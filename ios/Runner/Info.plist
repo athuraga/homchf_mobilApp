@@ -39,6 +39,10 @@
 	<string>This app needs access to location when open to enable users order food from nearby home chefs</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>For profile image</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>

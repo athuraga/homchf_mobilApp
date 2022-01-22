@@ -226,6 +226,7 @@ class SubMenuListData {
   String? name;
   String? image;
   String? price;
+  String? description;
   String? type;
   List<Custimization>? custimization;
   bool? isAdded = false;
@@ -242,6 +243,7 @@ class SubMenuListData {
     this.name,
     this.image,
     this.price,
+    this.description,
     this.type,
     this.custimization,
     required this.count,
@@ -258,6 +260,7 @@ class SubMenuListData {
     type = json['type'].toString();
     image = json['image'];
     price = json['price'];
+    description = json['description'];
     qty_reset = json['qty_reset'];
     item_reset_value = json['item_reset_value'];
     availabel_item = json['availabel_item'];
@@ -276,6 +279,7 @@ class SubMenuListData {
     data['type'] = this.type;
     data['image'] = this.image;
     data['price'] = this.price;
+    data['description'] = this.description;
     data['qty_reset'] = this.qty_reset;
     data['item_reset_value'] = this.item_reset_value;
     data['availabel_item'] = this.availabel_item;
